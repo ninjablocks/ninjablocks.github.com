@@ -23,13 +23,13 @@
         <p></p>
         <p class="view"><a href="#top"><i class="icon-home"></i> Top</a></p>
         <h2>Basics</h2>
-        <h4><a href="#coreconcepts"><i class="icon-book"></i> Core Concepts</a></h4>
-        <h4><a href="#authentication"><i class="icon-unlock"></i> Authentication</a></h4>
+        <h4><a href="#coreconcepts-basics"><i class="icon-book"></i> Core Concepts</a></h4>
+        <h4><a href="#authentication-basics"><i class="icon-unlock"></i> Authentication</a></h4>
         <h2>Objects</h2>
-        <h4><a href="#user"><i class="icon-group"></i> User</a></h4>
-        <h4><a href="#block"><i class="icon-hdd"></i> Block</a></h4>
-        <h4><a href="#device"><i class="icon-sitemap"></i> Device</a></h4>
-        <h4><a href="#rule"><i class="icon-legal"></i> Rule</a></h4>
+        <h4><a href="#user-object"><i class="icon-group"></i> User</a></h4>
+        <h4><a href="#block-object"><i class="icon-hdd"></i> Block</a></h4>
+        <h4><a href="#device-object"><i class="icon-sitemap"></i> Device</a></h4>
+        <h4><a href="#rule-object"><i class="icon-legal"></i> Rule</a></h4>
         <h2>See Also</h2>
         <p class="view"><a target="_blank" href="https://guides.ninja.is"><i class="icon-info-sign"></i> Guides</a></p>
         <p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github"></i> Code</a></p>
@@ -41,19 +41,126 @@
         <p>This site aims to outline the preferred way to interact with the Ninja Cloud. However, please note that we are still building this platform, and at present everything is EXPERIMENTAL, and some elements are likely to change.</p>
         <p>If you would like to be kept in the loop about changes please sign up to our <a href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks">developers mailing list</a>. We will do our best to communicate any changes we make to v0.</p>
         <h1>Basics</h1>
-        <a name="coreconcepts"></a><h2>Core Concepts</h2>
+        <!-- Core Concepts -->
+        <a name="coreconcepts-basics"></a>
+        <h2>Core Concepts</h2>
         <p>This section is coming soon</p>
-        <a name="authentication"></a><h2>Authentication</h2>
+        <!-- /Core Concepts -->
+        <!-- Authentication -->
+        <a name="authentication-basics"></a>
+        <h2>Authentication</h2>
         <p>This section is coming soon</p>
+        <!-- /Authentication -->
+        <!-- Objects -->
         <h1>Objects</h1>
-        <a name="user"></a><h2>User</h2>
-        <p>This section is coming soon</p>
-        <a name="block"></a><h2>Block</h2>
-        <p>This section is coming soon</p>
-        <a name="device"></a><h2>Device</h2>
-        <p>This section is coming soon</p>
-        <a name="rule"></a><h2>Rule</h2>
-        <p>This section is coming soon</p>
+        <a name="user-object"></a>
+        <h2>User</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th>Resource</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><a href="#user-stream">GET user/stream</a></td>
+              <td>Returns the last 30 entries in the user's activity stream.</td>
+            </tr>
+            <tr>
+              <td><a href="#user-realtime">PUT user/realtime</a></td>
+              <td>Set's the amount of time that 'realtime' mode will be active for. In this state all messages received from all blocks will be forwarded via Pusher up to a maximum of 30 seconds.</td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="block-object"></a>
+        <h2>Block</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th>Resource</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><a href="#block-activate">GET block/:blockId/activate</a></td>
+              <td>Returns the block token after a user has claimed the block. This token should be used with all subsequent requests.</td>
+            </tr>
+            <tr>
+              <td><a href="#block-post">POST block</a></td>
+              <td>Attempt to claim an unclaimed block.</td>
+            </tr>
+            <tr>
+              <td><a href="#block-commands">GET block/:blockId/commands</a></td>
+              <td>Long GET that will response with that block's commands for the duration of the request.</td>
+            </tr>
+            <tr>
+              <td><a href="#block-heartbeat">POST block/:blockId/heartbeat</a></td>
+              <td>Send a heartbeat from this block.</td>
+            </tr>
+            <tr>
+              <td><a href="#block-data">POST block/:blockId/data</a></td>
+              <td>Send a 'data' event from this block. Typically 'data' events will be instantly actioned, as opposed to heartbeats which will be queued and actioned in due course.</td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="device-object"></a>
+        <h2>Device</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th>Resource</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><a href="#device-get-devices">GET devices</a></td>
+              <td>Returns the list of devices associated with a user.</td>
+            </tr>
+            <tr>
+              <td><a href="#device-send-command">PUT device/:guid</a></td>
+              <td>Send a command to that device.</td>
+            </tr>
+            <tr>
+              <td><a href="#device-get-history">GET device/:guid/data/:from?/:to?</a></td>
+              <td>Return the historical data for the specified device. The parameters <strong>from</strong> and <strong>to</strong> are optional.</td>
+            </tr>
+            <tr>
+              <td><a href="#device-delete">DELETE device/:guid</a></td>
+              <td>Delete this device from the system. Note if future heartbeats are received for this device, it will be recreated.</td>
+            </tr>
+            <tr>
+              <td><a href="#device-create-subdevice">POST device/:guid/subdevice</a></td>
+              <td>Create a new sub-device under this device.</td>
+            </tr>
+            <tr>
+              <td><a href="#device-update-update">PUT device/:guid/subdevice/:subdeviceId</a></td>
+              <td>Update information about the specified sub-device.</td>
+            </tr>
+            <tr>
+              <td><a href="#device-update-update">DELETE device/:guid/subdevice/:subdeviceId</a></td>
+              <td>Delete the specified sub-device. Note that if there are any rules attached to this sub-device they will not be deleted, but instead become ineffectual.</td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="rule-object"></a>
+        <h2>Rule</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th>Resource</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><a href="#rule-create">POST rule</a></td>
+              <td>Create a new rule.</td>
+            </tr>
+            <tr>
+              <td><a href="#rule-get">GET rule</a></td>
+              <td>Fetch all of a user's rules.</td>
+            </tr>
+            <tr>
+              <td><a href="#rule-delete">DELETE rule/:rid</a></td>
+              <td>Delete a rule.</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
