@@ -1,6 +1,8 @@
+<!--
 ---
 title: Ninja Blocks API Documentation
 ---
+-->
 <!doctype html>
 <html>
   <head>
@@ -22,18 +24,19 @@ title: Ninja Blocks API Documentation
   <body>
     <div class="wrapper">
       <header>
-        <h1>API v0</h1>
+        <h1>API</h1>
+        <h3>/rest/v0</h3>
         <p></p>
         <p class="view"><a href="#top"><i class="icon-home"></i> Top</a></p>
-        <h2>Basics</h2>
+        <h3>Basics</h3>
         <h4><a href="#coreconcepts-basics"><i class="icon-book"></i> Core Concepts</a></h4>
         <h4><a href="#authentication-basics"><i class="icon-unlock"></i> Authentication</a></h4>
-        <h2>Objects</h2>
+        <h3>Objects</h3>
         <h4><a href="#user-object"><i class="icon-group"></i> User</a></h4>
         <h4><a href="#block-object"><i class="icon-hdd"></i> Block</a></h4>
         <h4><a href="#device-object"><i class="icon-sitemap"></i> Device</a></h4>
         <h4><a href="#rule-object"><i class="icon-legal"></i> Rule</a></h4>
-        <h2>See Also</h2>
+        <h3>See Also</h3>
         <p class="view"><a target="_blank" href="https://guides.ninja.is"><i class="icon-info-sign"></i> Guides</a></p>
         <p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github"></i> Code</a></p>
         <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
@@ -43,24 +46,28 @@ title: Ninja Blocks API Documentation
         <h3>Welcome Developer.</h3>
         <p>This site aims to outline the preferred way to interact with the Ninja Cloud. However, please note that we are still building this platform, and at present everything is EXPERIMENTAL, and some elements are likely to change.</p>
         <p>If you would like to be kept in the loop about changes please sign up to our <a href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks">developers mailing list</a>. We will do our best to communicate any changes we make to v0.</p>
-        <h1>Basics</h1>
+        <hr>
+
         <!-- Core Concepts -->
         <a name="coreconcepts-basics"></a>
-        <h2>Core Concepts</h2>
+        <h1>Core Concepts</h1>
         <p>This section is coming soon</p>
+        <!--
         {% highlight javascript %}
           var foo = 'bar';
         {% endhighlight %}
+      -->
         <!-- /Core Concepts -->
+        <hr>
         <!-- Authentication -->
         <a name="authentication-basics"></a>
-        <h2>Authentication</h2>
+        <h1>Authentication</h1>
         <p>This section is coming soon</p>
         <!-- /Authentication -->
+        <hr>
         <!-- Objects -->
-        <h1>Objects</h1>
         <a name="user-object"></a>
-        <h2>User</h2>
+        <h1>User</h1>
         <table>
           <tbody>
             <tr>
@@ -69,14 +76,73 @@ title: Ninja Blocks API Documentation
             </tr>
             <tr>
               <td><a href="#user-stream">GET user/stream</a></td>
-              <td>Returns the last 30 entries in the user's activity stream.</td>
+              <td>Returns the 30 most recent entries in the authenticating user's activity stream.</td>
             </tr>
             <tr>
               <td><a href="#user-realtime">PUT user/realtime</a></td>
-              <td>Set's the amount of time that 'realtime' mode will be active for. In this state all messages received from all blocks will be forwarded via Pusher up to a maximum of 30 seconds.</td>
+              <td>Set's the amount of time that 'realtime' mode will be active for. In this state all messages received from all blocks will be forwarded via Pusher.</td>
             </tr>
           </tbody>
         </table>
+        <a name="user-stream"></a>
+        <h2>GET user/stream</h2>
+        <p>Returns the 30 most recent entries in the authenticating user's activity stream.</p>
+        <p><strong>Resource URL</strong></p>
+        <pre><code>https://a.ninja.is/rest/v0/user/stream</code></pre>
+        <p><strong>Sample JSON response</strong></p>
+        <pre>
+<code>
+[
+    {
+        "message": "Rule \"Door Bell\" Executed.", 
+        "timestamp": 1343268860669
+    }, 
+    {
+        "message": "Rule \"Door Bell\" Executed.", 
+        "timestamp": 1343268810530
+    }, 
+    {
+        "message": "Rule \"Door Bell\" Executed.", 
+        "timestamp": 1343268782287
+    }, 
+    {
+        "message": "Rule \"Door Bell\" Executed.", 
+        "timestamp": 1343268757513
+    }
+]
+</code>
+      </pre>
+        <p>&nbsp;</p>
+        <a name="user-realtime"></a>
+        <h2>PUT user/realtime</h2>
+        <p>Set's the amount of time that 'realtime' mode will be active for. In this state all messages received from all blocks will be forwarded via Pusher.</p>
+        <p><strong>Resource URL</strong></p>
+        <pre><code>https://a.ninja.is/rest/v0/user/realtime</code></pre>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Parameters</th>
+            </tr>
+            <tr>
+              <td><strong>length</strong><br /><em>number</em><br /><small>Optional</small></td>
+              <td>
+                The amount of time to activate 'realtime' mode for. Note: must be between 1 and 30, values out of this range will be ignored, and defaulted to 30.
+                <br />
+                <small>Example: 15</small> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Sample JSON response</strong></p>
+        <pre>
+<code>
+{
+    "result": 1,
+    "error": null, 
+    "id": 0
+}</code>
+        </pre>
+        <hr>
         <a name="block-object"></a>
         <h2>Block</h2>
         <table>
@@ -107,6 +173,7 @@ title: Ninja Blocks API Documentation
             </tr>
           </tbody>
         </table>
+        <hr>
         <a name="device-object"></a>
         <h2>Device</h2>
         <table>
@@ -145,6 +212,7 @@ title: Ninja Blocks API Documentation
             </tr>
           </tbody>
         </table>
+        <hr>
         <a name="rule-object"></a>
         <h2>Rule</h2>
         <table>
@@ -173,5 +241,15 @@ title: Ninja Blocks API Documentation
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31570375-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  </script>
   </body>
 </html>
