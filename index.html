@@ -16,7 +16,9 @@ title: Ninja Blocks API Documentation
   <![endif]-->
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <script src="javascripts/smooth.pack.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="javascripts/naver.js"></script>
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -42,14 +44,14 @@ title: Ninja Blocks API Documentation
         <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
       <section>
-        <a name="top"></a>
+        <a id="top"></a>
         <h3>Welcome Developer.</h3>
         <p>This site aims to outline the preferred way to interact with the Ninja Cloud. However, please note that we are still building this platform, and at present everything is EXPERIMENTAL, and some elements are likely to change.</p>
         <p>If you would like to be kept in the loop about changes please sign up to our <a href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks">developers mailing list</a>. We will do our best to communicate any changes we make to v0.</p>
         <hr>
 
         <!-- Core Concepts -->
-        <a name="coreconcepts-basics"></a>
+        <a id="coreconcepts-basics"></a>
         <h1>Core Concepts</h1>
         <p>This section is coming soon</p>
         <!--
@@ -60,13 +62,13 @@ title: Ninja Blocks API Documentation
         <!-- /Core Concepts -->
         <hr>
         <!-- Authentication -->
-        <a name="authentication-basics"></a>
+        <a id="authentication-basics"></a>
         <h1>Authentication</h1>
         <p>This section is coming soon</p>
         <!-- /Authentication -->
         <hr>
         <!-- Objects -->
-        <a name="user-object"></a>
+        <a id="user-object"></a>
         <h1>User</h1>
         <table>
           <tbody>
@@ -85,7 +87,7 @@ title: Ninja Blocks API Documentation
           </tbody>
         </table>
         <p>&nbsp;</p>
-        <a name="user-stream"></a>
+        <a id="user-stream"></a>
         <h2>GET user/stream</h2>
         <p>Returns the 30 most recent entries in the authenticating user's activity stream.</p>
         <table>
@@ -124,7 +126,7 @@ title: Ninja Blocks API Documentation
 </code>
       </pre>
         <p>&nbsp;</p>
-        <a name="user-realtime"></a>
+        <a id="user-realtime"></a>
         <h2>PUT user/realtime</h2>
         <p>Sets the amount of time that 'realtime' mode will be active for, defaulting to 10 seconds. If successful, during this duration all messages received from all blocks will be forwarded via Pusher.</p>
         <table>
@@ -154,7 +156,7 @@ title: Ninja Blocks API Documentation
 }</code>
         </pre>
         <hr>
-        <a name="block-object"></a>
+        <a id="block-object"></a>
         <h1>Block</h1>
         <table>
           <tbody>
@@ -185,7 +187,7 @@ title: Ninja Blocks API Documentation
           </tbody>
         </table>
         <p>&nbsp;</p>
-        <a name="block-activate"></a>
+        <a id="block-activate"></a>
         <h2>GET block/:blockId/activate</h2>
         <p>Returns the block token after a user has claimed the block. This token should be used with all subsequent requests.</p>
         <table>
@@ -214,7 +216,7 @@ title: Ninja Blocks API Documentation
 }</code>
       </pre>
         <p>&nbsp;</p>
-        <a name="block-post"></a>
+        <a id="block-post"></a>
         <h2>POST block</h2>
         <p>Attempt to claim an unclaimed block.</p>
         <table>
@@ -244,7 +246,7 @@ title: Ninja Blocks API Documentation
 }</code>
         </pre>
         <p>&nbsp;</p>
-        <a name="block-commands"></a>
+        <a id="block-commands"></a>
         <h2>GET block/:blockId/commands</h2>
         <p>Long GET that will response with that block's commands for the duration of the request.</p>
         <table>
@@ -275,7 +277,7 @@ title: Ninja Blocks API Documentation
 {"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"100010100010101011010110"}]}</code>
         </pre>
         <p>&nbsp;</p>
-        <a name="block-heartbeat"></a>
+        <a id="block-heartbeat"></a>
         <h2>POST block/:blockId/heartbeat</h2>
         <p>Send a heartbeat from this block.<br /><strong>Important</strong>: the request body takes the form of an <strong>array of objects</strong>, whose parameters are outlined below.</p>
         <p>Heartbeat events are intended to be values to be analyzed in due course. For example, a temperature reading should be part of a 'heartbeat' event, whereas a button press should be a <a href="#block-data">'data'</a> event.</p>
@@ -342,7 +344,7 @@ title: Ninja Blocks API Documentation
 }</code>
         </pre>
         <p>&nbsp;</p>
-        <a name="block-data"></a>
+        <a id="block-data"></a>
         <h2>POST block/:blockId/data</h2>
         <p>Send a data event from this block.</p>
         <p>Data events are intended to be values to be actioned immediately. For example, a button press should be a 'data' event, whereas a temperature reading should be part of a <a href="#block-heartbeat">'heartbeat'</a> event</p>
@@ -409,7 +411,7 @@ title: Ninja Blocks API Documentation
 }</code>
         </pre>
         <hr>
-        <a name="device-object"></a>
+        <a id="device-object"></a>
         <h2>Device</h2>
         <table>
           <tbody>
@@ -448,7 +450,7 @@ title: Ninja Blocks API Documentation
           </tbody>
         </table>
         <hr>
-        <a name="rule-object"></a>
+        <a id="rule-object"></a>
         <h2>Rule</h2>
         <table>
           <tbody>
