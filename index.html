@@ -80,16 +80,27 @@ title: Ninja Blocks API Documentation
             </tr>
             <tr>
               <td><a href="#user-realtime">PUT user/realtime</a></td>
-              <td>Set's the amount of time that 'realtime' mode will be active for. In this state all messages received from all blocks will be forwarded via Pusher.</td>
+              <td>Sets the amount of time that 'realtime' mode will be active for. If successful, during this duration all messages received from all blocks will be forwarded via Pusher.</td>
             </tr>
           </tbody>
         </table>
+        <p>&nbsp;</p>
         <a name="user-stream"></a>
         <h2>GET user/stream</h2>
         <p>Returns the 30 most recent entries in the authenticating user's activity stream.</p>
-        <p><strong>Resource URL</strong></p>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Parameters</th>
+            </tr>
+            <tr>
+              <td colspan="2"><em>none</em</td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Resource URL</h4>
         <pre><code>https://a.ninja.is/rest/v0/user/stream</code></pre>
-        <p><strong>Sample JSON response</strong></p>
+        <h4>Sample JSON response</h4>
         <pre>
 <code>
 [
@@ -115,9 +126,7 @@ title: Ninja Blocks API Documentation
         <p>&nbsp;</p>
         <a name="user-realtime"></a>
         <h2>PUT user/realtime</h2>
-        <p>Set's the amount of time that 'realtime' mode will be active for. In this state all messages received from all blocks will be forwarded via Pusher.</p>
-        <p><strong>Resource URL</strong></p>
-        <pre><code>https://a.ninja.is/rest/v0/user/realtime</code></pre>
+        <p>Sets the amount of time that 'realtime' mode will be active for, defaulting to 10 seconds. If successful, during this duration all messages received from all blocks will be forwarded via Pusher.</p>
         <table>
           <tbody>
             <tr>
@@ -126,14 +135,16 @@ title: Ninja Blocks API Documentation
             <tr>
               <td><strong>length</strong><br /><em>number</em><br /><small>Optional</small></td>
               <td>
-                The amount of time to activate 'realtime' mode for. Note: must be between 1 and 30, values out of this range will be ignored, and defaulted to 30.
+                The amount of time to activate 'realtime' mode for. This value must be between 1 and 30. Values out of this range will be ignored, and defaulted to 10.
                 <br />
                 <small>Example: 15</small> 
               </td>
             </tr>
           </tbody>
         </table>
-        <p><strong>Sample JSON response</strong></p>
+        <h4>Resource URL</h4>
+        <pre><code>https://a.ninja.is/rest/v0/user/realtime</code></pre>
+        <h4>Sample JSON response</h4>
         <pre>
 <code>
 {
@@ -144,7 +155,7 @@ title: Ninja Blocks API Documentation
         </pre>
         <hr>
         <a name="block-object"></a>
-        <h2>Block</h2>
+        <h1>Block</h1>
         <table>
           <tbody>
             <tr>
@@ -173,6 +184,230 @@ title: Ninja Blocks API Documentation
             </tr>
           </tbody>
         </table>
+        <p>&nbsp;</p>
+        <a name="block-activate"></a>
+        <h2>GET block/:blockId/activate</h2>
+        <p>Returns the block token after a user has claimed the block. This token should be used with all subsequent requests.</p>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Parameters</th>
+            </tr>
+            <tr>
+              <td colspan="2"><em>none</em</td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Notes</h4>
+        <ul>
+          <li>This URI does not currently require authentication credentials.</li>
+          <li><strong>blockId</strong> must be at least 12 characters in length.</li>
+          <li>A response will be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. If the response ends without a body, the request should be retried.</li>
+        </ul>
+        <h4>Resource URL</h4>
+        <pre><code>https://dojo.ninja.is/rest/v0/block/:blockId/activate</code></pre>
+        <h4>Sample JSON response</h4>
+        <pre>
+<code>
+{
+    "token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
+}</code>
+      </pre>
+        <p>&nbsp;</p>
+        <a name="block-post"></a>
+        <h2>POST block</h2>
+        <p>Attempt to claim an unclaimed block.</p>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Parameters</th>
+            </tr>
+            <tr>
+              <td><strong>nodeid</strong><br /><em>string</em><br /><small>Required</small></td>
+              <td>
+                The ID of the block you are attempting to claim. This block must be currently awaiting activation. ID's have a minimum length of 12 characters.
+                <br />
+                <small>Example: ASTEALTHYNODE01</small> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Resource URL</h4>
+        <pre><code>https://a.ninja.is/rest/v0/block</code></pre>
+        <h4>Sample JSON response</h4>
+        <pre>
+<code>
+{
+    "result": 1,
+    "error": null, 
+    "id": 0
+}</code>
+        </pre>
+        <p>&nbsp;</p>
+        <a name="block-commands"></a>
+        <h2>GET block/:blockId/commands</h2>
+        <p>Long GET that will response with that block's commands for the duration of the request.</p>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Parameters</th>
+            </tr>
+            <tr>
+              <td colspan="2"><em>none</em></td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Notes</h4>
+        <ul>
+          <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:blockId/activate</a> route.</li>
+          <li><strong>blockId</strong> must be at least 12 characters in length.</li>
+          <li>Commands are separated by the newline character <em>\n</em>.</li>
+          <li>This request is long lived, and should be retried if disconnected.</li>
+        </ul>
+        <h4>Resource URL</h4>
+        <pre><code>https://dojo.ninja.is/rest/v0/block/:blockId/commands</code></pre>
+        <h4>Sample JSON response</h4>
+        <pre>
+<code>
+{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFF00"}]}
+{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"001100110011000011100101"}]}
+{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFFFF"}]}
+{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"100010100010101011010110"}]}</code>
+        </pre>
+        <p>&nbsp;</p>
+        <a name="block-heartbeat"></a>
+        <h2>POST block/:blockId/heartbeat</h2>
+        <p>Send a heartbeat from this block.<br /><strong>Important</strong>: the request body takes the form of an <strong>array of objects</strong>, whose parameters are outlined below.</p>
+        <p>Heartbeat events are intended to be values to be analyzed in due course. For example, a temperature reading should be part of a 'heartbeat' event, whereas a button press should be a <a href="#block-data">'data'</a> event.</p>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Each Array Element Parameters</th>
+            </tr>
+            <tr>
+              <td><strong>GUID</strong><br /><em>string</em><br /><small>Required</small></td>
+              <td>
+                The GUID of the device reporting.
+                <br />
+                <small>Example: ASTEALTHYNODE01_0_0_11</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>G</strong><br /><em>number</em><br /><small>Required</small></td>
+              <td>
+                The port number the device is located on.
+                <br />
+                <small>Example: 0</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>V</strong><br /><em>string</em><br /><small>Required</small></td>
+              <td>
+                The Vendor ID of the device.
+                <br />
+                <small>Example: "0"</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>D</strong><br /><em>number</em><br /><small>Required</small></td>
+              <td>
+                The device ID.
+                <br />
+                <small>Example: 11</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>DA</strong><br /><em>string</em><br /><small>Required</small></td>
+              <td>
+                The data value that this device is reporting.
+                <br />
+                <small>Example: "-1"</small> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Notes</h4>
+        <ul>
+          <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:blockId/activate</a> route.</li>
+        </ul>
+        <h4>Resource URL</h4>
+        <pre><code>https://dojo.ninja.is/rest/v0/block/:blockId/heartbeat</code></pre>
+        <h4>Sample JSON response</h4>
+        <pre>
+<code>
+{
+    "result": 1,
+    "error": null, 
+    "id": 0
+}</code>
+        </pre>
+        <p>&nbsp;</p>
+        <a name="block-data"></a>
+        <h2>POST block/:blockId/data</h2>
+        <p>Send a data event from this block.</p>
+        <p>Data events are intended to be values to be actioned immediately. For example, a button press should be a 'data' event, whereas a temperature reading should be part of a <a href="#block-heartbeat">'heartbeat'</a> event</p>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Parameters</th>
+            </tr>
+            <tr>
+              <td><strong>GUID</strong><br /><em>string</em><br /><small>Required</small></td>
+              <td>
+                The GUID of the device reporting.
+                <br />
+                <small>Example: ASTEALTHYNODE01_0_0_11</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>G</strong><br /><em>number</em><br /><small>Required</small></td>
+              <td>
+                The port number the device is located on.
+                <br />
+                <small>Example: 0</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>V</strong><br /><em>string</em><br /><small>Required</small></td>
+              <td>
+                The Vendor ID of the device.
+                <br />
+                <small>Example: "0"</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>D</strong><br /><em>number</em><br /><small>Required</small></td>
+              <td>
+                The device ID.
+                <br />
+                <small>Example: 11</small> 
+              </td>
+            </tr>
+            <tr>
+              <td><strong>DA</strong><br /><em>string</em><br /><small>Required</small></td>
+              <td>
+                The data value that this device is reporting.
+                <br />
+                <small>Example: "-1"</small> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Notes</h4>
+        <ul>
+          <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:blockId/activate</a> route.</li>
+        </ul>
+        <h4>Resource URL</h4>
+        <pre><code>https://dojo.ninja.is/rest/v0/block/:blockId/heartbeat</code></pre>
+        <h4>Sample JSON response</h4>
+        <pre>
+<code>
+{
+    "result": 1,
+    "error": null, 
+    "id": 0
+}</code>
+        </pre>
         <hr>
         <a name="device-object"></a>
         <h2>Device</h2>
