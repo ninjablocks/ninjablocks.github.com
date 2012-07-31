@@ -46,7 +46,7 @@ title: Ninja Blocks API Documentation
       <section>
         <a name="top" id="top"></a>
         <h3>Welcome Developer,</h3>
-        <p>Thinking about developing something on our platform? Awesome! This site aims to outline the preferred way to interact with the Ninja Cloud. Please note thought that we're still building this thing, and at present <em>everything</em> is experimental, and some elements are likely to change.</p>
+        <p>Thinking about developing something on our platform? Awesome! This site aims to outline the preferred way to interact with the Ninja platform. Please note thought that we're still building this thing, and at present <em>everything</em> is experimental, and some elements are likely to change.</p>
         <p>If you would like to be kept in the loop about changes please sign up to our <a href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks">developer mailing list</a>. We will do our best to communicate any changes we make to v0.</p>
         <p>One more thing, you might notice us throwing a few cardinal rules about consistency out of the window here and there (looking at you camel case vs underscore). We know it's bad, and we promise to fix all of it in v1. Right now we're focused on building the foundations, rest assured we'll get to the finishings soon.</p>
         <p>Enjoy!</p>
@@ -67,7 +67,9 @@ title: Ninja Blocks API Documentation
         <!-- Authentication -->
         <a name="authentication-basics" id="authentication-basics"></a>
         <h1>Authentication</h1>
-        <p>This section is coming soon</p>
+
+        <p>While we are currently working on creating OAuth 2 endpoints for authentication & authorization, at present this is not yet implemented.</p>
+        <p>Until then, we ask that developers use our regular login process, which will return 
         <!-- /Authentication -->
         <hr>
         <!-- Objects -->
@@ -82,6 +84,10 @@ title: Ninja Blocks API Documentation
             <tr>
               <td><a href="#user-stream">GET user/stream</a></td>
               <td>Returns the 30 most recent entries in the authenticating user's activity stream.</td>
+            </tr>
+            <tr>
+              <td><a href="#user-pusher">GET user/pusherchannel</a></td>
+              <td>Returns user's pusher channel key.</td>
             </tr>
             <tr>
               <td><a href="#user-realtime">PUT user/realtime</a></td>
@@ -124,6 +130,31 @@ title: Ninja Blocks API Documentation
         "timestamp": 1343268757513
     }
 ]</code></pre>
+        <p>&nbsp;</p>
+        <a name="user-pusher" id="user-pusher"></a>
+        <h2>GET user/pusherchannel</h2>
+        <p>Returns user's pusher channel key.</p>
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2">Parameters</th>
+            </tr>
+            <tr>
+              <td colspan="2"><em>none</em</td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Resource URL</h4>
+        <pre><code>https://a.ninja.is/rest/v0/user/pusherchannel</code></pre>
+        <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "pusherChannel": "1c0c8929-3318-411d-96e0-36fb7872ea5e"
+  }
+}</code></pre>
         <p>&nbsp;</p>
         <a name="user-realtime" id="user-realtime"></a>
         <h2>PUT user/realtime</h2>
@@ -817,7 +848,7 @@ title: Ninja Blocks API Documentation
           <li>The <strong>token</strong> in this instance in the token received when the <a href="#device-create-subdevice">create sub-device</a> with category 'webhook' call is returned.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
+        <pre><code>https://dojo.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
