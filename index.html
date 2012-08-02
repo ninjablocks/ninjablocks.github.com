@@ -56,6 +56,7 @@ title: Ninja Blocks API Documentation
         <!-- Core Concepts -->
         <a name="coreconcepts-basics" id="coreconcepts-basics"></a>
         <h1>Core Concepts</h1>
+        <!-- Built around actuators and sensors -->
         <p>This section is coming soon</p>
         <!--
         {% highlight javascript %}
@@ -67,9 +68,54 @@ title: Ninja Blocks API Documentation
         <!-- Authentication -->
         <a name="authentication-basics" id="authentication-basics"></a>
         <h1>Authentication</h1>
+        <p>We are currently working on creating OAuth 2 endpoints for authentication & authorization, however at present this is not yet implemented.</p>
+        <p>Until then, we ask that developers use our regular login endpoint which will return a 'ninja.sid' session token (note: Content-Type should be 'application/json', otherwise you will receive a 302 redirect). This token should be used as in the 'Cookie' header for all API endpoints.</p>
+        <h4>Resource URL</h4>
+        <pre><code>https://a.ninja.is/signin</code></pre>
+        <h4>Example</h4>
+<pre><code>$ curl -H 'Content-Type: application/json' \
+       -d '{"email":"email@example.com","password":"correctpassword"}' \
+       -i whttps://a.ninja.is/signin | json
 
-        <p>While we are currently working on creating OAuth 2 endpoints for authentication & authorization, at present this is not yet implemented.</p>
-        <p>Until then, we ask that developers use our regular login process, which will return 
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Thu, 02 Aug 2012 01:05:59 GMT
+X-Powered-By: Express
+Content-Length: 124
+Connection: keep-alive
+
+{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "ninja.sid": "DYjuqrmbE6LBqAIS86bk373X.7ygX0lzun8Nk6XCZTRs373NQ7qRbD2MngInekHiqYho"
+  }
+}
+
+$ curl -H 'Cookie: ninja.sid=DYjuqrmbE6LBqAIS86bk373X.7ygX0lzun8Nk6XCZTRs373NQ7qRbD2MngInekHiqYho' \
+       -H 'Content-Type: application/json' \
+       -i https://a.ninja.is/rest/v0/user/pusherchannel | json
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Thu, 02 Aug 2012 01:23:16 GMT
+Set-Cookie: ninja.sid=DYjuqrmbD6LBqAIS86bk373X.7ygX0lzun8Nj6XCZTRs373NQ7qQbD2MngInekGiqYho; domain=.ninja.is; path=/; expires=Thu, 02 Aug 2012 03:23:10 GMT; httpOnly; secure
+Strict-Transport-Security: max-age=31536000; includeSubdomains
+X-Powered-By: Express
+Content-Length: 2
+Connection: keep-alive
+
+{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "pusherChannel": "1c0c8929-3318-411d-96e0-36fb7872ea5e"
+  }
+}
+</code></pre>
+        <br />
         <!-- /Authentication -->
         <hr>
         <!-- Objects -->
