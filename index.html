@@ -288,7 +288,7 @@ Connection: keep-alive
           <li>A response will be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. If the response ends without a body, the request should be retried.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://dojo.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
+        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
@@ -346,7 +346,7 @@ Connection: keep-alive
           <li>This request is long lived, and should be reinitialized if the connection is severed.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://dojo.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
+        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFF00"}]}
 {"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"001100110011000011100101"}]}
@@ -409,7 +409,7 @@ Connection: keep-alive
           <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://dojo.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
+        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -473,7 +473,7 @@ Connection: keep-alive
           <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://dojo.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
+        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -903,7 +903,7 @@ Connection: keep-alive
           <li>The <strong>token</strong> in this instance in the token received when the <a href="#device-create-subdevice">create sub-device</a> with category 'webhook' call is returned.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://dojo.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
+        <pre><code>https://daidojo.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -982,9 +982,11 @@ Connection: keep-alive
           </tbody>
         </table>
       </section>
+      <!-- Sorry guys, doesn't work on retina
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
+      -->
     </div>
     <script src="javascripts/scale.fix.js"></script>
     <script type="text/javascript">
