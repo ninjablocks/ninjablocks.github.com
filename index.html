@@ -70,12 +70,12 @@ title: Ninja Blocks API Documentation
         <p>Until then, we ask that developers use our regular login endpoint which will return a 'ninja.sid' session token. This token should be used as in the 'Cookie' header for all API endpoints, and will allow access to all of the authenticated user's resources.</p>
         <p><strong>Important</strong>: the Accept header should always be set to 'application/json' if you are expecting json, otherwise you might receive a 302 if the session has timed out. This is only temporary until our OAuth2 provider service in in place.</p>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/signin</code></pre>
+        <pre><code>https://api.ninja.is/signin</code></pre>
         <h4>Example</h4>
 <pre><code>$ curl -H 'Content-Type: application/json' \
        -H 'Accept: application/json' \
        -d '{"email":"email@example.com","password":"correctpassword"}' \
-       -i https://a.ninja.is/signin | json
+       -i https://api.ninja.is/signin | json
 
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
@@ -96,7 +96,7 @@ Connection: keep-alive
 $ curl -H 'Cookie: ninja.sid=DYjuqrmbE6LBqAIS86bk373X.7ygX0lzun8Nk6XCZTRs373NQ7qRbD2MngInekHiqYho' \
        -H 'Content-Type: application/json' \
        -H 'Accept: application/json' \
-       -i https://a.ninja.is/rest/v0/user/pusherchannel | json
+       -i https://api.ninja.is/rest/v0/user/pusherchannel | json
 
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
@@ -157,7 +157,7 @@ Connection: keep-alive
           </tbody>
         </table>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/user/stream</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/user/stream</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>[
     {
@@ -196,7 +196,7 @@ Connection: keep-alive
           <li>Ninja Blocks' pusher key is 00faab0f9cd3973fb150</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/user/pusherchannel</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/user/pusherchannel</code></pre>
 
         
 
@@ -229,7 +229,7 @@ Connection: keep-alive
           </tbody>
         </table>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/user/realtime</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/user/realtime</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -288,7 +288,7 @@ Connection: keep-alive
           <li>A response will be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. If the response ends without a body, the request should be retried.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
@@ -317,7 +317,7 @@ Connection: keep-alive
           <li>Note that presently, we cannot guarantee the block has been successfully claimed, even if a result of 1 is returned. We are at present working on this.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/block</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/block</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -346,7 +346,7 @@ Connection: keep-alive
           <li>This request is long lived, and should be reinitialized if the connection is severed.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFF00"}]}
 {"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"001100110011000011100101"}]}
@@ -409,7 +409,7 @@ Connection: keep-alive
           <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -473,7 +473,7 @@ Connection: keep-alive
           <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://daidojo.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -546,7 +546,7 @@ Connection: keep-alive
           </tbody>
         </table>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/devices</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/devices</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -645,7 +645,7 @@ Connection: keep-alive
           <li>You must give us at least one parameter.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/device/:guid</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
@@ -667,7 +667,7 @@ Connection: keep-alive
           </tbody>
         </table>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/device/:guid</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -706,7 +706,7 @@ Connection: keep-alive
           <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/data?from=1343268810530&to=1343268820530</small></li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/device/:guid/subdevice</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -745,7 +745,7 @@ Connection: keep-alive
         <p>Create a new sub-device associated with the specified device and return a unique ID within the device.</p>
         <p>Sub-devices allow you to store different values against one device. For example, various mobile numbers against the SMS device, different 'webhook' actuators against the 'webhook' device, and different RF binary values against the RF433MHz device.</p>
         <p>Please note that the different categories of sub-devices may return different data. For example, the create 'webhook' 'sensor' sub-device call will return a token that is used as part of <a href="#device-webhook-subdevice-tickle">the URL to 'tickle' it</a>, whereas most others will just return the id of the sub-device.</p>
-        <p><strong>Webhooks Note</strong>: to enable webhooks the user must have created added the Webhooks device, which is done via the "Services" tab in the settings page, or by a GET to https://a.ninja.is/auth/webhook. For more information about Webhooks see our <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages">GitHub wiki</a> for examples.</p>
+        <p><strong>Webhooks Note</strong>: to enable webhooks the user must have created added the Webhooks device, which is done via the "Services" tab in the settings page, or by a GET to https://api.ninja.is/auth/webhook. For more information about Webhooks see our <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages">GitHub wiki</a> for examples.</p>
         <table>
           <tbody>
             <tr>
@@ -790,7 +790,7 @@ Connection: keep-alive
           <li>Depending on the type of category, a call to create a sub-device will return slightly different results. These are enumerated below.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/device/:guid/subdevice</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice</code></pre>
         <h4>Sample 'webhook' 'sensor' JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -854,7 +854,7 @@ Connection: keep-alive
           </tbody>
         </table>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -876,7 +876,7 @@ Connection: keep-alive
           </tbody>
         </table>
         <h4>Resource URL</h4>
-        <pre><code>https://a.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -903,7 +903,7 @@ Connection: keep-alive
           <li>The <strong>token</strong> in this instance in the token received when the <a href="#device-create-subdevice">create sub-device</a> with category 'webhook' call is returned.</li>
         </ul>
         <h4>Resource URL</h4>
-        <pre><code>https://daidojo.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
+        <pre><code>https://api.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
         <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
