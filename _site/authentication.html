@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> Authentication |  Ninja Blocks API Documentation</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/font-awesome.css">
+  <!--[if IE 7]>
+    <link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
+  <![endif]-->
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="javascripts/smooth.pack.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>ninjAPI</h1>
+        <h3>/rest/v0</h3>
+        <p></p>
+        <p class="view"><a href="index.html#top"><i class="icon-home"></i> Top</a></p>
+        <h3>Basics</h3>
+        <h4><a href="index.html#coreconcepts-basics"><i class="icon-book"></i> Core Concepts</a></h4>
+        <h4><a href="authentication.html"><i class="icon-unlock"></i> Authentication</a></h4>
+        <h3>Objects</h3>
+        <h4><a href="index.html#user-object"><i class="icon-group"></i> User</a></h4>
+        <h4><a href="index.html#block-object"><i class="icon-hdd"></i> Block</a></h4>
+        <h4><a href="index.html#device-object"><i class="icon-sitemap"></i> Device</a></h4>
+        <h4><a href="index.html#rule-object"><i class="icon-legal"></i> Rule</a></h4>
+        <h3>See Also</h3>
+        <p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
+        <p class="view"><a target="_blank" href="http://help.ninja.is"><i class="icon-info-sign"></i> Support</a></p>
+        <p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github"></i> Code</a></p>
+        <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
+      </header>
+      <!-- Authentication -->
+<section>
+  <a name="authentication-basics" id="authentication-basics"></a>
+  <h1>Authentication</h1>
+  <p>We are currently working on creating OAuth 2 endpoints for authentication & authorization, however at present this is not yet implemented.</p>
+  <p>Until then, we ask that developers use our regular login endpoint which will return a 'ninja.sid' session token. This token should be used as in the 'Cookie' header for all API endpoints, and will allow access to all of the authenticated user's resources.</p>
+  <p><strong>Important</strong>: the Accept header should always be set to 'application/json' if you are expecting json, otherwise you might receive a 302 if the session has timed out. This is only temporary until our OAuth2 provider service in in place.</p>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/signin</code></pre>
+  <h4>Example</h4>
+<pre><code>$ curl -H 'Content-Type: application/json' \
+ -H 'Accept: application/json' \
+ -d '{"email":"email@example.com","password":"correctpassword"}' \
+ -i https://api.ninja.is/signin | json
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Thu, 02 Aug 2012 01:05:59 GMT
+X-Powered-By: Express
+Content-Length: 124
+Connection: keep-alive
+
+{
+"result": 1,
+"error": null,
+"id": 0,
+"data": {
+"ninja.sid": "DYjuqrmbE6LBqAIS86bk373X.7ygX0lzun8Nk6XCZTRs373NQ7qRbD2MngInekHiqYho"
+}
+}
+
+$ curl -H 'Cookie: ninja.sid=DYjuqrmbE6LBqAIS86bk373X.7ygX0lzun8Nk6XCZTRs373NQ7qRbD2MngInekHiqYho' \
+ -H 'Content-Type: application/json' \
+ -H 'Accept: application/json' \
+ -i https://api.ninja.is/rest/v0/user/pusherchannel | json
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Thu, 02 Aug 2012 01:23:16 GMT
+Set-Cookie: ninja.sid=DYjuqrmbD6LBqAIS86bk373X.7ygX0lzun8Nj6XCZTRs373NQ7qQbD2MngInekGiqYho; domain=.ninja.is; path=/; expires=Thu, 02 Aug 2012 03:23:10 GMT; httpOnly; secure
+Strict-Transport-Security: max-age=31536000; includeSubdomains
+X-Powered-By: Express
+Content-Length: 2
+Connection: keep-alive
+
+{
+"result": 1,
+"error": null,
+"id": 0,
+"data": {
+"pusherChannel": "1c0c8929-3318-411d-96e0-36fb7872ea5e"
+}
+}
+</code></pre>
+  <br />
+  <!-- /Authentication -->
+</section>
+      <script src="javascripts/scale.fix.js"></script>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-31570375-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+---
+title: Authentication
+layout: default
+---
+<!-- Authentication -->
+<section>
+  <a name="authentication-basics" id="authentication-basics"></a>
+  <h1>Authentication</h1>
+  <p>We are currently working on creating OAuth 2 endpoints for authentication & authorization, however at present this is not yet implemented.</p>
+  <p>Until then, we ask that developers use our regular login endpoint which will return a 'ninja.sid' session token. This token should be used as in the 'Cookie' header for all API endpoints, and will allow access to all of the authenticated user's resources.</p>
+  <p><strong>Important</strong>: the Accept header should always be set to 'application/json' if you are expecting json, otherwise you might receive a 302 if the session has timed out. This is only temporary until our OAuth2 provider service in in place.</p>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/signin</code></pre>
+  <h4>Example</h4>
+<pre><code>$ curl -H 'Content-Type: application/json' \
+ -H 'Accept: application/json' \
+ -d '{"email":"email@example.com","password":"correctpassword"}' \
+ -i https://api.ninja.is/signin | json
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Thu, 02 Aug 2012 01:05:59 GMT
+X-Powered-By: Express
+Content-Length: 124
+Connection: keep-alive
+
+{
+"result": 1,
+"error": null,
+"id": 0,
+"data": {
+"ninja.sid": "DYjuqrmbE6LBqAIS86bk373X.7ygX0lzun8Nk6XCZTRs373NQ7qRbD2MngInekHiqYho"
+}
+}
+
+$ curl -H 'Cookie: ninja.sid=DYjuqrmbE6LBqAIS86bk373X.7ygX0lzun8Nk6XCZTRs373NQ7qRbD2MngInekHiqYho' \
+ -H 'Content-Type: application/json' \
+ -H 'Accept: application/json' \
+ -i https://api.ninja.is/rest/v0/user/pusherchannel | json
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Thu, 02 Aug 2012 01:23:16 GMT
+Set-Cookie: ninja.sid=DYjuqrmbD6LBqAIS86bk373X.7ygX0lzun8Nj6XCZTRs373NQ7qQbD2MngInekGiqYho; domain=.ninja.is; path=/; expires=Thu, 02 Aug 2012 03:23:10 GMT; httpOnly; secure
+Strict-Transport-Security: max-age=31536000; includeSubdomains
+X-Powered-By: Express
+Content-Length: 2
+Connection: keep-alive
+
+{
+"result": 1,
+"error": null,
+"id": 0,
+"data": {
+"pusherChannel": "1c0c8929-3318-411d-96e0-36fb7872ea5e"
+}
+}
+</code></pre>
+  <br />
+  <!-- /Authentication -->
+</section>
