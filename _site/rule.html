@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Ninja Blocks API Documentation |  Ninja Blocks API Documentation</title>
+    <title> Rule |  Ninja Blocks API Documentation</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/font-awesome.css">
     <!--[if IE 7]>
@@ -39,15 +39,29 @@
         <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
       <section>
-  <a name="top" id="top"></a>
-  <h3>Welcome Developer,</h3>
-  <p>Thinking about developing something on our platform? Awesome! This site aims to outline the preferred way to interact with the Ninja platform. Please note thought that we're still building this thing, and at present <em>everything</em> is experimental, and some elements are likely to change.</p>
-  <p>If you would like to be kept in the loop about changes please sign up to our <a href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks">developer mailing list</a>. We will do our best to communicate any changes we make to v0.</p>
-  <p>One more thing, you might notice us throwing a few cardinal rules about consistency out of the window here and there (looking at you camel case vs underscore). We know it's bad, and we promise to fix all of it in v1. Right now we're focused on building the foundations, rest assured we'll get to the finishings soon.</p>
-  <p>Enjoy!</p>
-  <p>- The Platform Team</p>
+  <a name="rule-object" id="rule-object"></a>
+  <h2>Rule</h2>
+  <table>
+    <tbody>
+      <tr>
+        <th>Resource</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><a href="#rule-create">POST rule</a></td>
+        <td>Create a new rule.</td>
+      </tr>
+      <tr>
+        <td><a href="#rule-get">GET rule</a></td>
+        <td>Fetch all of a user's rules.</td>
+      </tr>
+      <tr>
+        <td><a href="#rule-delete">DELETE rule/:rid</a></td>
+        <td>Delete a rule.</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
-
       <script src="javascripts/scale.fix.js"></script>
       <script type="text/javascript">
         var _gaq = _gaq || [];

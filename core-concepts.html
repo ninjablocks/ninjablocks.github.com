@@ -1,0 +1,14 @@
+---
+title: Core Concepts
+layout: default
+---
+<section>
+  <!-- Core Concepts -->
+  <a name="coreconcepts-basics" id="coreconcepts-basics"></a>
+  <h1>Core Concepts</h1>
+  <p>The first class citizen in the Ninja Platform are devices. <strong>Devices</strong> are things like temperature sensors, LED lights, SMS, and can even be services such as Twitter and Facebook (anything really). These things can sense, actuate, and in some cases both.</p>
+  <p>Devices talk to the Ninja Platform via a 'hub', which we call the 'block'. <strong>Blocks</strong> are essentially just gateways between your devices and our platform. They handle the authentication, and route messages to and from your devices.</p>
+  <p>In some cases, you might have many things talking to 1 device, for example an RF module, or Blue Tooth dongle. In this case we allow for creating 'sub-devices'. <strong>Sub-devices</strong> can be either sensors or actuators, and exist within a device. For example, an RF motion sensor might emit a certain string (stored as a sub-device) to the RF module (the device).</p>
+  <p>You can add web services as devices too, such as Twitter, Webhooks, Facebook, Email, Twilio, etc. The list can be found in the 'Services' tab of your account page.</p>
+  <!-- /Core Concepts -->
+ </section>

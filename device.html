@@ -1,0 +1,517 @@
+---
+title: Device
+layout: default
+---
+<section>
+  <a name="device-object" id="device-object"></a>
+  <h1>Device</h1>
+  <table>
+    <tbody>
+      <tr>
+        <th>Resource</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><a href="#device-get-devices">GET devices</a></td>
+        <td>Returns the list of devices associated with the authenticating user.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-update-device">PUT device/:guid</a></td>
+        <td>Update a device, including sending a command.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-delete">DELETE device/:guid</a></td>
+        <td>Delete this device from the system. Note if future heartbeats are received for this device, it will be recreated.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-get-history">GET device/:guid/data</a></td>
+        <td>Return the historical data for the specified device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-get-heartbeat">GET device/:guid/heartbeat</a></td>
+        <td>Return the last heartbeat for the specified device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-create-subdevice">POST device/:guid/subdevice</a></td>
+        <td>Create a new sub-device under this device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-update-subdevice">PUT device/:guid/subdevice/:subdeviceId</a></td>
+        <td>Update information about the specified sub-device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-delete-subdevice">DELETE device/:guid/subdevice/:subdeviceId</a></td>
+        <td>Delete the specified sub-device. Note that if there are any rules attached to this sub-device they will not be deleted, but instead become ineffectual.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-webhook-subdevice-tickle">POST device/:deviceGuid/subdevice<br />/:subDeviceId/tickle/:token</a></td>
+        <td>Tickle a 'webhook' sub-device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-request-image">GET camera/:guid/snapshot</a></td>
+        <td>Request an image from the specified device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-send-image">POST camera/:guid/snapshot</a></td>
+        <td>Send an image that has been requested via a 'snapshot' command.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;</p>
+  <a name="device-get-devices" id="device-get-devices"></a>
+  <h2>GET devices</h2>
+  <p>Returns the list of devices associated with the authenticating user.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/devices</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null, 
+"id": 0, 
+"data": {
+  "ASTEALTHYNODE01_0_0_1": {
+      "css_class": "sensor cape temp", 
+      "default_name": "Block Temperature", 
+      "device_type": "temperature", 
+      "did": "1", 
+      "gid": "0", 
+      "is_actuator": 0, 
+      "is_sensor": 1, 
+      "is_silent": 0, 
+      "meta": {}, 
+      "shortName": "Block Temperature", 
+      "subDevices": {}, 
+      "vid": "0"
+  }, 
+  "ASTEALTHYNODE01_0_0_1000": {
+      "css_class": "actuator cape led rgbled", 
+      "default_name": "On Board RGB LED", 
+      "device_type": "rgbled", 
+      "did": "1000", 
+      "gid": "0", 
+      "is_actuator": 1, 
+      "is_sensor": 1, 
+      "is_silent": 0, 
+      "meta": {}, 
+      "shortName": "On Board RGB LED", 
+      "subDevices": {}, 
+      "vid": "0"
+  }, 
+  "ASTEALTHYNODE01_0_0_2": {
+      "css_class": "sensor cape accelerometer orientation", 
+      "default_name": "Block Accelerometer", 
+      "device_type": "orientation", 
+      "did": "2", 
+      "gid": "0",
+      "is_actuator": 0,
+      "is_sensor": 1,
+      "is_silent": 0, 
+      "meta": {},
+      "shortName": "Block Accelerometer",
+      "subDevices": {},
+      "vid": "0"
+  }, 
+  "ASTEALTHYNODE01_1_0_11": {
+      "css_class": "sensor serial rf rf433 receiver transmitter", 
+      "default_name": "RF 433Mhz", 
+      "device_type": "rf433", 
+      "did": "11", 
+      "gid": "1", 
+      "is_actuator": 1, 
+      "is_sensor": 1, 
+      "is_silent": 0, 
+      "meta": {}, 
+      "shortName": "RF 433Mhz", 
+      "subDevices": {}, 
+      "vid": "0"
+  }
+}
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-update-device" id="device-update-device"></a>
+  <h2>PUT device/:guid</h2>
+  <p>Update a device, including sending a command.</p>
+  <p>Sending a command and updating the meta data are two distinct operations internally. If the response we send is in the affirmative, ie result = 1, then both have succeeded. However, if it is the negative, ie result = 0, then one or both of the operations failed, and you won't know which one. We recommend using two separate API calls if this concerns you.</p>
+  <p>We've implemented it this way for conceptual consistency hoping that most, if not all, of your calls will be successful.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>DA</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The data value to send to the device.
+          <br />
+          <small>Example: "FFFF00"</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>shortName</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The meta data title of the device to update.
+          <br />
+          <small>Example: "Living Room Webcam"</small> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+ <h4>Notes</h4>
+  <ul>
+    <li>You must give us at least one parameter.</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null, 
+"id": 0
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-delete" id="device-delete"></a>
+  <h2>DELETE device/:guid</h2>
+  <p>Delete all data about the specified device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0
+}</code></pre>
+<p>&nbsp;</p>
+  <a name="device-get-heartbeat" id="device-get-heartbeat"></a>
+  <h2>GET device/:guid/heartbeat</h2>
+  <p>Return the last heartbeat for the specified device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/heartbeat</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0,
+"data": {
+"G": "0",
+"V": 0,
+"D": 1000,
+"DA": "00FF00",
+"GUID": "1012BB013141_0_0_1000",
+"timestamp": 1346660053613
+}
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-get-history" id="device-get-history"></a>
+  <h2>GET device/:guid/data</h2>
+  <p>Return the historical data for the specified device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>from</strong><br /><em>number</em><br /><small>Optional</small></td>
+        <td>
+          Timestamp representing the beginning of the period measurements are requested for.
+          <br />
+          <small>Example: 1343268810530</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>to</strong><br /><em>number</em><br /><small>Optional</small></td>
+        <td>
+          Timestamp representing the end of the period measurements are requested for.
+          <br />
+          <small>Example: 1343268820530</small> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/data?from=1343268810530&to=1343268820530</small></li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/data</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0,
+"data": [
+{
+"t": "2012-06-28T01:49:00.000+0000",
+"v": 22.1
+},
+{
+"t": "2012-06-28T01:50:00.000+0000",
+"v": 22.191999999999993
+},
+{
+"t": "2012-06-28T01:51:00.000+0000",
+"v": 22.199999999999996
+},
+{
+"t": "2012-06-28T01:52:00.000+0000",
+"v": 22.199999999999996
+},
+{
+"t": "2012-06-28T01:53:00.000+0000",
+"v": 22.199999999999992
+},
+{
+"t": "2012-06-28T01:54:00.000+0000",
+"v": 22.199999999999992
+}
+]
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-create-subdevice" id="device-create-subdevice"></a>
+  <h2>POST device/:guid/subdevice</h2>
+  <p>Create a new sub-device associated with the specified device and return a unique ID within the device.</p>
+  <p>Sub-devices allow you to store different values against one device. For example, various mobile numbers against the SMS device, different 'webhook' actuators against the 'webhook' device, and different RF binary values against the RF433MHz device.</p>
+  <p>Please note that the different categories of sub-devices may return different data. For example, the create 'webhook' 'sensor' sub-device call will return a token that is used as part of <a href="#device-webhook-subdevice-tickle">the URL to 'tickle' it</a>, whereas most others will just return the id of the sub-device.</p>
+  <p><strong>Webhooks Note</strong>: to enable webhooks the user must have created added the Webhooks device, which is done via the "Services" tab in the settings page, or by a GET to https://api.ninja.is/auth/webhook. For more information about Webhooks see our <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages">GitHub wiki</a> for examples.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>category</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The category of sub-device. Allowed: "rf", "webhook", "sms". This determines the behavior associated with the sub-device, and MUST correspond to the type of device used again.
+          <br />
+          <small>Example: "rf"</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>shortName</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The short name describing the sub-device.
+          <br />
+          <small>Example: "Lamp On"</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>data</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          Some data to be stored against the sub-device.
+          <br />
+          <small>Example: "001100110011000011100101"</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>type</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The type of sub-device, whether it is an actuator or a sensor. Allowed: "actuator" or "sensor"
+          <br />
+          <small>Example: "actuator"</small> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>Depending on the type of category, a call to create a sub-device will return slightly different results. These are enumerated below.</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice</code></pre>
+  <h4>Sample 'webhook' 'sensor' JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0,
+"data": {
+"id":"LA9EJ",
+"token": "1c0c8929-3318-411d-96e0-36fb7872ea5d"
+}
+}</code></pre>
+  <h4>Sample 'rf' or 'sms' JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0,
+"data": {
+"id":"MB0FH"
+}
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-update-subdevice" id="device-update-subdevice"></a>
+  <h2>PUT device/:guid/subdevice/:subdeviceId</h2>
+  <p>Update information about the specified sub-device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>category</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The category of sub-device. Allowed: "rf", "webhook", "sms". This determines the behaviour associated with the sub-device, and MUST correspond to the type of device used again.
+          <br />
+          <small>Example: "rf"</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>shortName</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The short name describing the sub-device.
+          <br />
+          <small>Example: "Lamp Off"</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>data</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The data to be stored against the subdevice.
+          <br />
+          <small>Example: "100010100010101011010110"</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>type</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The type of subdevice, whether it is an actuator or a sensor. Allowed: "actuator" or "sensor"
+          <br />
+          <small>Example: "actuator"</small> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-delete-subdevice" id="device-delete-subdevice"></a>
+  <h2>DELETE device/:guid/subdevice/:subdeviceId</h2>
+  <p>Delete the specified sub-device. Note that if there are any rules attached to this sub-device they will not be deleted, but instead become ineffectual.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0
+}</code></pre>
+
+  <p>&nbsp;</p>
+  <a name="device-webhook-subdevice-tickle" id="device-webhook-subdevice-tickle"></a>
+  <h2>POST device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</h2>
+  <p>'Tickle' a 'webhook' sub-device. By calling this, you effectively 'actuate' the device. This is especially useful when used with the corresponding rule precondition handler.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>The <strong>token</strong> in this instance in the token received when the <a href="#device-create-subdevice">create sub-device</a> with category 'webhook' call is returned.</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0
+}</code></pre>
+
+  <p>&nbsp;</p>
+  <a name="device-request-image" id="device-request-image"></a>
+  <h2>GET camera/:guid/snapshot</h2>
+  <p>Request an image from the specified device. Returns a jpeg piped straight from the webcam.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>This call sends a command to the webcam device telling it to capture a still image. That image is then piped from the Ninja Block through to the agent of the request.</li>
+    <li>Given the reasonable complexity of actuating a webcam and streaming the response straight from the Ninja Block to the user agent, we cannot guarantee this call will always be successful.</li> 
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://stream.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
+
+
+  <p>&nbsp;</p>
+  <a name="device-send-image" id="device-send-image"></a>
+  <h2>POST camera/:guid/snapshot</h2>
+  <p>Send an image that has been requested via a 'snapshot' command.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
+    <li>The request body should contain the binary of the image, with the correct mime type in the headers</li>
+    <li>This request should only be made when a 'DA' value of 1 is received by the device.</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://stream.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
+
+
+</section>

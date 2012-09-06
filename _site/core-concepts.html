@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Ninja Blocks API Documentation |  Ninja Blocks API Documentation</title>
+    <title> Core Concepts |  Ninja Blocks API Documentation</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/font-awesome.css">
     <!--[if IE 7]>
@@ -39,15 +39,15 @@
         <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
       <section>
-  <a name="top" id="top"></a>
-  <h3>Welcome Developer,</h3>
-  <p>Thinking about developing something on our platform? Awesome! This site aims to outline the preferred way to interact with the Ninja platform. Please note thought that we're still building this thing, and at present <em>everything</em> is experimental, and some elements are likely to change.</p>
-  <p>If you would like to be kept in the loop about changes please sign up to our <a href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks">developer mailing list</a>. We will do our best to communicate any changes we make to v0.</p>
-  <p>One more thing, you might notice us throwing a few cardinal rules about consistency out of the window here and there (looking at you camel case vs underscore). We know it's bad, and we promise to fix all of it in v1. Right now we're focused on building the foundations, rest assured we'll get to the finishings soon.</p>
-  <p>Enjoy!</p>
-  <p>- The Platform Team</p>
-</section>
-
+  <!-- Core Concepts -->
+  <a name="coreconcepts-basics" id="coreconcepts-basics"></a>
+  <h1>Core Concepts</h1>
+  <p>The first class citizen in the Ninja Platform are devices. <strong>Devices</strong> are things like temperature sensors, LED lights, SMS, and can even be services such as Twitter and Facebook (anything really). These things can sense, actuate, and in some cases both.</p>
+  <p>Devices talk to the Ninja Platform via a 'hub', which we call the 'block'. <strong>Blocks</strong> are essentially just gateways between your devices and our platform. They handle the authentication, and route messages to and from your devices.</p>
+  <p>In some cases, you might have many things talking to 1 device, for example an RF module, or Blue Tooth dongle. In this case we allow for creating 'sub-devices'. <strong>Sub-devices</strong> can be either sensors or actuators, and exist within a device. For example, an RF motion sensor might emit a certain string (stored as a sub-device) to the RF module (the device).</p>
+  <p>You can add web services as devices too, such as Twitter, Webhooks, Facebook, Email, Twilio, etc. The list can be found in the 'Services' tab of your account page.</p>
+  <!-- /Core Concepts -->
+ </section>
       <script src="javascripts/scale.fix.js"></script>
       <script type="text/javascript">
         var _gaq = _gaq || [];
