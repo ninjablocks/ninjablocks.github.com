@@ -4,8 +4,8 @@ layout: default
 ---
 <section>
   <h1>OAuth 2</h1>
-  <p>OAuth 2 is a protocol that allows third party applications access to a user's personal data securely, and with permission. OAuth 2 is the only means by which a third party application can access another user's data via the Ninja Blocks platform.</p>
-  <p>All third party applications must be registed via the '<a href="https://a.ninja.is/hacking">settings</a>' page of your Ninja Blocks account. All applications are issued an ID and a secret. The client secret must not be shared.</p>
+  <p>OAuth 2 is a protocol that allows third party applications access to a user's personal data securely. OAuth 2 is the only means by which a third party application can access another user's data via the Ninja Blocks platform.</p>
+  <p>All third party applications must be registed on the '<a href="https://a.ninja.is/hacking">settings</a>' page of your Ninja Blocks account, and are issued an ID and secret on registration. The client secret must not be shared.</p>
 
   <h2>Third Party Application Flow</h2>
   <hr />
@@ -44,7 +44,7 @@ layout: default
       -->
     </tbody>
   </table>
-  <h3>Step 2 - retrieve an access token</h3>
+  <h3>Step 2 - exchange your code for an access token</h3>
   <p>If the user authorizes your application, Ninja Blocks redirects back to your application with a <code>code</code> parameter. This should be exchanged for an access token.</p>
   <pre><code>POST https://api.ninja.is/oauth/access_token</code></pre>
   <table>
@@ -74,6 +74,12 @@ layout: default
         <td><strong>code</strong><br /><em>string</em><br /><small>Required</small></td>
         <td>
           The code your received in the previous step.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>grant_type</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The OAuth grant type. Currently, only <code>authorization_code</code> is supported.
         </td>
       </tr>
       <!--
