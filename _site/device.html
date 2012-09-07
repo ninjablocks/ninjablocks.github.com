@@ -57,7 +57,7 @@
       </tr>
       <tr>
         <td><a href="#device-delete">DELETE device/:guid</a></td>
-        <td>Delete this device from the system. Note if future heartbeats are received for this device, it will be recreated.</td>
+        <td>Delete this device from the system.</td>
       </tr>
       <tr>
         <td><a href="#device-get-history">GET device/:guid/data</a></td>
@@ -66,6 +66,22 @@
       <tr>
         <td><a href="#device-get-heartbeat">GET device/:guid/heartbeat</a></td>
         <td>Return the last heartbeat for the specified device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-create-callback">POST device/:guid/callback</a></td>
+        <td>Register a new callback against this device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-get-callback">GET device/:guid/callback</a></td>
+        <td>Retrieve the current callback url registered against this device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-update-callback">PUT device/:guid/callback</a></td>
+        <td>Update an existing callback against this device.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-delete-callback">DELETE device/:guid/callback</a></td>
+        <td>Delete an existing callback against this device.</td>
       </tr>
       <tr>
         <td><a href="#device-create-subdevice">POST device/:guid/subdevice</a></td>
@@ -210,9 +226,9 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null, 
-"id": 0
+  "result": 1,
+  "error": null, 
+  "id": 0
 }</code></pre>
   <p>&nbsp;</p>
   <a name="device-delete" id="device-delete"></a>
@@ -232,9 +248,9 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0
+  "result": 1,
+  "error": null,
+  "id": 0
 }</code></pre>
 <p>&nbsp;</p>
   <a name="device-get-heartbeat" id="device-get-heartbeat"></a>
@@ -254,21 +270,21 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:guid/heartbeat</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0,
-"data": {
-"G": "0",
-"V": 0,
-"D": 1000,
-"DA": "00FF00",
-"GUID": "1012BB013141_0_0_1000",
-"timestamp": 1346660053613
-}
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "G": "0",
+    "V": 0,
+    "D": 1000,
+    "DA": "00FF00",
+    "GUID": "1012BB013141_0_0_1000",
+    "timestamp": 1346660053613
+  }
 }</code></pre>
   <p>&nbsp;</p>
   <a name="device-get-history" id="device-get-history"></a>
-  <h2>GET device/:guid/data</h2>
+  <h2>POST device/:guid/callback</h2>
   <p>Return the historical data for the specified device.</p>
   <table>
     <tbody>
@@ -301,37 +317,153 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:guid/data</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0,
-"data": [
-{
-"t": "2012-06-28T01:49:00.000+0000",
-"v": 22.1
-},
-{
-"t": "2012-06-28T01:50:00.000+0000",
-"v": 22.191999999999993
-},
-{
-"t": "2012-06-28T01:51:00.000+0000",
-"v": 22.199999999999996
-},
-{
-"t": "2012-06-28T01:52:00.000+0000",
-"v": 22.199999999999996
-},
-{
-"t": "2012-06-28T01:53:00.000+0000",
-"v": 22.199999999999992
-},
-{
-"t": "2012-06-28T01:54:00.000+0000",
-"v": 22.199999999999992
-}
-]
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": [
+    {
+      "t": "2012-06-28T01:49:00.000+0000",
+      "v": 22.1
+    },
+    {
+      "t": "2012-06-28T01:50:00.000+0000",
+      "v": 22.191999999999993
+    },
+    {
+      "t": "2012-06-28T01:51:00.000+0000",
+      "v": 22.199999999999996
+    },
+    {
+      "t": "2012-06-28T01:52:00.000+0000",
+      "v": 22.199999999999996
+    },
+    {
+      "t": "2012-06-28T01:53:00.000+0000",
+      "v": 22.199999999999992
+    },
+    {
+      "t": "2012-06-28T01:54:00.000+0000",
+      "v": 22.199999999999992
+    }
+  ]
 }</code></pre>
   <p>&nbsp;</p>
+  <a name="device-create-callback" id="device-create-callback"></a>
+  <h2>POST device/:guid/callback</h2>
+  <p>Register a new callback against this device.</p>
+  <p>Callbacks are URLs that we will POST to with this device's data, as soon as we receive it</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>url</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The URL you wish to register a callback against.
+          <br />
+          <small>Example: "http://my-app.herokuapp.com/data_callback"</small> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>If you have already registered a callback against this device, this call will 409 Conflict. You should PUT instead.</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-get-callback" id="device-get-callback"></a>
+  <h2>GET device/:guid/callback</h2>
+  <p>Retrieve the current callback url registered against this device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "url": "http://my-app.herokuapp.com/data_callback"
+  }
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-update-callback" id="device-update-callback"></a>
+  <h2>PUT device/:guid/callback</h2>
+  <p>Update an existing callback against this device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>url</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The URL you wish to update this callback to.
+          <br />
+          <small>Example: "http://my-app.herokuapp.com/data_callback"</small> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="device-delete-callback" id="device-delete-callback"></a>
+  <h2>DELETE device/:guid/callback</h2>
+  <p>Delete an existing callback against this device.</p>
+  <p>Once this request returns, the system will no longer POST to the previous callback.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+}</code></pre>
+  <p>&nbsp;</p>
+
+
+
+
+
+
+
+
+
   <a name="device-create-subdevice" id="device-create-subdevice"></a>
   <h2>POST device/:guid/subdevice</h2>
   <p>Create a new sub-device associated with the specified device and return a unique ID within the device.</p>
@@ -385,22 +517,22 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice</code></pre>
   <h4>Sample 'webhook' 'sensor' JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0,
-"data": {
-"id":"LA9EJ",
-"token": "1c0c8929-3318-411d-96e0-36fb7872ea5d"
-}
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "id":"LA9EJ",
+    "token": "1c0c8929-3318-411d-96e0-36fb7872ea5d"
+  }
 }</code></pre>
   <h4>Sample 'rf' or 'sms' JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0,
-"data": {
-"id":"MB0FH"
-}
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "id":"MB0FH"
+  }
 }</code></pre>
   <p>&nbsp;</p>
   <a name="device-update-subdevice" id="device-update-subdevice"></a>
@@ -449,9 +581,9 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0
+  "result": 1,
+  "error": null,
+  "id": 0
 }</code></pre>
   <p>&nbsp;</p>
   <a name="device-delete-subdevice" id="device-delete-subdevice"></a>
@@ -471,9 +603,9 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0
+  "result": 1,
+  "error": null,
+  "id": 0
 }</code></pre>
 
   <p>&nbsp;</p>
@@ -498,9 +630,9 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0
+  "result": 1,
+  "error": null,
+  "id": 0
 }</code></pre>
 
   <p>&nbsp;</p>
@@ -548,8 +680,6 @@
   </ul>
   <h4>Resource URL</h4>
   <pre><code>https://stream.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
-
-
 </section>
       <script src="javascripts/scale.fix.js"></script>
       <script type="text/javascript">

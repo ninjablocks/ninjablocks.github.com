@@ -38,7 +38,100 @@
         <p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github"></i> Code</a></p>
         <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
-      <!-- Authentication -->
+      <section>
+  <h1>OAuth 2</h1>
+  <p>OAuth 2 is a protocol that allows third party applications access to a user's personal data securely, and with permission. OAuth 2 is the only means by which a third party application can access another user's data via the Ninja Blocks platform.</p>
+  <p>All third party applications must be registed via the '<a href="https://a.ninja.is/hacking">settings</a>' page of your Ninja Blocks account. All applications are issued an ID and a secret. The client secret must not be shared.</p>
+
+  <h2>Third Party Application Flow</h2>
+  <hr />
+  <h3>Step 1 - retrieve an access code</h3>
+<pre><code>GET https://api.ninja.is/oauth/authorize</code></pre>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>client_id</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The client id provided after registration.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>redirect_uri</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The URL that the user will be redirected to after authorization. This MUST be exactly equal to the URL provided when registering your application.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>scope</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          Comma seperated list of scopes. Currently Ninja Blocks only supports 'all'.
+        </td>
+      </tr>
+      <!--
+      <tr>
+        <td><strong>state</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          A unique string that we can provide back to you to prevent against cross-site forgery attacks.
+        </td>
+      </tr>
+      -->
+    </tbody>
+  </table>
+  <h3>Step 2 - retrieve an access token</h3>
+  <p>If the user authorizes your application, Ninja Blocks redirects back to your application with a <code>code</code> parameter. This should be exchanged for an access token.</p>
+  <pre><code>POST https://api.ninja.is/oauth/access_token</code></pre>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>client_id</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The client id provided after registration.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>redirect_uri</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td><strong>client_secret</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The client secret received when you registered your application.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>code</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The code your received in the previous step.
+        </td>
+      </tr>
+      <!--
+      <tr>
+        <td><strong>state</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          A unique string that we can provide back to you to prevent against cross-site forgery attacks.
+        </td>
+      </tr>
+      -->
+    </tbody>
+  </table>
+  <p>
+    The response will contain an <code>access_token</code> which must be used to access the authenticated user's data.
+  <p>
+  <h3>Step 3 - access the API</h3>
+  <pre><code>GET https://api.ninja.is/rest/v0/user?access_token=...</code></pre>
+</section>
+
+
+
+<!-- Authentication
 <section>
   <a name="authentication-basics" id="authentication-basics"></a>
   <h1>Authentication</h1>
@@ -93,7 +186,7 @@ Connection: keep-alive
 }
 </code></pre>
   <br />
-  <!-- /Authentication -->
+ /Authentication -->
 </section>
       <script src="javascripts/scale.fix.js"></script>
       <script type="text/javascript">
