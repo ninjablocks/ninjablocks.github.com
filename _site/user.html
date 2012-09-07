@@ -20,7 +20,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>ninjAPI</h1>
+        <h1>Ninja Blocks API</h1>
         <h3>/rest/v0</h3>
         <p></p>
         <p class="view"><a href="index.html"><i class="icon-home"></i> Home</a></p>
@@ -48,6 +48,10 @@
         <th>Description</th>
       </tr>
       <tr>
+        <td><a href="#user-info">GET user</a></td>
+        <td>Return information about the authenticated user.</td>
+      </tr>
+      <tr>
         <td><a href="#user-stream">GET user/stream</a></td>
         <td>Returns the 30 most recent entries in the authenticating user's activity stream.</td>
       </tr>
@@ -61,6 +65,29 @@
       </tr>
     </tbody>
   </table>
+  <p>&nbsp;</p>
+  <a name="user-info" id="user-info"></a>
+  <h2>GET user</h2>
+  <p>Return information about the authenticated user.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/user</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "email": "help@ninjablocks.com", 
+    "id": "1fb889da-f331-11e1-9acb-ab5bc6c99ebf", 
+    "name": "Ninja Support", 
+    "pusherChannel": "97f0b1e1-e504-f333-b7ad-eadaa8590b99"
+}</code></pre>
   <p>&nbsp;</p>
   <a name="user-stream" id="user-stream"></a>
   <h2>GET user/stream</h2>
