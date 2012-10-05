@@ -6,7 +6,7 @@ layout: default
   <a name="block-object" id="block-object"></a>
   <h1>Block</h1>
   <h2>Quick Access</h2>
-  <p>To get you up and running quickly, we've built in a virtual block token, which you can enable (and revoke), in the <a href="https://a.ninja.is/hacking">account settings page</a>. This block token will allow you to create arbitrary devices under your account without activating or claiming.</p>
+  <p>To get you up and running quickly, we provide a virtual block token, which you can enable (and revoke), in the <a href="https://a.ninja.is/hacking">account settings page</a>. This block token will allow you to create arbitrary devices under your account without activating or claiming.</p>
   <p>Use your virtual block token exactly as you would a standard block token, i.e. pass it as an http header named X-Ninja-Token.</p>
   <table>
     <tbody>
@@ -24,7 +24,7 @@ layout: default
       </tr>
       <tr>
         <td><a href="#block-commands">GET block/:nodeId/commands</a></td>
-        <td>Long GET that will response with that block's commands for the duration of the request.</td>
+        <td>Long GET that will respond with that block's commands for the duration of the request.</td>
       </tr>
       <tr>
         <td><a href="#block-heartbeat">POST block/:nodeId/heartbeat</a></td>
@@ -63,7 +63,7 @@ layout: default
 "token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
 }</code></pre>
   <h4>Curl Example</h4>
-  <p>Await activation of a block with nodeId 123456789ABC</p>
+  <p>Listen for activation from a the block with nodeId 123456789ABC</p>
   <pre><code>curl -H 'Content-Type: application/json' \
    -X 'GET' \
    -i https://api.ninja.is/rest/v0/block/123456789ABC/activate</code></pre>
@@ -102,9 +102,8 @@ layout: default
   <h4>Curl Example</h4>
   <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
   <pre><code>curl -H 'Content-Type: application/json' \
-     -H 'X-Ninja-Token: ' \
      -X 'POST' \
-     -i https://api.ninja.is/rest/v0/block?user_access_token=YOUR_ACCESS_TOKEN \
+     -i https://api.ninja.is/rest/v0/block?user_access_token=YOUR_API_TOKEN \
      -d '{"nodeid":"123456789ABC"}'</code></pre>
 
   <p>&nbsp;</p>
@@ -135,6 +134,13 @@ layout: default
 {"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"001100110011000011100101"}]}
 {"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFFFF"}]}
 {"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"100010100010101011010110"}]}</code></pre>
+  <h4>Curl Example</h4>
+  <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
+  <pre><code>curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
+
   <p>&nbsp;</p>
   <a name="block-heartbeat" id="block-heartbeat"></a>
   <h2>POST block/:nodeId/heartbeat</h2>
@@ -199,6 +205,14 @@ layout: default
 "error": null, 
 "id": 0
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>Send a heartbeat from a temperature device 20 degrees C and report RGB LED device as purple. Note that heartbeats contain an array of device data, it must be submitted as an array even if there is only a single device.</a></p>
+  <pre><code>curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat \
+     -d '[{"GUID":"123456789ABC_0_0_9","G":0,"V":0,"D":9,"DA":"20"},{"GUID":"123456789ABC_0_0_1000","G":0,"V":0,"D":9,"DA":"FF00FF"}]'</code></pre>
+
   <p>&nbsp;</p>
   <a name="block-data" id="block-data"></a>
   <h2>POST block/:nodeId/data</h2>
@@ -263,4 +277,11 @@ layout: default
 "error": null, 
 "id": 0
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>Send a data event from a button device. Note that data messages contain a single device and are NOT an array.</a></p>
+  <pre><code>curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/data \
+     -d '{"GUID":"123456789ABC_0_0_5","G":0,"V":0,"D":5,"DA":"1"}' </code></pre>
 </section>
