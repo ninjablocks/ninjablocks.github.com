@@ -15,16 +15,12 @@ layout: default
         <th>Description</th>
       </tr>
       <tr>
-        <td><a href="#block-activate">GET block/:nodeId/activate</a></td>
-        <td>Returns the block token after a user has claimed the block. This token should be used with all subsequent requests. Your nodeId is a 12+ character identifier, ideally a unique serial number.</td>
-      </tr>
-      <tr>
         <td><a href="#block-post">POST block</a></td>
         <td>Attempt to claim an unclaimed block.</td>
       </tr>
       <tr>
-        <td><a href="#block-commands">GET block/:nodeId/commands</a></td>
-        <td>Long GET that will respond with that block's commands for the duration of the request.</td>
+        <td><a href="#block-activate">GET block/:nodeId/activate</a></td>
+        <td>Returns the block token after a user has claimed the block. This token should be used with all subsequent requests. Your nodeId is a 12+ character identifier, ideally a unique serial number.</td>
       </tr>
       <tr>
         <td><a href="#block-heartbeat">POST block/:nodeId/heartbeat</a></td>
@@ -34,39 +30,13 @@ layout: default
         <td><a href="#block-data">POST block/:nodeId/data</a></td>
         <td>Send a 'data' event from this block. Typically 'data' events will be instantly actioned, as opposed to heartbeats which may be queued.</td>
       </tr>
-    </tbody>
-  </table>
-  <p>&nbsp;</p>
-  <a name="block-activate" id="block-activate"></a>
-  <h2>GET block/:nodeId/activate</h2>
-  <p>Returns the block token when an authenticated user has claimed the block. This token should be used with all subsequent requests. This should be implemented as a long GET.</p>
-  <table>
-    <tbody>
       <tr>
-        <th colspan="2">Parameters</th>
-      </tr>
-      <tr>
-        <td colspan="2"><em>none</em</td>
+        <td><a href="#block-commands">GET block/:nodeId/commands</a></td>
+        <td>Long GET that will respond with that block's commands for the duration of the request.</td>
       </tr>
     </tbody>
   </table>
-  <h4>Notes</h4>
-  <ul>
-    <li><strong>nodeId</strong> should be a unique string at least 12 characters in length, ideally a hardware serial number accessible by the user.</li>
-    <li>This URI does not currently require authentication credentials.</li>
-    <li>A response will be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. If the response ends without a body, the request should be retried.</li>
-  </ul>
-  <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
-  <h4>Sample JSON response</h4>
-<pre><code>{
-"token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
-}</code></pre>
-  <h4>Curl Example</h4>
-  <p>Listen for activation from a the block with nodeId 123456789ABC</p>
-  <pre><code>curl -H 'Content-Type: application/json' \
-   -X 'GET' \
-   -i https://api.ninja.is/rest/v0/block/123456789ABC/activate</code></pre>
+
 
   <p>&nbsp;</p>
   <a name="block-post" id="block-post"></a>
@@ -107,39 +77,36 @@ layout: default
      -d '{"nodeid":"123456789ABC"}'</code></pre>
 
   <p>&nbsp;</p>
-  <a name="block-commands" id="block-commands"></a>
-  <h2>GET block/:nodeId/commands</h2>
-  <p>Long GET that will respond with that block's commands for the duration of the request.</p>
+  <a name="block-activate" id="block-activate"></a>
+  <h2>GET block/:nodeId/activate</h2>
+  <p>Returns the block token when an authenticated user has claimed the block. This token should be used with all subsequent requests. This should be implemented as a long GET.</p>
   <table>
     <tbody>
       <tr>
         <th colspan="2">Parameters</th>
       </tr>
       <tr>
-        <td colspan="2"><em>none</em></td>
+        <td colspan="2"><em>none</em</td>
       </tr>
     </tbody>
   </table>
   <h4>Notes</h4>
   <ul>
-    <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
-    <li><strong>nodeId</strong> must be at least 12 characters in length.</li>
-    <li>Commands are separated by the newline character <em>\n</em>.</li>
-    <li>This request is long lived, and should be reinitialized if the connection is severed.</li>
+    <li><strong>nodeId</strong> should be a unique string at least 12 characters in length, ideally a hardware serial number accessible by the user.</li>
+    <li>This URI does not currently require authentication credentials.</li>
+    <li>A response will be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. If the response ends without a body, the request should be retried.</li>
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
+  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
   <h4>Sample JSON response</h4>
-<pre><code>{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFF00"}]}
-{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"001100110011000011100101"}]}
-{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFFFF"}]}
-{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"100010100010101011010110"}]}</code></pre>
+<pre><code>{
+"token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
+}</code></pre>
   <h4>Curl Example</h4>
-  <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
+  <p>Listen for activation from a the block with nodeId 123456789ABC</p>
   <pre><code>curl -H 'Content-Type: application/json' \
-     -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
+   -X 'GET' \
+   -i https://api.ninja.is/rest/v0/block/123456789ABC/activate</code></pre>
 
   <p>&nbsp;</p>
   <a name="block-heartbeat" id="block-heartbeat"></a>
@@ -211,7 +178,7 @@ layout: default
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -X 'POST' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat \
-     -d '[{"GUID":"123456789ABC_0_0_9","G":0,"V":0,"D":9,"DA":"20"},{"GUID":"123456789ABC_0_0_1000","G":0,"V":0,"D":9,"DA":"FF00FF"}]'</code></pre>
+     -d '[{"GUID":"123456789ABC_0_0_9","G":0,"V":0,"D":9,"DA":"20"},{"GUID":"123456789ABC_0_0_1000","G":0,"V":0,"D":1000,"DA":"FF00FF"}]'</code></pre>
 
   <p>&nbsp;</p>
   <a name="block-data" id="block-data"></a>
@@ -284,4 +251,40 @@ layout: default
      -X 'POST' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/data \
      -d '{"GUID":"123456789ABC_0_0_5","G":0,"V":0,"D":5,"DA":"1"}' </code></pre>
+
+  <p>&nbsp;</p>
+  <a name="block-commands" id="block-commands"></a>
+  <h2>GET block/:nodeId/commands</h2>
+  <p>Long GET that will respond with that block's commands for the duration of the request.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
+    <li><strong>nodeId</strong> must be at least 12 characters in length.</li>
+    <li>Commands are separated by the newline character <em>\n</em>.</li>
+    <li>This request is long lived, and should be reinitialized if the connection is severed.</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFF00"}]}
+{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"001100110011000011100101"}]}
+{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFFFF"}]}
+{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"100010100010101011010110"}]}</code></pre>
+  <h4>Curl Example</h4>
+  <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
+  <pre><code>curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
+
 </section>
