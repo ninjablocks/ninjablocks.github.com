@@ -67,10 +67,7 @@ layout: default
         <td><a href="#device-request-image">GET camera/:guid/snapshot</a></td>
         <td>Request an image from the specified device.</td>
       </tr>
-      <tr>
-        <td><a href="#device-send-image">POST camera/:guid/snapshot</a></td>
-        <td>Send an image that has been requested via a 'snapshot' command.</td>
-      </tr>
+
     </tbody>
   </table>
   <p>&nbsp;</p>
@@ -622,26 +619,4 @@ layout: default
   <pre><code>https://stream.ninja.is/rest/camera/:guid/snapshot</code></pre>
   <strong>Note the lack of v0 in the endpoint</strong>
 
-  <p>&nbsp;</p>
-  <a name="device-send-image" id="device-send-image"></a>
-  <h2>POST camera/:guid/snapshot</h2>
-  <p>Send an image that has been requested via a 'snapshot' command.</p>
-  <table>
-    <tbody>
-      <tr>
-        <th colspan="2">Parameters</th>
-      </tr>
-      <tr>
-        <td colspan="2"><em>none</em></td>
-      </tr>
-    </tbody>
-  </table>
-  <h4>Notes</h4>
-  <ul>
-    <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
-    <li>The request body should contain the binary of the image, with the correct mime type in the headers</li>
-    <li>This request should only be made when a 'DA' value of 1 is received by the device.</li>
-  </ul>
-  <h4>Resource URL</h4>
-  <pre><code>https://stream.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
 </section>
