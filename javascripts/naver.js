@@ -1,6 +1,6 @@
 var topRange = 0,  // measure from the top of the viewport to X pixels down
     edgeMargin = 0,   // margin above the top or margin from the end of the page
-    animationTime = 400, // time in milliseconds
+    animationTime = 200, // time in milliseconds
     contentTop = [];
 
 $(document).ready(function(){
@@ -24,7 +24,7 @@ $(document).ready(function(){
             $('html,body').stop().animate({
             'scrollTop': newTop
         }, animationTime, function () {
-            //window.location.hash = $(sel).attr('href');
+            window.location.hash = $(sel).attr('href');
         });
         return false;
     });
