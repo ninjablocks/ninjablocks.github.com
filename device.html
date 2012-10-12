@@ -123,20 +123,6 @@ layout: default
       "subDevices": {}, 
       "vid": "0"
   }, 
-  "ASTEALTHYNODE01_0_0_2": {
-      "css_class": "sensor cape accelerometer orientation", 
-      "default_name": "Block Accelerometer", 
-      "device_type": "orientation", 
-      "did": "2", 
-      "gid": "0",
-      "is_actuator": 0,
-      "is_sensor": 1,
-      "is_silent": 0, 
-      "meta": {},
-      "shortName": "Block Accelerometer",
-      "subDevices": {},
-      "vid": "0"
-  }, 
   "ASTEALTHYNODE01_1_0_11": {
       "css_class": "sensor serial rf rf433 receiver transmitter", 
       "default_name": "RF 433Mhz", 
@@ -153,6 +139,17 @@ layout: default
   }
 }
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>List all your devices</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN 
+  </code></pre>
+
+<p><strong>Curl tip</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+
+
   <p>&nbsp;</p>
   <a name="device-update-device" id="device-update-device"></a>
   <h2>PUT device/:guid</h2>
