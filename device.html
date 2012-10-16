@@ -19,6 +19,10 @@ layout: default
         <td>Returns the list of devices associated with the authenticating user.</td>
       </tr>
       <tr>
+        <td><a href="#device-get">GET device/:guid</a></td>
+        <td>Fetch metadata about the specified device.</td>
+      </tr>
+      <tr>
         <td><a href="#device-update-device">PUT device/:guid</a></td>
         <td>Update a device, including sending a command.</td>
       </tr>
@@ -141,14 +145,42 @@ layout: default
 }</code></pre>
   <h4>Curl Example</h4>
   <p>List all your devices</p>
-  <pre><code>
-curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN 
-  </code></pre>
+<pre><code>curl -H 'Content-Type: application/json' \
+   -X 'GET' \
+   -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN</code></pre>
 
-<p><strong>Curl tip</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+<p><strong>Tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
 
+  <p>&nbsp;</p>
+  <a name="device-get" id="device-get"></a>
+  <h2>GET device/:guid</h2>
+  <p>Fetch metadata about the specified device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2">none</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null, 
+    "id": 0, 
+    "data": {
+        "did": "1000", 
+        "gid": "0", 
+        "guid": "STEALTHYNINJA_0_0_1000", 
+        "meta": {}, 
+        "subDevices": {}, 
+        "vid": "0"
+    }
+}</code></pre>
 
   <p>&nbsp;</p>
   <a name="device-update-device" id="device-update-device"></a>
@@ -268,11 +300,43 @@ curl -H 'Content-Type: application/json' \
           <small>Example: 1343268820530</small> 
         </td>
       </tr>
+      <tr>
+        <td><strong>interval</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          Intervals are specified by a number and a unit of time, i.e. 6hour or 1day. The supported time units are:
+          <br /><br />
+          <ul>
+            <li>min - Minutes</li>
+            <li>hour - Hours</li>
+            <li>day - Days</li>
+            <li>month - Months</li>
+            <li>year - Years</li>
+          </ul>
+          <small>Example: 1day</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>fn</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The folding function specifies how the datapoints are reduced within each interval. The default folding function is <em>mean</em> which returns the mean (average). The following folding functions are supported:
+          <br /><br />
+          <ul>
+            <li>mean - Average of all datapoints</li>
+            <li>sum - Sum of all datapoints</li>
+            <li>min - Minimum value of all datapoints</li>
+            <li>max - Maximum value of all datapoints</li>
+            <li>stddev - Standard deviation of all datapoints</li>
+            <li>ss - Sum of squares of all datapoints</li>
+            <li>count - Total number of datapoints in the DataSet</li>
+          </ul>
+          <small>Example: count</small> 
+        </td>
+      </tr>
     </tbody>
   </table>
   <h4>Notes</h4>
   <ul>
-    <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/data?from=1343268810530&to=1343268820530</small></li>
+    <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/data?from=1343268810530&to=1343268820530&fn=mean&interval=1day</small></li>
   </ul>
   <h4>Resource URL</h4>
   <pre><code>https://api.ninja.is/rest/v0/device/:guid/data</code></pre>

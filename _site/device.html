@@ -34,13 +34,16 @@
         <h4><a href="rule.html"><i class="icon-legal"></i> Rule</a></h4>
         <h3>See Also</h3>
         <p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
-        <p class="view"><a target="_blank" href="http://help.ninja.is"><i class="icon-info-sign"></i> Support</a></p>
+        <p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
         <p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github"></i> Code</a></p>
         <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
       <section>
   <a name="device-object" id="device-object"></a>
   <h1>Device</h1>
+  <p>In the Ninja API devices are the first class citizens not Blocks. Devices are logically separate sensors and/or actuators that have a Globally Unique Identifier <code>GUID</code>, a Vendor ID <code>V</code>, a Device ID <code>D</code>, and a port <code>G</code>. Most routes use GUIDs alone to address devices, the other fields will only matter to you if you are <a href-"http://docs.ninja.is/block.html">creating devices</a>.  Ninja supplied hardware uses the convention <code>SERIALNUMBER_G_V_D</code> for GUIDs, which makes it easy to "read" GUIDs. See <a href="http://docs.ninja.is/core-concepts.html">Core Concepts</a> for more information.
+  <h3>A note on Auth</h3>
+  <p>For quick dev and hacking on your own account you can use your personal API Access Token found at <a href="https://a.ninja.is/hacking">a.ninja.is/hacking</a>. The curl examples in this document use your <code>user_access_token</code>. Note that when using the API with a token acquired via OAuth, the param is just <code>access_token</code>. See the section on <a href="http://docs.ninja.is/authentication.html">authentication</a> for more</p>
   <table>
     <tbody>
       <tr>
@@ -50,6 +53,10 @@
       <tr>
         <td><a href="#device-get-devices">GET devices</a></td>
         <td>Returns the list of devices associated with the authenticating user.</td>
+      </tr>
+      <tr>
+        <td><a href="#device-get">GET device/:guid</a></td>
+        <td>Fetch metadata about the specified device.</td>
       </tr>
       <tr>
         <td><a href="#device-update-device">PUT device/:guid</a></td>
@@ -103,10 +110,7 @@
         <td><a href="#device-request-image">GET camera/:guid/snapshot</a></td>
         <td>Request an image from the specified device.</td>
       </tr>
-      <tr>
-        <td><a href="#device-send-image">POST camera/:guid/snapshot</a></td>
-        <td>Send an image that has been requested via a 'snapshot' command.</td>
-      </tr>
+
     </tbody>
   </table>
   <p>&nbsp;</p>
@@ -159,20 +163,6 @@
       "subDevices": {}, 
       "vid": "0"
   }, 
-  "ASTEALTHYNODE01_0_0_2": {
-      "css_class": "sensor cape accelerometer orientation", 
-      "default_name": "Block Accelerometer", 
-      "device_type": "orientation", 
-      "did": "2", 
-      "gid": "0",
-      "is_actuator": 0,
-      "is_sensor": 1,
-      "is_silent": 0, 
-      "meta": {},
-      "shortName": "Block Accelerometer",
-      "subDevices": {},
-      "vid": "0"
-  }, 
   "ASTEALTHYNODE01_1_0_11": {
       "css_class": "sensor serial rf rf433 receiver transmitter", 
       "default_name": "RF 433Mhz", 
@@ -189,6 +179,45 @@
   }
 }
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>List all your devices</p>
+<pre><code>curl -H 'Content-Type: application/json' \
+   -X 'GET' \
+   -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN</code></pre>
+
+<p><strong>Tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+
+  <p>&nbsp;</p>
+  <a name="device-get" id="device-get"></a>
+  <h2>GET device/:guid</h2>
+  <p>Fetch metadata about the specified device.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2">none</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null, 
+    "id": 0, 
+    "data": {
+        "did": "1000", 
+        "gid": "0", 
+        "guid": "STEALTHYNINJA_0_0_1000", 
+        "meta": {}, 
+        "subDevices": {}, 
+        "vid": "0"
+    }
+}</code></pre>
+
   <p>&nbsp;</p>
   <a name="device-update-device" id="device-update-device"></a>
   <h2>PUT device/:guid</h2>
@@ -284,7 +313,7 @@
 }</code></pre>
   <p>&nbsp;</p>
   <a name="device-get-history" id="device-get-history"></a>
-  <h2>POST device/:guid/callback</h2>
+  <h2>GET device/:guid/data</h2>
   <p>Return the historical data for the specified device.</p>
   <table>
     <tbody>
@@ -307,11 +336,44 @@
           <small>Example: 1343268820530</small> 
         </td>
       </tr>
+      <tr>
+        <td><strong>interval</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          Intervals are specified by a number and a unit of time, i.e. 6hour or 1day. The supported time units are:
+          <br /><br />
+          <ul>
+            <li>min - Minutes</li>
+            <li>hour - Hours</li>
+            <li>day - Days</li>
+            <li>month - Months</li>
+            <li>year - Years</li>
+          </ul>
+          <small>Example: 1day</small> 
+        </td>
+      </tr>
+      <tr>
+        <td><strong>fn</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          The folding function specifies how the datapoints are reduced within each interval. The default folding function is <em>mean</em> which returns the mean (average). The following folding functions are supported:
+          <br /><br />
+          <ul>
+            <li>mean - Average of all datapoints</li>
+            <li>sum - Sum of all datapoints</li>
+            <li>min - Minimum value of all datapoints</li>
+            <li>max - Maximum value of all datapoints</li>
+            <li>stddev - Standard deviation of all datapoints</li>
+            <li>ss - Sum of squares of all datapoints</li>
+            <li>count - Total number of datapoints in the DataSet</li>
+          </ul>
+          <small>Example: count</small> 
+        </td>
+      </tr>
+
     </tbody>
   </table>
   <h4>Notes</h4>
   <ul>
-    <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/data?from=1343268810530&to=1343268820530</small></li>
+    <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/data?from=1343268810530&to=1343268820530&fn=mean&interval=1day</small></li>
   </ul>
   <h4>Resource URL</h4>
   <pre><code>https://api.ninja.is/rest/v0/device/:guid/data</code></pre>
@@ -655,31 +717,8 @@
     <li>Given the reasonable complexity of actuating a webcam and streaming the response straight from the Ninja Block to the user agent, we cannot guarantee this call will always be successful.</li> 
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://stream.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
-
-
-  <p>&nbsp;</p>
-  <a name="device-send-image" id="device-send-image"></a>
-  <h2>POST camera/:guid/snapshot</h2>
-  <p>Send an image that has been requested via a 'snapshot' command.</p>
-  <table>
-    <tbody>
-      <tr>
-        <th colspan="2">Parameters</th>
-      </tr>
-      <tr>
-        <td colspan="2"><em>none</em></td>
-      </tr>
-    </tbody>
-  </table>
-  <h4>Notes</h4>
-  <ul>
-    <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
-    <li>The request body should contain the binary of the image, with the correct mime type in the headers</li>
-    <li>This request should only be made when a 'DA' value of 1 is received by the device.</li>
-  </ul>
-  <h4>Resource URL</h4>
-  <pre><code>https://stream.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
+  <pre><code>https://stream.ninja.is/rest/v0/camera/:guid/snapshot</code></pre>
+  <strong>Note: this call is to stream.ninja.is.</strong>
 </section>
       <script src="javascripts/scale.fix.js"></script>
       <script type="text/javascript">
