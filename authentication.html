@@ -39,6 +39,12 @@ layout: default
           Comma seperated list of scopes. Currently Ninja Blocks only supports 'all'.
         </td>
       </tr>
+      <tr>
+        <td><strong>response_type</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          Whether to use authorization code grant type or implicit grant type flow. Currently only authorization code is supported, thus this variable MUST be <code>code</code>.
+        </td>
+      </tr>
       <!--
       <tr>
         <td><strong>state</strong><br /><em>string</em><br /><small>Optional</small></td>
