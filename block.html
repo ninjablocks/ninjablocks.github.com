@@ -124,23 +124,15 @@ layout: default
         <th colspan="2">Each Array Element Parameters</th>
       </tr>
       <tr>
-        <td><strong>GUID</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td><strong>G</strong><br /><em>string</em><br /><small>Required</small></td>
         <td>
-          The GUID of the device reporting.
-          <br />
-          <small>Example: "ASTEALTHYNODE01_0_0_11"</small>
-        </td>
-      </tr>
-      <tr>
-        <td><strong>G</strong><br /><em>string/number</em><br /><small>Required</small></td>
-        <td>
-          The port number the device is located on.
+          The port/channel number the device is located on.
           <br />
           <small>Example: 0</small>
         </td>
       </tr>
       <tr>
-        <td><strong>V</strong><br /><em>string/number</em><br /><small>Required</small></td>
+        <td><strong>V</strong><br /><em>number</em><br /><small>Required</small></td>
         <td>
           The Vendor ID of the device.
           <br />
@@ -148,7 +140,7 @@ layout: default
         </td>
       </tr>
       <tr>
-        <td><strong>D</strong><br /><em>string/number</em><br /><small>Required</small></td>
+        <td><strong>D</strong><br /><em>number</em><br /><small>Required</small></td>
         <td>
           The device ID.
           <br />
@@ -156,7 +148,7 @@ layout: default
         </td>
       </tr>
       <tr>
-        <td><strong>DA</strong><br /><em>string/number</em><br /><small>Required</small></td>
+        <td><strong>DA</strong><br /><em>string</em><br /><small>Required</small></td>
         <td>
           The data value that this device is reporting.
           <br />
@@ -185,6 +177,11 @@ layout: default
      -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat \
      -d '[{"GUID":"123456789ABC_0_0_9","G":0,"V":0,"D":9,"DA":"20"},{"GUID":"123456789ABC_0_0_1000","G":0,"V":0,"D":1000,"DA":"FF00FF"}]'</code></pre>
 
+
+
+
+
+
   <p>&nbsp;</p>
   <a name="block-data" id="block-data"></a>
   <h2>POST block/:nodeId/data</h2>
@@ -196,23 +193,15 @@ layout: default
         <th colspan="2">Parameters</th>
       </tr>
       <tr>
-        <td><strong>GUID</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td><strong>G</strong><br /><em>string</em><br /><small>Required</small></td>
         <td>
-          The GUID of the device reporting.
-          <br />
-          <small>Example: ASTEALTHYNODE01_0_0_11</small>
-        </td>
-      </tr>
-      <tr>
-        <td><strong>G</strong><br /><em>string/number</em><br /><small>Required</small></td>
-        <td>
-          The port number the device is located on.
+          The port/channel the device is located on.
           <br />
           <small>Example: 0</small>
         </td>
       </tr>
       <tr>
-        <td><strong>V</strong><br /><em>string/number</em><br /><small>Required</small></td>
+        <td><strong>V</strong><br /><em>number</em><br /><small>Required</small></td>
         <td>
           The Vendor ID of the device.
           <br />
@@ -220,7 +209,7 @@ layout: default
         </td>
       </tr>
       <tr>
-        <td><strong>D</strong><br /><em>string/number</em><br /><small>Required</small></td>
+        <td><strong>D</strong><br /><em>number</em><br /><small>Required</small></td>
         <td>
           The device ID.
           <br />
@@ -228,7 +217,7 @@ layout: default
         </td>
       </tr>
       <tr>
-        <td><strong>DA</strong><br /><em>string/number</em><br /><small>Required</small></td>
+        <td><strong>DA</strong><br /><em>string</em><br /><small>Required</small></td>
         <td>
           The data value that this device is reporting.
           <br />
@@ -256,12 +245,15 @@ layout: default
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -X 'POST' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/data \
-     -d '{"GUID":"123456789ABC_0_0_5","G":0,"V":0,"D":5,"DA":"1"}' </code></pre>
+     -d '{"G":0,"V":0,"D":5,"DA":"1"}' </code></pre>
+
+
+
 
   <p>&nbsp;</p>
   <a name="block-commands" id="block-commands"></a>
   <h2>GET block/:nodeId/commands</h2>
-  <p>Long GET that will respond with that block's commands for the duration of the request.</p>
+  <p>Long GET that will respond with a the requested block's commands.</p>
   <table>
     <tbody>
       <tr>
@@ -276,22 +268,25 @@ layout: default
   <ul>
     <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
     <li><strong>nodeId</strong> must be at least 12 characters in length.</li>
-    <li>Commands are separated by the newline character <em>\n</em>.</li>
-    <li>This request is long lived, and should be reinitialized if the connection is severed.</li>
+    <li>The request will end after each command is received, or after approximately 30 seconds. Requests should be reinitialized in these instances.</li>
   </ul>
   <h4>Resource URL</h4>
   <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
   <h4>Sample JSON response</h4>
-<pre><code>{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFF00"}]}
-{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"001100110011000011100101"}]}
-{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_1000","G":0,"V":0,"D":1,"DA":"FFFFFF"}]}
-{"NODE_ID":"ASTEALTHYNODE01","DEVICE":[{"GUID":"ASTEALTHYNODE01_0_0_11","G":0,"V":0,"D":1,"DA":"100010100010101011010110"}]}</code></pre>
+<pre><code>{"DEVICE":[{"G":"0","V":0,"D":1000,"DA":"FFFFFF"}]}
+</code></pre>
   <h4>Curl Example</h4>
   <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
   <pre><code>curl -H 'Content-Type: application/json' \
      -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
      -X 'GET' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
+
+
+
+
+
+
   <p>&nbsp;</p>
   <a name="device-send-image" id="device-send-image"></a>
   <h2>POST camera/:guid/snapshot</h2>
