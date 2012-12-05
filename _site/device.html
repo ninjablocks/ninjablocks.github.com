@@ -41,7 +41,7 @@
       <section>
   <a name="device-object" id="device-object"></a>
   <h1>Device</h1>
-  <p>In the Ninja API devices are the first class citizens not Blocks. Devices are logically separate sensors and/or actuators that have a Globally Unique Identifier <code>GUID</code>, a Vendor ID <code>V</code>, a Device ID <code>D</code>, and a port <code>G</code>. Most routes use GUIDs alone to address devices, the other fields will only matter to you if you are <a href-"http://docs.ninja.is/block.html">creating devices</a>.  Ninja supplied hardware uses the convention <code>SERIALNUMBER_G_V_D</code> for GUIDs, which makes it easy to "read" GUIDs. See <a href="http://docs.ninja.is/core-concepts.html">Core Concepts</a> for more information.
+  <p>In the Ninja API devices are the first class citizens not Blocks. Devices are logically separate sensors and/or actuators that have a Globally Unique Identifier <code>GUID</code>, a Vendor ID <code>V</code>, a Device ID <code>D</code>, and a port <code>G</code>. Most routes use GUIDs alone to address devices, the other fields will only matter to you if you are <a href="http://docs.ninja.is/block.html">creating devices</a>.  Ninja supplied hardware uses the convention <code>SERIALNUMBER_G_V_D</code> for GUIDs, which makes them easy to <em>grok</em>. See <a href="http://docs.ninja.is/core-concepts.html">Core Concepts</a> for more information.
   <h3>A note on Auth</h3>
   <p>For quick dev and hacking on your own account you can use your personal API Access Token found at <a href="https://a.ninja.is/hacking">a.ninja.is/hacking</a>. The curl examples in this document use your <code>user_access_token</code>. Note that when using the API with a token acquired via OAuth, the param is just <code>access_token</code>. See the section on <a href="http://docs.ninja.is/authentication.html">authentication</a> for more</p>
   <table>
@@ -185,7 +185,7 @@
    -X 'GET' \
    -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN</code></pre>
 
-<p><strong>Tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+  <p><strong>Tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
 
   <p>&nbsp;</p>
   <a name="device-get" id="device-get"></a>
@@ -222,8 +222,8 @@
   <a name="device-update-device" id="device-update-device"></a>
   <h2>PUT device/:guid</h2>
   <p>Update a device, including sending a command.</p>
-  <p>Sending a command and updating the meta data are two distinct operations internally. If the response we send is in the affirmative, ie result = 1, then both have succeeded. However, if it is the negative, ie result = 0, then one or both of the operations failed, and you won't know which one. We recommend using two separate API calls if this concerns you.</p>
-  <p>We've implemented it this way for conceptual consistency hoping that most, if not all, of your calls will be successful.</p>
+  <p>Sending a command and updating the meta data are two distinct operations internally. If the response we send is in the affirmative, ie result = 1, then both have succeeded. However, if it is the negative, ie result = 0, then one or both of the operations failed, and you won't know which one.</p>
+  <p>We've implemented it this way for conceptual consistency. We recommend using two separate API calls if you need to handle errors.</p>
   <table>
     <tbody>
       <tr>
@@ -259,6 +259,24 @@
   "error": null, 
   "id": 0
 }</code></pre>
+
+  <h4>Curl Example</h4>
+  <p>Set the color of your LED to Purple.</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "DA" : "FF00FF" }' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
+  <p>Rename your LED</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "shortName" : "The color changing light" }' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
   <p>&nbsp;</p>
   <a name="device-delete" id="device-delete"></a>
   <h2>DELETE device/:guid</h2>
@@ -281,10 +299,19 @@
   "error": null,
   "id": 0
 }</code></pre>
+
+  <h4>Curl Example</h4>
+  <p>Delete your LED device. Note it will be re-created on the next heart beat if plugged in.</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'DELETE' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
 <p>&nbsp;</p>
   <a name="device-get-heartbeat" id="device-get-heartbeat"></a>
   <h2>GET device/:guid/heartbeat</h2>
-  <p>Return the last heartbeat for the specified device.</p>
+  <p>Return the last heartbeat for the specified device. i.e. its "current" or more accurately last reported value.</p>
   <table>
     <tbody>
       <tr>
@@ -307,10 +334,19 @@
     "V": 0,
     "D": 1000,
     "DA": "00FF00",
-    "GUID": "1012BB013141_0_0_1000",
+    "GUID": "ASTEALTHYNODE_0_0_1000",
     "timestamp": 1346660053613
   }
 }</code></pre>
+
+  <h4>Curl Example</h4>
+  <p>Retrieve the current color of your onboard LED.</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000/heartbeat?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
   <p>&nbsp;</p>
   <a name="device-get-history" id="device-get-history"></a>
   <h2>GET device/:guid/data</h2>
@@ -368,7 +404,6 @@
           <small>Example: count</small> 
         </td>
       </tr>
-
     </tbody>
   </table>
   <h4>Notes</h4>
@@ -409,6 +444,9 @@
     }
   ]
 }</code></pre>
+
+<!-- CURL EXAMPLE TODO -->
+
   <p>&nbsp;</p>
   <a name="device-create-callback" id="device-create-callback"></a>
   <h2>POST device/:guid/callback</h2>
@@ -441,6 +479,15 @@
   "error": null,
   "id": 0
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>Set a new callback for a temperature sensor</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'POST' \
+     -d '{ "url" : "http://my-app.herokuapp.com/temp_handler" }' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
   <p>&nbsp;</p>
   <a name="device-get-callback" id="device-get-callback"></a>
   <h2>GET device/:guid/callback</h2>
@@ -463,9 +510,17 @@
   "error": null,
   "id": 0,
   "data": {
-    "url": "http://my-app.herokuapp.com/data_callback"
+    "url": "http://my-app.herokuapp.com/temp_handler"
   }
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>Retrieve the current callback for the temperature sensor</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
   <p>&nbsp;</p>
   <a name="device-update-callback" id="device-update-callback"></a>
   <h2>PUT device/:guid/callback</h2>
@@ -493,6 +548,15 @@
   "error": null,
   "id": 0
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>Update the temperature callback</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "url" : "http://my-app.herokuapp.com/different_temp_handler" }' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
   <p>&nbsp;</p>
   <a name="device-delete-callback" id="device-delete-callback"></a>
   <h2>DELETE device/:guid/callback</h2>
@@ -516,22 +580,21 @@
   "error": null,
   "id": 0
 }</code></pre>
+  <h4>Curl Example</h4>
+  <p>Retrieve the current callback for the temperature sensor</p>
+  <pre><code>
+curl -H 'Content-Type: application/json' \
+     -X 'DELETE' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+  </code></pre>
+
   <p>&nbsp;</p>
-
-
-
-
-
-
-
-
-
   <a name="device-create-subdevice" id="device-create-subdevice"></a>
   <h2>POST device/:guid/subdevice</h2>
   <p>Create a new sub-device associated with the specified device and return a unique ID within the device.</p>
   <p>Sub-devices allow you to store different values against one device. For example, various mobile numbers against the SMS device, different 'webhook' actuators against the 'webhook' device, and different RF binary values against the RF433MHz device.</p>
   <p>Please note that the different categories of sub-devices may return different data. For example, the create 'webhook' 'sensor' sub-device call will return a token that is used as part of <a href="#device-webhook-subdevice-tickle">the URL to 'tickle' it</a>, whereas most others will just return the id of the sub-device.</p>
-  <p><strong>Webhooks Note</strong>: to enable webhooks the user must have created added the Webhooks device, which is done via the "Services" tab in the settings page, or by a GET to https://api.ninja.is/auth/webhook. For more information about Webhooks see our <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages">GitHub wiki</a> for examples.</p>
+  <p><strong>Webhooks Note</strong>: to enable webhooks the user must have added the Webhooks device, which is done via the "Services" tab in the settings page, or by a GET to https://api.ninja.is/auth/webhook. For more information about Webhooks see our <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages">GitHub wiki</a> for examples.</p>
   <table>
     <tbody>
       <tr>

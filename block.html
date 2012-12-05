@@ -11,7 +11,7 @@ layout: default
   <table>
     <tbody>
       <tr>
-        <th>Resource</th>
+        <th width='35%'>Resource</th>
         <th>Description</th>
       </tr>
       <tr>
@@ -29,6 +29,10 @@ layout: default
       <tr>
         <td><a href="#block-data">POST block/:nodeId/data</a></td>
         <td>Send a 'data' event from this block. Typically 'data' events will be instantly actioned, as opposed to heartbeats which may be queued.</td>
+      </tr>
+      <tr>
+        <td><a href="#block-config">POST block/:nodeId/config</a></td>
+        <td>Config events are intended to be meta information about a device, for example it's IP address if it were an IP camera.</td>
       </tr>
       <tr>
         <td><a href="#block-commands">GET block/:nodeId/commands</a></td>
@@ -67,9 +71,9 @@ layout: default
   <pre><code>https://api.ninja.is/rest/v0/block</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0
+  "result": 1,
+  "error": null,
+  "id": 0
 }</code></pre>
   <h4>Curl Example</h4>
   <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
@@ -105,7 +109,7 @@ layout: default
   <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
+  "token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
 }</code></pre>
   <h4>Curl Example</h4>
   <p>Listen for activation from a the block with nodeId 123456789ABC</p>
@@ -166,9 +170,9 @@ layout: default
   <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0
+  "result": 1,
+  "error": null,
+  "id": 0
 }</code></pre>
   <h4>Curl Example</h4>
   <p>Send a heartbeat from a temperature device 20 degrees C and report RGB LED device as purple. Note that heartbeats contain an array of device data, it must be submitted as an array even if there is only a single device.</a></p>
@@ -241,12 +245,78 @@ layout: default
 "id": 0
 }</code></pre>
   <h4>Curl Example</h4>
-  <p>Send a data event from a button device. Note that data messages contain a single device and are NOT an array.</a></p>
   <pre><code>curl -H 'Content-Type: application/json' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -X 'POST' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/data \
      -d '{"G":0,"V":0,"D":5,"DA":"1"}' </code></pre>
+
+
+<p>&nbsp;</p>
+  <a name="block-config" id="block-config"></a>
+  <h2>POST block/:nodeId/config</h2>
+  <p>Send a config event from this block.</p>
+  <p>Config events are intended to be meta information about a device, for example it's IP address if it were an IP camera, whether its plugged in or not, etc.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>G</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The port/channel the device is located on.
+          <br />
+          <small>Example: 0</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>V</strong><br /><em>number</em><br /><small>Required</small></td>
+        <td>
+          The Vendor ID of the device.
+          <br />
+          <small>Example: "0"</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>D</strong><br /><em>number</em><br /><small>Required</small></td>
+        <td>
+          The device ID.
+          <br />
+          <small>Example: 11</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>type</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The type of the config event. Currently in our dashboard we support "UNPLUG" & "PLUGIN", however this can be anything.
+          <br />
+          <small>Example: "PLUGIN"</small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>This endpoint will also accept an array of objects to send multiple config events in one request.</li>
+    <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/config</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+"result": 1,
+"error": null,
+"id": 0
+}</code></pre>
+  <h4>Curl Example</h4>
+  <pre><code>curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/config \
+     -d '{"G":0,"V":0,"D":5,"type":"UNPLUG"}' </code></pre>
+
+
 
 
 
@@ -282,11 +352,6 @@ layout: default
      -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
      -X 'GET' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
-
-
-
-
-
 
   <p>&nbsp;</p>
   <a name="device-send-image" id="device-send-image"></a>
