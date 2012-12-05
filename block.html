@@ -116,6 +116,7 @@ layout: default
   <p>&nbsp;</p>
   <a name="block-heartbeat" id="block-heartbeat"></a>
   <h2>POST block/:nodeId/heartbeat</h2>
+  <h4><em>Deprecated</em></h4>
   <p>Send a heartbeat from this block.<br /><strong>Important</strong>: the request body takes the form of an <strong>array of objects</strong>, whose parameters are outlined below.</p>
   <p>Heartbeat events are intended to be values to be analyzed in due course. For example, a temperature reading should be part of a 'heartbeat' event, whereas a button press should be a <a href="#block-data">'data'</a> event.</p>
   <table>
@@ -175,7 +176,7 @@ layout: default
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -X 'POST' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat \
-     -d '[{"GUID":"123456789ABC_0_0_9","G":0,"V":0,"D":9,"DA":"20"},{"GUID":"123456789ABC_0_0_1000","G":0,"V":0,"D":1000,"DA":"FF00FF"}]'</code></pre>
+     -d '[{"G":0,"V":0,"D":9,"DA":"20"},{"G":0,"V":0,"D":1000,"DA":"FF00FF"}]'</code></pre>
 
 
 
