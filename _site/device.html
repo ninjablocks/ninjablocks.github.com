@@ -103,6 +103,10 @@
         <td>Delete the specified sub-device. Note that if there are any rules attached to this sub-device they will not be deleted, but instead become ineffectual.</td>
       </tr>
       <tr>
+        <td><a href="#device-fetch-subdevice-data">GET device/:guid/subdevice/:subdeviceId/data</a></td>
+        <td>Fetch the count of the number of times the sub-device was actuated.</td>
+      </tr>
+      <tr>
         <td><a href="#device-webhook-subdevice-tickle">POST device/:deviceGuid/subdevice<br />/:subDeviceId/tickle/:token</a></td>
         <td>Tickle a 'webhook' sub-device.</td>
       </tr>
@@ -132,49 +136,49 @@
   <h4>Sample JSON response</h4>
 <pre><code>{
 "result": 1,
-"error": null, 
-"id": 0, 
+"error": null,
+"id": 0,
 "data": {
   "ASTEALTHYNODE01_0_0_1": {
-      "css_class": "sensor cape temp", 
-      "default_name": "Block Temperature", 
-      "device_type": "temperature", 
-      "did": "1", 
-      "gid": "0", 
-      "is_actuator": 0, 
-      "is_sensor": 1, 
-      "is_silent": 0, 
-      "meta": {}, 
-      "shortName": "Block Temperature", 
-      "subDevices": {}, 
+      "css_class": "sensor cape temp",
+      "default_name": "Block Temperature",
+      "device_type": "temperature",
+      "did": "1",
+      "gid": "0",
+      "is_actuator": 0,
+      "is_sensor": 1,
+      "is_silent": 0,
+      "meta": {},
+      "shortName": "Block Temperature",
+      "subDevices": {},
       "vid": "0"
-  }, 
+  },
   "ASTEALTHYNODE01_0_0_1000": {
-      "css_class": "actuator cape led rgbled", 
-      "default_name": "On Board RGB LED", 
-      "device_type": "rgbled", 
-      "did": "1000", 
-      "gid": "0", 
-      "is_actuator": 1, 
-      "is_sensor": 1, 
-      "is_silent": 0, 
-      "meta": {}, 
-      "shortName": "On Board RGB LED", 
-      "subDevices": {}, 
+      "css_class": "actuator cape led rgbled",
+      "default_name": "On Board RGB LED",
+      "device_type": "rgbled",
+      "did": "1000",
+      "gid": "0",
+      "is_actuator": 1,
+      "is_sensor": 1,
+      "is_silent": 0,
+      "meta": {},
+      "shortName": "On Board RGB LED",
+      "subDevices": {},
       "vid": "0"
-  }, 
+  },
   "ASTEALTHYNODE01_1_0_11": {
-      "css_class": "sensor serial rf rf433 receiver transmitter", 
-      "default_name": "RF 433Mhz", 
-      "device_type": "rf433", 
-      "did": "11", 
-      "gid": "1", 
-      "is_actuator": 1, 
-      "is_sensor": 1, 
-      "is_silent": 0, 
-      "meta": {}, 
-      "shortName": "RF 433Mhz", 
-      "subDevices": {}, 
+      "css_class": "sensor serial rf rf433 receiver transmitter",
+      "default_name": "RF 433Mhz",
+      "device_type": "rf433",
+      "did": "11",
+      "gid": "1",
+      "is_actuator": 1,
+      "is_sensor": 1,
+      "is_silent": 0,
+      "meta": {},
+      "shortName": "RF 433Mhz",
+      "subDevices": {},
       "vid": "0"
   }
 }
@@ -206,14 +210,14 @@
   <h4>Sample JSON response</h4>
 <pre><code>{
     "result": 1,
-    "error": null, 
-    "id": 0, 
+    "error": null,
+    "id": 0,
     "data": {
-        "did": "1000", 
-        "gid": "0", 
-        "guid": "STEALTHYNINJA_0_0_1000", 
-        "meta": {}, 
-        "subDevices": {}, 
+        "did": "1000",
+        "gid": "0",
+        "guid": "STEALTHYNINJA_0_0_1000",
+        "meta": {},
+        "subDevices": {},
         "vid": "0"
     }
 }</code></pre>
@@ -234,7 +238,7 @@
         <td>
           The data value to send to the device.
           <br />
-          <small>Example: "FFFF00"</small> 
+          <small>Example: "FFFF00"</small>
         </td>
       </tr>
       <tr>
@@ -242,7 +246,7 @@
         <td>
           The meta data title of the device to update.
           <br />
-          <small>Example: "Living Room Webcam"</small> 
+          <small>Example: "Living Room Webcam"</small>
         </td>
       </tr>
     </tbody>
@@ -256,7 +260,7 @@
   <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
-  "error": null, 
+  "error": null,
   "id": 0
 }</code></pre>
 
@@ -266,7 +270,7 @@
 curl -H 'Content-Type: application/json' \
      -X 'PUT' \
      -d '{ "DA" : "FF00FF" }' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
   <p>Rename your LED</p>
@@ -274,7 +278,7 @@ curl -H 'Content-Type: application/json' \
 curl -H 'Content-Type: application/json' \
      -X 'PUT' \
      -d '{ "shortName" : "The color changing light" }' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
   <p>&nbsp;</p>
@@ -305,7 +309,7 @@ curl -H 'Content-Type: application/json' \
   <pre><code>
 curl -H 'Content-Type: application/json' \
      -X 'DELETE' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
 <p>&nbsp;</p>
@@ -344,7 +348,7 @@ curl -H 'Content-Type: application/json' \
   <pre><code>
 curl -H 'Content-Type: application/json' \
      -X 'GET' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000/heartbeat?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000/heartbeat?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
   <p>&nbsp;</p>
@@ -361,7 +365,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           Timestamp representing the beginning of the period measurements are requested for.
           <br />
-          <small>Example: 1343268810530</small> 
+          <small>Example: 1343268810530</small>
         </td>
       </tr>
       <tr>
@@ -369,7 +373,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           Timestamp representing the end of the period measurements are requested for.
           <br />
-          <small>Example: 1343268820530</small> 
+          <small>Example: 1343268820530</small>
         </td>
       </tr>
       <tr>
@@ -384,7 +388,7 @@ curl -H 'Content-Type: application/json' \
             <li>month - Months</li>
             <li>year - Years</li>
           </ul>
-          <small>Example: 1day</small> 
+          <small>Example: 1day</small>
         </td>
       </tr>
       <tr>
@@ -401,7 +405,7 @@ curl -H 'Content-Type: application/json' \
             <li>ss - Sum of squares of all datapoints</li>
             <li>count - Total number of datapoints in the DataSet</li>
           </ul>
-          <small>Example: count</small> 
+          <small>Example: count</small>
         </td>
       </tr>
     </tbody>
@@ -462,7 +466,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The URL you wish to register a callback against.
           <br />
-          <small>Example: "http://my-app.herokuapp.com/data_callback"</small> 
+          <small>Example: "http://my-app.herokuapp.com/data_callback"</small>
         </td>
       </tr>
     </tbody>
@@ -485,7 +489,7 @@ curl -H 'Content-Type: application/json' \
 curl -H 'Content-Type: application/json' \
      -X 'POST' \
      -d '{ "url" : "http://my-app.herokuapp.com/temp_handler" }' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
   <p>&nbsp;</p>
@@ -518,7 +522,7 @@ curl -H 'Content-Type: application/json' \
   <pre><code>
 curl -H 'Content-Type: application/json' \
      -X 'GET' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
   <p>&nbsp;</p>
@@ -535,7 +539,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The URL you wish to update this callback to.
           <br />
-          <small>Example: "http://my-app.herokuapp.com/data_callback"</small> 
+          <small>Example: "http://my-app.herokuapp.com/data_callback"</small>
         </td>
       </tr>
     </tbody>
@@ -554,7 +558,7 @@ curl -H 'Content-Type: application/json' \
 curl -H 'Content-Type: application/json' \
      -X 'PUT' \
      -d '{ "url" : "http://my-app.herokuapp.com/different_temp_handler" }' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
   <p>&nbsp;</p>
@@ -585,7 +589,7 @@ curl -H 'Content-Type: application/json' \
   <pre><code>
 curl -H 'Content-Type: application/json' \
      -X 'DELETE' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN
   </code></pre>
 
   <p>&nbsp;</p>
@@ -605,7 +609,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The category of sub-device. Allowed: "rf", "webhook", "sms". This determines the behavior associated with the sub-device, and MUST correspond to the type of device used again.
           <br />
-          <small>Example: "rf"</small> 
+          <small>Example: "rf"</small>
         </td>
       </tr>
       <tr>
@@ -613,7 +617,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The short name describing the sub-device.
           <br />
-          <small>Example: "Lamp On"</small> 
+          <small>Example: "Lamp On"</small>
         </td>
       </tr>
       <tr>
@@ -621,7 +625,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           Some data to be stored against the sub-device.
           <br />
-          <small>Example: "001100110011000011100101"</small> 
+          <small>Example: "001100110011000011100101"</small>
         </td>
       </tr>
       <tr>
@@ -629,7 +633,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The type of sub-device, whether it is an actuator or a sensor. Allowed: "actuator" or "sensor"
           <br />
-          <small>Example: "actuator"</small> 
+          <small>Example: "actuator"</small>
         </td>
       </tr>
     </tbody>
@@ -673,7 +677,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The category of sub-device. Allowed: "rf", "webhook", "sms". This determines the behaviour associated with the sub-device, and MUST correspond to the type of device used again.
           <br />
-          <small>Example: "rf"</small> 
+          <small>Example: "rf"</small>
         </td>
       </tr>
       <tr>
@@ -681,7 +685,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The short name describing the sub-device.
           <br />
-          <small>Example: "Lamp Off"</small> 
+          <small>Example: "Lamp Off"</small>
         </td>
       </tr>
       <tr>
@@ -689,7 +693,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The data to be stored against the subdevice.
           <br />
-          <small>Example: "100010100010101011010110"</small> 
+          <small>Example: "100010100010101011010110"</small>
         </td>
       </tr>
       <tr>
@@ -697,7 +701,7 @@ curl -H 'Content-Type: application/json' \
         <td>
           The type of subdevice, whether it is an actuator or a sensor. Allowed: "actuator" or "sensor"
           <br />
-          <small>Example: "actuator"</small> 
+          <small>Example: "actuator"</small>
         </td>
       </tr>
     </tbody>
@@ -732,6 +736,90 @@ curl -H 'Content-Type: application/json' \
   "error": null,
   "id": 0
 }</code></pre>
+
+
+
+  <p>&nbsp;</p>
+  <a name="device-fetch-subdevice-data" id="device-fetch-subdevice-data"></a>
+  <h2>GET device/:guid/subdevice/:subdeviceId/data</h2>
+  <p>Fetch the count of the number of times the sub-device was actuated.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>from</strong><br /><em>number</em><br /><small>Optional</small></td>
+        <td>
+          Timestamp representing the beginning of the period measurements are requested for.
+          <br />
+          <small>Example: 1343268810530</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>to</strong><br /><em>number</em><br /><small>Optional</small></td>
+        <td>
+          Timestamp representing the end of the period measurements are requested for.
+          <br />
+          <small>Example: 1343268820530</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>interval</strong><br /><em>string</em><br /><small>Optional</small></td>
+        <td>
+          Intervals are specified by a number and a unit of time, i.e. 6hour or 1day. The supported time units are:
+          <br /><br />
+          <ul>
+            <li>min - Minutes</li>
+            <li>hour - Hours</li>
+            <li>day - Days</li>
+            <li>month - Months</li>
+            <li>year - Years</li>
+          </ul>
+          <small>Example: 1day</small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/subdevice/:subdeviceId/data?from=1343268810530&to=1343268820530&interval=1day</small></li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/device/:guid/subdevice/:subdeviceId/data</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": [
+    {
+      "t": "2012-06-28T01:49:00.000+0000",
+      "v": 5
+    },
+    {
+      "t": "2012-06-28T01:50:00.000+0000",
+      "v": 2
+    },
+    {
+      "t": "2012-06-28T01:51:00.000+0000",
+      "v": 8
+    },
+    {
+      "t": "2012-06-28T01:52:00.000+0000",
+      "v": 25
+    },
+    {
+      "t": "2012-06-28T01:53:00.000+0000",
+      "v": 3
+    },
+    {
+      "t": "2012-06-28T01:54:00.000+0000",
+      "v": 6
+    }
+  ]
+}</code></pre>
+
 
   <p>&nbsp;</p>
   <a name="device-webhook-subdevice-tickle" id="device-webhook-subdevice-tickle"></a>
@@ -777,7 +865,7 @@ curl -H 'Content-Type: application/json' \
   <h4>Notes</h4>
   <ul>
     <li>This call sends a command to the webcam device telling it to capture a still image. That image is then piped from the Ninja Block through to the agent of the request.</li>
-    <li>Given the reasonable complexity of actuating a webcam and streaming the response straight from the Ninja Block to the user agent, we cannot guarantee this call will always be successful.</li> 
+    <li>Given the reasonable complexity of actuating a webcam and streaming the response straight from the Ninja Block to the user agent, we cannot guarantee this call will always be successful.</li>
   </ul>
   <h4>Resource URL</h4>
   <pre><code>https://stream.ninja.is/rest/v0/camera/:guid/snapshot</code></pre>
