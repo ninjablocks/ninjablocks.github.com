@@ -8,11 +8,18 @@ layout: default
   <h2>Quick Access</h2>
   <p>To get you up and running quickly, we provide a virtual block token, which you can enable (and revoke), in the <a href="https://a.ninja.is/hacking">account settings page</a>. This block token will allow you to create arbitrary devices under your account without activating or claiming.</p>
   <p>Use your virtual block token exactly as you would a standard block token, i.e. pass it as an http header named X-Ninja-Token.</p>
+
+  <p><strong>cURL tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+
   <table>
     <tbody>
       <tr>
         <th width='35%'>Resource</th>
         <th>Description</th>
+      </tr>
+      <tr>
+        <td><a href="#block-get">GET block</a></td>
+        <td>Fetch all claimed blocks.</td>
       </tr>
       <tr>
         <td><a href="#block-post">POST block</a></td>
@@ -22,6 +29,16 @@ layout: default
         <td><a href="#block-activate">GET block/:nodeId/activate</a></td>
         <td>Returns the block token after a user has claimed the block. This token should be used with all subsequent requests. Your nodeId is a 12+ character identifier, ideally a unique serial number.</td>
       </tr>
+
+      <tr>
+        <td><a href="#block-get-one">GET block/:nodeId</a></td>
+        <td>Fetch a specific block's details.</td>
+      </tr>
+      <tr>
+        <td><a href="#block-unpair">DELETE block/:nodeId</a></td>
+        <td>Unpair a block.</td>
+      </tr>
+
       <tr>
         <td><a href="#block-heartbeat">POST block/:nodeId/heartbeat</a></td>
         <td>[DEPRECATED] Send a heartbeat from this block.</td>
@@ -44,6 +61,50 @@ layout: default
       </tr>
     </tbody>
   </table>
+
+
+  <p>&nbsp;</p>
+  <a name="block-get" id="block-get"></a>
+  <h2>GET block</h2>
+  <p>Returns all the blocks paied to an account.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/block</code></pre>
+
+  <h4>cURL Example</h4>
+  <p>Fetch all of a user's blocks:</p>
+<pre><code>curl -i https://api.ninja.is/rest/v0/block?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null,
+    "id": 0,
+    "data": {
+        "STEALTHYNODE01": {
+            "date_created": 1354675751000,
+            "last_active": 1354765031967,
+            "short_name": "Ninja Block"
+        },
+        "STEALTHYNODE02": {
+            "date_created": 1354672575000,
+            "last_active": 1354741967799,
+            "short_name": "Ninja Block"
+        }
+    }
+}</code></pre>
+
+
+
   <p>&nbsp;</p>
   <a name="block-post" id="block-post"></a>
   <h2>POST block</h2>
@@ -68,21 +129,22 @@ layout: default
     <li>Note that a result of 1 indicates the claim attempt was received successfully NOT that the claim was successful (this will change in V1 of the API). The first block requesting activation with a matching nodeid within 5 minutes will be given a token linking it to the user making this request. </li>
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block</code></pre>
+<pre><code>https://api.ninja.is/rest/v0/block</code></pre>
+  <h4>cURL Example</h4>
+  <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
+<pre><code>curl -H 'Content-Type: application/json' \
+     -X 'POST' \
+     -d '{"nodeid":"123456789ABC"}' \
+     -i https://api.ninja.is/rest/v0/block?user_access_token=YOUR_API_TOKEN </code></pre>
+
   <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
   "error": null,
   "id": 0
 }</code></pre>
-  <h4>Curl Example</h4>
-  <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
-  <pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
-     -i https://api.ninja.is/rest/v0/block?user_access_token=YOUR_API_TOKEN \
-     -d '{"nodeid":"123456789ABC"}'</code></pre>
 
-  <p><strong>Curl tip</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+
 
 
   <p>&nbsp;</p>
@@ -106,16 +168,83 @@ layout: default
     <li>A response will be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. If the response ends without a body, the request should be retried.</li>
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
+<pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
+  <h4>cURL Example</h4>
+  <p>Listen for activation from a the block with nodeId 123456789ABC:</p>
+<pre><code>curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/activate</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
   "token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
 }</code></pre>
-  <h4>Curl Example</h4>
-  <p>Listen for activation from a the block with nodeId 123456789ABC</p>
-  <pre><code>curl -H 'Content-Type: application/json' \
-   -X 'GET' \
-   -i https://api.ninja.is/rest/v0/block/123456789ABC/activate</code></pre>
+
+  <p>&nbsp;</p>
+  <a name="block-get-one" id="block-get-one"></a>
+  <h2>GET block/:nodeId</h2>
+  <p>Returns data about the specified block.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/block/:nodeId</code></pre>
+
+  <h4>cURL Example</h4>
+  <p>Fetch one block's details:</p>
+<pre><code>curl -i https://api.ninja.is/rest/v0/block/STEALTHYNODE02?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null,
+    "id": 0,
+    "data": {
+        "date_created": 1354672575000,
+        "last_active": 1354741967799,
+        "short_name": "Ninja Block"
+    }
+}</code></pre>
+
+
+  <p>&nbsp;</p>
+  <a name="block-unpair" id="block-unpair"></a>
+  <h2>DELETE block/:nodeId</h2>
+  <p>Unpair a block.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>At the time of writing the block must be restarted to complete the unpairing process. In future this will not be necessary.</li>
+  </ul>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/block/:nodeId</code></pre>
+
+  <h4>cURL Example</h4>
+  <p>Unpair the block 'STEALTHYNODE02':</p>
+<pre><code>curl -X 'DELETE' \
+     -i https://api.ninja.is/rest/v0/block/STEALTHYNODE02?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null,
+    "id": 0
+}</code></pre>
 
   <p>&nbsp;</p>
   <a name="block-heartbeat" id="block-heartbeat"></a>
@@ -167,25 +296,20 @@ layout: default
     <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
+<pre><code>https://api.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
+  <h4>cURL Example</h4>
+  <p>Send a heartbeat from a temperature device 20 degrees C and report RGB LED device as purple. Note that heartbeats contain an array of device data, it must be submitted as an array even if there is only a single device.</a></p>
+<pre><code>curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
+     -X 'POST' \
+     -d '[{"G":0,"V":0,"D":9,"DA":"20"},{"G":0,"V":0,"D":1000,"DA":"FF00FF"}]' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat </code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
   "error": null,
   "id": 0
 }</code></pre>
-  <h4>Curl Example</h4>
-  <p>Send a heartbeat from a temperature device 20 degrees C and report RGB LED device as purple. Note that heartbeats contain an array of device data, it must be submitted as an array even if there is only a single device.</a></p>
-  <pre><code>curl -H 'Content-Type: application/json' \
-     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
-     -X 'POST' \
-     -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat \
-     -d '[{"G":0,"V":0,"D":9,"DA":"20"},{"G":0,"V":0,"D":1000,"DA":"FF00FF"}]'</code></pre>
-
-
-
-
-
 
   <p>&nbsp;</p>
   <a name="block-data" id="block-data"></a>
@@ -237,19 +361,19 @@ layout: default
     <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/data</code></pre>
-  <h4>Sample JSON response</h4>
-<pre><code>{
-"result": 1,
-"error": null,
-"id": 0
-}</code></pre>
-  <h4>Curl Example</h4>
-  <pre><code>curl -H 'Content-Type: application/json' \
+<pre><code>https://api.ninja.is/rest/v0/block/:nodeId/data</code></pre>
+  <h4>cURL Example</h4>
+<pre><code>curl -H 'Content-Type: application/json' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -X 'POST' \
-     -i https://api.ninja.is/rest/v0/block/123456789ABC/data \
-     -d '{"G":0,"V":0,"D":5,"DA":"1"}' </code></pre>
+     -d '{"G":0,"V":0,"D":5,"DA":"1"}' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/data </code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+}</code></pre>
 
 
 <p>&nbsp;</p>
@@ -302,22 +426,20 @@ layout: default
     <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/config</code></pre>
-  <h4>Sample JSON response</h4>
-<pre><code>{
-"result": 1,
-"error": null,
-"id": 0
-}</code></pre>
-  <h4>Curl Example</h4>
-  <pre><code>curl -H 'Content-Type: application/json' \
+<pre><code>https://api.ninja.is/rest/v0/block/:nodeId/config</code></pre>
+  <h4>cURL Example</h4>
+<pre><code>curl -H 'Content-Type: application/json' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -X 'POST' \
-     -i https://api.ninja.is/rest/v0/block/123456789ABC/config \
-     -d '{"G":0,"V":0,"D":5,"type":"UNPLUG"}' </code></pre>
+     -d '{"G":0,"V":0,"D":5,"type":"UNPLUG"}' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/config </code></pre>
 
-
-
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+}</code></pre>
 
 
 
@@ -342,16 +464,15 @@ layout: default
     <li>The request will end after each command is received, or after approximately 30 seconds. Requests should be reinitialized in these instances.</li>
   </ul>
   <h4>Resource URL</h4>
-  <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
-  <h4>Sample JSON response</h4>
-<pre><code>{"DEVICE":[{"G":"0","V":0,"D":1000,"DA":"FFFFFF"}]}
-</code></pre>
-  <h4>Curl Example</h4>
-  <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
-  <pre><code>curl -H 'Content-Type: application/json' \
+<pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
+  <h4>cURL Example</h4>
+  <p>Await a command sent to this block:</p>
+<pre><code>curl -H 'Content-Type: application/json' \
      -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
      -X 'GET' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{"DEVICE":[{"G":"0","V":0,"D":1000,"DA":"FFFFFF"}]}</code></pre>
 
   <p>&nbsp;</p>
   <a name="device-send-image" id="device-send-image"></a>
