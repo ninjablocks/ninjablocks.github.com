@@ -290,13 +290,13 @@ layout: default
 
   <h4>cURL Examples</h4>
   <p>Set the color of your LED to Purple:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "DA" : "FF00FF" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
 <p>Rename your LED:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "shortName" : "The color changing light" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
 
@@ -482,8 +482,8 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
   <h4>cURL Example</h4>
   <p>Set a new callback for a temperature sensor:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{ "url" : "http://my-app.herokuapp.com/callback_handler" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
@@ -546,8 +546,8 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
   <h4>cURL Example</h4>
   <p>Update the temperature callback:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "url" : "http://my-app.herokuapp.com/different_temp_handler" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
@@ -649,8 +649,8 @@ layout: default
 
   <h4>cURL Webhook Sensor Example</h4>
   <p>Create a webhook sensor that can be actuated via a <a href="#device-webhook-subdevice-tickle">tickle</a>:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{ "category" : "webhook", "type":"sensor", "shortName":"My Sensor Webhook" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/subdevice?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
@@ -668,8 +668,8 @@ layout: default
 
   <h4>cURL RF Actuator Example</h4>
   <p>Create a RF actuator:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{ "category" : "rf", "type":"actuator", "shortName":"My RF Actuator" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/subdevice?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
@@ -739,8 +739,8 @@ layout: default
 
   <h4>cURL Example</h4>
   <p>Update the data stored in the specified sub-device:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "data" : "100010100010101011010110" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_11/subdevice/MB0FH?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
