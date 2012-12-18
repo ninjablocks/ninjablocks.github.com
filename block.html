@@ -465,8 +465,7 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
   <h4>cURL Example</h4>
   <p>Await a command sent to this block:</p>
-<pre><code>curl -X 'GET' \
-     -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
+<pre><code>curl -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
      -H 'Content-Type: application/json' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
   <h4>Sample JSON response</h4>
