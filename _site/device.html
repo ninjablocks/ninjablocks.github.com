@@ -137,9 +137,7 @@
 <pre><code>https://api.ninja.is/rest/v0/devices</code></pre>
   <h4>cURL Example</h4>
   <p>List all your devices:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN</code></pre>
+<pre><code>curl -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN</code></pre>
 
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -261,9 +259,7 @@
 
   <h4>cURL Example</h4>
   <p>Fetch the meta data for the specified device:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE01_0301_0_31?user_access_token=YOUR_API_TOKEN</code></pre>
+<pre><code>curl -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE01_0301_0_31?user_access_token=YOUR_API_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -330,13 +326,13 @@
 
   <h4>cURL Examples</h4>
   <p>Set the color of your LED to Purple:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "DA" : "FF00FF" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
 <p>Rename your LED:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "shortName" : "The color changing light" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
 
@@ -365,8 +361,7 @@
 <pre><code>https://api.ninja.is/rest/v0/device/:guid</code></pre>
   <h4>cURL Example</h4>
   <p>Delete your LED device. Note it will be re-created on the next heart beat if plugged in:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'DELETE' \
+<pre><code>curl -X 'DELETE' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -394,9 +389,7 @@
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/heartbeat</code></pre>
   <h4>cURL Example</h4>
   <p>Retrieve the current color of your onboard LED:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000/heartbeat?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+<pre><code>curl -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000/heartbeat?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -525,8 +518,8 @@
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
   <h4>cURL Example</h4>
   <p>Set a new callback for a temperature sensor:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{ "url" : "http://my-app.herokuapp.com/callback_handler" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
@@ -554,9 +547,7 @@
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
   <h4>cURL Example</h4>
   <p>Retrieve the current callback for the temperature sensor:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN
+<pre><code>curl -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -591,8 +582,8 @@
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
   <h4>cURL Example</h4>
   <p>Update the temperature callback:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "url" : "http://my-app.herokuapp.com/different_temp_handler" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
@@ -621,8 +612,7 @@
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/callback</code></pre>
   <h4>cURL Example</h4>
   <p>Retrieve the current callback for the temperature sensor:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'DELETE' \
+<pre><code>curl -X 'DELETE' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
   <h4>Sample JSON response</h4>
@@ -695,8 +685,8 @@
 
   <h4>cURL Webhook Sensor Example</h4>
   <p>Create a webhook sensor that can be actuated via a <a href="#device-webhook-subdevice-tickle">tickle</a>:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{ "category" : "webhook", "type":"sensor", "shortName":"My Sensor Webhook" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/subdevice?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
@@ -714,8 +704,8 @@
 
   <h4>cURL RF Actuator Example</h4>
   <p>Create a RF actuator:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{ "category" : "rf", "type":"actuator", "shortName":"My RF Actuator" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/subdevice?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
@@ -785,8 +775,8 @@
 
   <h4>cURL Example</h4>
   <p>Update the data stored in the specified sub-device:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'PUT' \
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
      -d '{ "data" : "100010100010101011010110" }' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_11/subdevice/MB0FH?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
@@ -816,8 +806,7 @@
 
   <h4>cURL Example</h4>
   <p>Delete the specified sub-device:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'DELETE' \
+<pre><code>curl -X 'DELETE' \
      -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_11/subdevice/MB0FH?user_access_token=YOUR_ACCESS_TOKEN
 </code></pre>
 
@@ -882,9 +871,7 @@
 
   <h4>cURL Example</h4>
   <p>Fetch the counts in 1 minute interval of this sub-device:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE01_0_0_11/subdevice/MA9EJ/data?interval=1min&user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+<pre><code>curl -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE01_0_0_11/subdevice/MA9EJ/data?interval=1min&user_access_token=YOUR_ACCESS_TOKEN</code></pre>
 
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -942,8 +929,7 @@
   <pre><code>https://api.ninja.is/rest/v0/device/:deviceGuid/subdevice/:subDeviceId/tickle/:token</code></pre>
   <h4>cURL Example</h4>
   <p>Fetch the counts in 1 minute interval of this sub-device:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
      -i https://api.ninja.is/rest/v0/device/WEBHOOK_0_0_108/subdevice/LA9EJ/tickle/1c0c8929-3318-411d-96e0-36fb7872ea5d</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -997,7 +983,7 @@ Connection: keep-alive
       <script src="javascripts/scale.fix.js"></script>
       <script type="text/javascript">
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-31570375-1']);
+        _gaq.push(['_setAccount', 'UA-28187777-2']);
         _gaq.push(['_trackPageview']);
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

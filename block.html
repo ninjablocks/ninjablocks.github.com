@@ -5,9 +5,10 @@ layout: default
 <section>
   <a name="block-object" id="block-object"></a>
   <h1>Block</h1>
-  <h2>Quick Access</h2>
+  <h3>Quick Access Via Virtual Block Token</h3>
   <p>To get you up and running quickly, we provide a virtual block token, which you can enable (and revoke), in the <a href="https://a.ninja.is/hacking">account settings page</a>. This block token will allow you to create arbitrary devices under your account without activating or claiming.</p>
   <p>Use your virtual block token exactly as you would a standard block token, i.e. pass it as an http header named X-Ninja-Token.</p>
+  {% include block_activation.html %}
 
   <p><strong>cURL tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
 
@@ -27,7 +28,7 @@ layout: default
       </tr>
       <tr>
         <td><a href="#block-activate">GET block/:nodeId/activate</a></td>
-        <td>Returns the block token after a user has claimed the block. This token should be used with all subsequent requests. Your nodeId is a 12+ character identifier, ideally a unique serial number.</td>
+        <td>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier, ideally a unique serial number.</td>
       </tr>
 
       <tr>
@@ -126,7 +127,7 @@ layout: default
   </table>
   <h4>Notes</h4>
   <ul>
-    <li>Note that a result of 1 indicates the claim attempt was received successfully NOT that the claim was successful (this will change in V1 of the API). The first block requesting activation with a matching nodeid within 5 minutes will be given a token linking it to the user making this request. </li>
+    <li>Note that a result of 1 indicates the claim attempt was received successfully NOT that the claim was successful (this will change in v1 of the API). The first block requesting activation with a matching nodeid within 30 seconds will be given a token linking it to the user making this request. </li>
   </ul>
   <h4>Resource URL</h4>
 <pre><code>https://api.ninja.is/rest/v0/block</code></pre>
@@ -144,13 +145,10 @@ layout: default
   "id": 0
 }</code></pre>
 
-
-
-
   <p>&nbsp;</p>
   <a name="block-activate" id="block-activate"></a>
   <h2>GET block/:nodeId/activate</h2>
-  <p>Returns the block token when an authenticated user has claimed the block. This token should be used with all subsequent requests. This should be implemented as a long GET.</p>
+  <p>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier, ideally a unique serial number.</p>
   <table>
     <tbody>
       <tr>
@@ -164,8 +162,8 @@ layout: default
   <h4>Notes</h4>
   <ul>
     <li><strong>nodeId</strong> should be a unique string at least 12 characters in length, ideally a hardware serial number accessible by the user.</li>
-    <li>This URI does not currently require authentication credentials.</li>
-    <li>A response will be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. If the response ends without a body, the request should be retried.</li>
+    <li>If authentication credentials are provided with the request, ie via an <code>access_token</code> or <code>user_access_token</code>, an activated block token will immediately be returned.</li>
+    <li>If no authentication credentials are provided, a response will only be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. In this case the request is a 'long GET', and thus if the response ends without a body, the request should be reinitialized.</li>
   </ul>
   <h4>Resource URL</h4>
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>

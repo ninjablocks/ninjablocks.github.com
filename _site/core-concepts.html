@@ -55,12 +55,19 @@
   </ul></p>
   <p>In some cases, you might have many things talking to 1 device, for example an RF module, or Blue Tooth dongle. In this case we allow for creating 'sub-devices'. <strong>Sub-devices</strong> can be either sensors or actuators, and  essentially allow you to class data that might be sent/received by that device. For example, your RF module might report '101000001111101010000' when you press your door bell. Saving this value as a sensor sub-device allows the user a more human interaction. Depending on your application, you may never have to interact with sub-devices.</p>
   <p>You can add web services as devices too, such as Twitter, Webhooks, Facebook, Email, Twilio, etc. The list can be found in <a href="https://a.ninja.is/networking">your account</a> page.</p>
+
+    <h3>Block Activation Explained</h3>
+
+  <p>The process of claiming / activating a block is the process of retrieving a token for that particular block (identified by its node ID) that is tied to a user account.</p>
+  <p>There are two flows to block activation. First, you can request a token with user credentials. This is useful for browsers and other apps that already have a user's authorization.</p>
+  <p>The second involves a two-legged flow where a block requests a token and awaits activation (HTTP GET, does not require user authorization) and a user separately attempts to claim that block awaiting activation (HTTP POST, does require authorization). For example an Arduino might request activation, and a user then 'claims' that block via his/her browser/smartphone. The token is sent down the wire to the Arduino which then uses it in all subsequent requests.</p>
+
   <!-- /Core Concepts -->
  </section>
       <script src="javascripts/scale.fix.js"></script>
       <script type="text/javascript">
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-31570375-1']);
+        _gaq.push(['_setAccount', 'UA-28187777-2']);
         _gaq.push(['_trackPageview']);
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
