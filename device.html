@@ -97,6 +97,13 @@ layout: default
   </table>
   <h4>Resource URL</h4>
   <pre><code>https://api.ninja.is/rest/v0/devices</code></pre>
+  <h4>Curl Example</h4>
+  <p>List all your devices</p>
+<pre><code>curl -H 'Content-Type: application/json' \
+   -X 'GET' \
+   -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN</code></pre>
+
+  <p><strong>Tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
   <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
@@ -172,13 +179,7 @@ layout: default
     }
   }
 }</code></pre>
-  <h4>Curl Example</h4>
-  <p>List all your devices</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-   -X 'GET' \
-   -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN</code></pre>
 
-  <p><strong>Tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
 
   <p>&nbsp;</p>
   <a name="device-get" id="device-get"></a>
