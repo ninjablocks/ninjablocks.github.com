@@ -132,8 +132,8 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/block</code></pre>
   <h4>cURL Example</h4>
   <p>Attempt to claim block 123456789ABC on behalf of the user identified by their <a href="authentication.html">user access token</a></p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'POST' \
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{"nodeid":"123456789ABC"}' \
      -i https://api.ninja.is/rest/v0/block?user_access_token=YOUR_API_TOKEN </code></pre>
 
@@ -171,9 +171,7 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/activate</code></pre>
   <h4>cURL Example</h4>
   <p>Listen for activation from a the block with nodeId 123456789ABC:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/block/123456789ABC/activate</code></pre>
+<pre><code>curl -i https://api.ninja.is/rest/v0/block/123456789ABC/activate</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
   "token": "1c0c8929-3318-411d-96e0-36fb7872ea5c"
@@ -299,9 +297,9 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/heartbeat</code></pre>
   <h4>cURL Example</h4>
   <p>Send a heartbeat from a temperature device 20 degrees C and report RGB LED device as purple. Note that heartbeats contain an array of device data, it must be submitted as an array even if there is only a single device.</a></p>
-<pre><code>curl -H 'Content-Type: application/json' \
+<pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
-     -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '[{"G":0,"V":0,"D":9,"DA":"20"},{"G":0,"V":0,"D":1000,"DA":"FF00FF"}]' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat </code></pre>
   <h4>Sample JSON response</h4>
@@ -363,9 +361,9 @@ layout: default
   <h4>Resource URL</h4>
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/data</code></pre>
   <h4>cURL Example</h4>
-<pre><code>curl -H 'Content-Type: application/json' \
+<pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
-     -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{"G":0,"V":0,"D":5,"DA":"1"}' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/data </code></pre>
   <h4>Sample JSON response</h4>
@@ -428,9 +426,9 @@ layout: default
   <h4>Resource URL</h4>
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/config</code></pre>
   <h4>cURL Example</h4>
-<pre><code>curl -H 'Content-Type: application/json' \
+<pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
-     -X 'POST' \
+     -H 'Content-Type: application/json' \
      -d '{"G":0,"V":0,"D":5,"type":"UNPLUG"}' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/config </code></pre>
 
@@ -467,9 +465,9 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/commands</code></pre>
   <h4>cURL Example</h4>
   <p>Await a command sent to this block:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
+<pre><code>curl -X 'GET' \
      -H 'X-Ninja-Token:YOUR_BLOCK_TOKEN' \
-     -X 'GET' \
+     -H 'Content-Type: application/json' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/commands</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{"DEVICE":[{"G":"0","V":0,"D":1000,"DA":"FFFFFF"}]}</code></pre>
