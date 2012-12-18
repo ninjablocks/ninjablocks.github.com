@@ -135,53 +135,78 @@
   <pre><code>https://api.ninja.is/rest/v0/devices</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
-"result": 1,
-"error": null,
-"id": 0,
-"data": {
-  "ASTEALTHYNODE01_0_0_1": {
-      "css_class": "sensor cape temp",
-      "default_name": "Block Temperature",
-      "device_type": "temperature",
-      "did": "1",
-      "gid": "0",
-      "is_actuator": 0,
-      "is_sensor": 1,
-      "is_silent": 0,
-      "meta": {},
-      "shortName": "Block Temperature",
-      "subDevices": {},
-      "vid": "0"
-  },
-  "ASTEALTHYNODE01_0_0_1000": {
-      "css_class": "actuator cape led rgbled",
-      "default_name": "On Board RGB LED",
-      "device_type": "rgbled",
-      "did": "1000",
-      "gid": "0",
-      "is_actuator": 1,
-      "is_sensor": 1,
-      "is_silent": 0,
-      "meta": {},
-      "shortName": "On Board RGB LED",
-      "subDevices": {},
-      "vid": "0"
-  },
-  "ASTEALTHYNODE01_1_0_11": {
-      "css_class": "sensor serial rf rf433 receiver transmitter",
-      "default_name": "RF 433Mhz",
-      "device_type": "rf433",
-      "did": "11",
-      "gid": "1",
-      "is_actuator": 1,
-      "is_sensor": 1,
-      "is_silent": 0,
-      "meta": {},
-      "shortName": "RF 433Mhz",
-      "subDevices": {},
-      "vid": "0"
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "ASTEALTHYNODE01_0_0_1": {
+        "css_class": "sensor cape temp",
+        "default_name": "Block Temperature",
+        "device_type": "temperature",
+        "did": "1",
+        "gid": "0",
+        "has_subdevice_count": 0,
+        "has_time_series": 1,
+        "is_actuator": 0,
+        "is_sensor": 1,
+        "is_silent": 0,
+        "last_data": {},
+        "meta": {},
+        "node": "ASTEALTHYNODE01",
+        "shortName": "Block Temperature",
+        "subDevices": {},
+        "vid": "0"
+    },
+    "ASTEALTHYNODE01_0_0_1000": {
+        "css_class": "actuator cape led rgbled",
+        "default_name": "On Board RGB LED",
+        "device_type": "rgbled",
+        "did": "1000",
+        "gid": "0",
+        "has_subdevice_count": 0,
+        "has_time_series": 0,
+        "is_actuator": 1,
+        "is_sensor": 1,
+        "is_silent": 0,
+        "last_data": {
+            "DA": "22B42B",
+            "timestamp": 1355790209080
+        },
+        "meta": {},
+        "node": "ASTEALTHYNODE01",
+        "shortName": "On Board RGB LED",
+        "subDevices": {},
+        "vid": "0"
+    },
+    "ASTEALTHYNODE01_0_0_11": {
+        "css_class": "sensor serial rf rf433 receiver transmitter",
+        "default_name": "RF 433Mhz",
+        "device_type": "rf433",
+        "did": "11",
+        "gid": "0",
+        "has_subdevice_count": 1,
+        "has_time_series": 0,
+        "is_actuator": 1,
+        "is_sensor": 1,
+        "is_silent": 0,
+        "last_data": {
+            "DA": "010001010101010100010101",
+            "timestamp": 1355789891324
+        },
+        "meta": {},
+        "node": "ASTEALTHYNODE01",
+        "shortName": "RF 433Mhz",
+        "subDevices": {
+            "6l8At": {
+                "category": "rf",
+                "data": "011111110001010100110000",
+                "shortName": "Door Bell",
+                "type": "sensor"
+            }
+        },
+        "vid": "0"
+    }
   }
-}
 }</code></pre>
   <h4>Curl Example</h4>
   <p>List all your devices</p>
@@ -783,6 +808,7 @@ curl -H 'Content-Type: application/json' \
   </table>
   <h4>Notes</h4>
   <ul>
+    <li>The sub-device ID is the key of the `subDevices` property of the device. See <a href="#device-get-devices">GET devices</a></small></li>
     <li>Parameters are provided in the query string.<br /><small>Example: device/:guid/subdevice/:subdeviceId/data?from=1343268810530&to=1343268820530&interval=1day</small></li>
   </ul>
   <h4>Resource URL</h4>
