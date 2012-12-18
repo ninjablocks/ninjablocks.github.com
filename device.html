@@ -447,9 +447,7 @@ layout: default
 <pre><code>https://api.ninja.is/rest/v0/device/:guid/data</code></pre>
   <h4>cURL Example</h4>
   <p>Fetch the mean temperature in 1 day intervals for the past week:</p>
-<pre><code>curl -H 'Content-Type: application/json' \
-     -X 'GET' \
-     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE01_0301_0_31/data?fn=mean&interval=1day&user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+<pre><code>curl -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE01_0301_0_31/data?fn=mean&interval=1day&user_access_token=YOUR_ACCESS_TOKEN</code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
   "result": 1,
