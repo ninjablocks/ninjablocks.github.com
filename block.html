@@ -8,6 +8,7 @@ layout: default
   <h3>Quick Access Via Virtual Block Token</h3>
   <p>To get you up and running quickly, we provide a virtual block token, which you can enable (and revoke), in the <a href="https://a.ninja.is/hacking">account settings page</a>. This block token will allow you to create arbitrary devices under your account without activating or claiming.</p>
   <p>Use your virtual block token exactly as you would a standard block token, i.e. pass it as an http header named X-Ninja-Token.</p>
+
   {% include block_activation.html %}
 
   <p><strong>cURL tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
@@ -67,7 +68,7 @@ layout: default
   <p>&nbsp;</p>
   <a name="block-get" id="block-get"></a>
   <h2>GET block</h2>
-  <p>Returns all the blocks paied to an account.</p>
+  <p>Returns all the blocks paired to an account.</p>
   <table>
     <tbody>
       <tr>
