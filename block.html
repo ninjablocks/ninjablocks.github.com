@@ -29,7 +29,7 @@ layout: default
       </tr>
       <tr>
         <td><a href="#block-activate">GET block/:nodeId/activate</a></td>
-        <td>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier, ideally a unique serial number.</td>
+        <td>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier (no underscores), ideally a unique serial number.</td>
       </tr>
 
       <tr>
@@ -119,7 +119,7 @@ layout: default
       <tr>
         <td><strong>nodeid</strong><br /><em>string</em><br /><small>Required</small></td>
         <td>
-          The ID of the block you are attempting to claim. This block must be currently awaiting activation. ID's have a minimum length of 12 characters.
+          The ID of the block you are attempting to claim. This block must be currently awaiting activation. ID's have a minimum length of 12 characters and only include letters and numbers (no underscores).
           <br />
           <small>Example: "ASTEALTHYNODE01"</small>
         </td>
@@ -149,7 +149,7 @@ layout: default
   <p>&nbsp;</p>
   <a name="block-activate" id="block-activate"></a>
   <h2>GET block/:nodeId/activate</h2>
-  <p>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier, ideally a unique serial number.</p>
+  <p>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier (no underscores), ideally a unique serial number.</p>
   <table>
     <tbody>
       <tr>
@@ -162,7 +162,7 @@ layout: default
   </table>
   <h4>Notes</h4>
   <ul>
-    <li><strong>nodeId</strong> should be a unique string at least 12 characters in length, ideally a hardware serial number accessible by the user.</li>
+    <li><strong>nodeId</strong> should be a unique string at least 12 alphanumeric characters (no underscores) in length, ideally a hardware serial number accessible by the user.</li>
     <li>If authentication credentials are provided with the request, ie via an <code>access_token</code> or <code>user_access_token</code>, an activated block token will immediately be returned.</li>
     <li>If no authentication credentials are provided, a response will only be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. In this case the request is a 'long GET', and thus if the response ends without a body, the request should be reinitialized.</li>
   </ul>

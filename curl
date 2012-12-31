@@ -1,0 +1,159 @@
+Cheers,
+Pete
+---
+skype:ptemoore
+facetime/gtalk: askpete@gmail.com
+AU +61-414-587637
+US +1-415-6709637
+GET DEVICES https://api.ninja.is/rest/v0/devices
+
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/devices?user_access_token=YOUR_API_TOKEN 
+
+
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/devices?user_access_token=2ca54ecb-bdbe-4f08-9691-271198921527 
+
+
+POST DEVICE 
+
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "shortName" : "The color changing light" }' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "DA" : "FF00FF" }' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000?user_access_token=YOUR_ACCESS_TOKEN 
+
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "shortName" : "The color changing light" }' \
+     -i https://api.ninja.is/rest/v0/device/1012BB013150_0_0_1000?user_access_token=2ca54ecb-bdbe-4f08-9691-271198921527 
+
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "DA" : "^^^^^^^^" }' \
+     -i https://api.ninja.is/rest/v0/device/0000000071B4CE9B_0_0_7000?user_access_token=2ca54ecb-bdbe-4f08-9691-271198921527 
+
+
+GET HEartbeat
+
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_1000/heartbeat?user_access_token=YOUR_ACCESS_TOKEN 
+
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/device/1012BB013150_0_0_1000/heartbeat?user_access_token=2ca54ecb-bdbe-4f08-9691-271198921527 
+
+
+CALLBACKS
+Post
+curl -H 'Content-Type: application/json' \
+     -X 'POST' \
+     -d '{ "url" : "http://my-app.herokuapp.com/temp_handler"}' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -d '{ "url" : "http://my-app.herokuapp.com/temp_handler"}' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=2ca54ecb-bdbe-4f08-9691-271198921527 
+Get
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=YOUR_ACCESS_TOKEN 
+curl -H 'Content-Type: application/json' \
+     -X 'DELETE' \
+     -i https://api.ninja.is/rest/v0/device/ASTEALTHYNODE_0_0_9/callback?user_access_token=2ca54ecb-bdbe-4f08-9691-271198921527 
+Update
+
+
+Activate
+
+curl -H 'Content-Type: application/json' \
+     -X 'GET' \
+     -i https://staging.ninja.is/rest/v0/block/123456789ABC/activate
+
+
+Claim
+
+curl -H 'Content-Type: application/json' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block?user_access_token=YOUR_API_TOKEN \
+     -d '{"nodeid":"123456789ABC"}'
+
+
+curl -H 'Content-Type: application/json' \
+     -X 'POST' \
+     -i https://staging.ninja.is/rest/v0/block?user_access_token=a63b9f46-df0b-4da9-bf9e-fc51c9f24af5 \
+     -d '{"nodeid":"123456789ABC"}'
+
+
+curl -H 'Content-Type: application/json' \
+     -X 'PUT' \
+     -i https://staging.ninja.is/rest/v0/device/1012BB022411_0_0_11?user_access_token=a63b9f46-df0b-4da9-bf9e-fc51c9f24af5 \
+     -d '{"DA":"110110101101101011011010"}'
+
+
+1012BB022411_0_0_11
+
+
+Commands
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
+     -X 'GET' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/commands 
+
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: 9aaab6be-fe82-469e-a11d-21351dca0914' \
+     -X 'GET' \
+     -i https://staging.ninja.is/rest/v0/block/123456789ABC/commands 
+
+Heartbeat
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat \
+     -d '[{"GUID":"123456789ABC_0_0_9","G":0,"V":0,"D":9,"DA":"20"},{"GUID":"123456789ABC_0_0_1000","G":0,"V":0,"D":1000,"DA":"FF00FF"}]' 
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: 9aaab6be-fe82-469e-a11d-21351dca0914' \
+     -X 'POST' \
+     -i https://staging.ninja.is/rest/v0/block/123456789ABC/heartbeat \
+     -d '[{"GUID":"123456789ABC_0_0_9","G":0,"V":0,"D":9,"DA":"20"},{"GUID":"123456789ABC_0_0_1000","G":0,"V":0,"D":1000,"DA":"FF00FF"}]' 
+
+
+DATA
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block/123456789ABC/data \
+     -d '{"GUID":"123456789ABC_0_0_5","G":0,"V":0,"D":5,"DA":"1"}' 
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: 9aaab6be-fe82-469e-a11d-21351dca0914' \
+     -X 'POST' \
+     -i https://staging.ninja.is/rest/v0/block/123456789ABC/data \
+     -d '{"GUID":"123456789ABC_0_0_5","G":0,"V":0,"D":5,"DA":"0"}' 
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: ec3f475d-5794-4f39-8464-76836eb0b53b' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block/1234567890ABC/data \
+     -d '{"GUID":"1234567890ABC_0_0_7000","G":0,"V":0,"D":7000,"DA":"Hello"}' 
+
+curl -H 'Content-Type: application/json' \
+     -H 'X-Ninja-Token: ec3f475d-5794-4f39-8464-76836eb0b53b' \
+     -X 'POST' \
+     -i https://api.ninja.is/rest/v0/block/1234567890ABC/data \
+     -d '{"GUID":"0000000071B4CE9B_0_0_7000","G":0,"V":0,"D":7000,"DA":"Hello"}' 
+
+
