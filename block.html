@@ -246,7 +246,7 @@ layout: default
   <p>&nbsp;</p>
   <a name="block-heartbeat" id="block-heartbeat"></a>
   <h2>POST block/:nodeId/heartbeat</h2>
-  <h4><em>Deprecated</em></h4>
+  <h3><em>DEPRECATED - use <a href="#block-data">Data</a> instead</em></h3>
   <p>Send a heartbeat from this block.<br /><strong>Important</strong>: the request body takes the form of an <strong>array of objects</strong>, whose parameters are outlined below.</p>
   <p>Heartbeat events are intended to be values to be analyzed in due course. For example, a temperature reading should be part of a 'heartbeat' event, whereas a button press should be a <a href="#block-data">'data'</a> event.</p>
   <table>
@@ -312,7 +312,7 @@ layout: default
   <a name="block-data" id="block-data"></a>
   <h2>POST block/:nodeId/data</h2>
   <p>Send a data event from this block.</p>
-  <p>Data events are intended to be values to be actioned immediately. For example, a button press should be a 'data' event, whereas a temperature reading should be part of a <a href="#block-heartbeat">'heartbeat'</a> event</p>
+  <p>Data events are actioned immediately. You can POST a single data event object or an array of objects. Note that omiting the timestamp attibute will result in the server timestamping the event on receipt.</p>
   <table>
     <tbody>
       <tr>
@@ -350,20 +350,29 @@ layout: default
           <small>Example: "-1"</small>
         </td>
       </tr>
+      <tr>
+        <td><strong>TIMESTAMP</strong><br /><em>int (timestamp)</em><br /><small>Optional</small></td>
+        <td>
+          The time of the event in <a href="http://www.epochconverter.com/">Unix or Epoch time</a>.
+          <br />
+          <small>Example: "1356920901"</small>
+        </td>
+      </tr>
+
     </tbody>
   </table>
   <h4>Notes</h4>
   <ul>
-    <li>This endpoint will also accept an array of objects to send multiple datapoints in one request.</li>
+    <li>This endpoint will also accept an object or an array of objects to send multiple datapoints in one request.</li>
     <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
   </ul>
   <h4>Resource URL</h4>
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/data</code></pre>
-  <h4>cURL Example</h4>
+  <p>Set the temperature to 20 degrees C and report RGB LED device as purple.</a></p>
 <pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -H 'Content-Type: application/json' \
-     -d '{"G":0,"V":0,"D":5,"DA":"1"}' \
+     -d '[{"G":0,"V":0,"D":9,"DA":"20"},{"G":0,"V":0,"D":1000,"DA":"FF00FF"}]' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/data </code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
