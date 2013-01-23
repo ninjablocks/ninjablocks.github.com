@@ -2,20 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Core Concepts |  Ninja Blocks API</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/font-awesome.css">
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
-    <![endif]-->
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="javascripts/smooth.pack.js"></script>
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title> Core Concepts |  Ninja Blocks API</title>
+<link rel="stylesheet" href="/stylesheets/styles.css">
+<link rel="stylesheet" href="/stylesheets/font-awesome.css">
+<!--[if IE 7]>
+<link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
+<![endif]-->
+<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/javascripts/smooth.pack.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
   </head>
   <body>
     <div class="wrapper">
@@ -23,21 +23,18 @@
         <h1>Ninja Blocks API</h1>
         <h3>/rest/v0</h3>
         <p></p>
-        <p class="view"><a href="index.html"><i class="icon-home"></i> Home</a></p>
-        <h3>Basics</h3>
-        <h4><a href="core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
-        <h4><a href="authentication.html"><i class="icon-unlock"></i> Authentication</a></h4>
-        <h3>Objects</h3>
-        <h4><a href="user.html"><i class="icon-group"></i> User</a></h4>
-        <h4><a href="block.html"><i class="icon-hdd"></i> Block</a></h4>
-        <h4><a href="device.html"><i class="icon-sitemap"></i> Device</a></h4>
-        <h4><a href="rule.html"><i class="icon-legal"></i> Rule</a></h4>
-        <h4><a href="module.html"><i class="icon-cogs"></i> Module</a></h4>
+        <p class="view"><a href="/index.html"><i class="icon-home"></i> Home</a></p>
+        <h4><a href="/core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
+        <h4><a href="/rest"><i class="icon-bolt"></i> REST</a></h4>
+        <!--
+        <h4><a href="/module.html"><i class="icon-cogs"></i> Modules</a></h4>
+        <h4><a href="/protocol"><i class="icon-book"></i> Device Protocols</a></h4>
+      -->
         <h3>See Also</h3>
-        <p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
-        <p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
-        <p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github"></i> Code</a></p>
-        <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
+<p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github-alt"></i> Code</a></p>
+<p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
       <section>
   <!-- Core Concepts -->
@@ -45,7 +42,7 @@
   <h1>Core Concepts</h1>
   <p>The first class citizen in the Ninja Platform are devices. <strong>Devices</strong> are things like temperature sensors, LED lights, SMS, and can even be services such as Twitter and Facebook (anything really). These things can sense, actuate, and in some cases both.</p>
   <p>Devices talk to the Ninja Platform via a hub which we call a 'block'. <strong>Blocks</strong> are essentially just gateways between your devices and our platform. They handle authentication, configuration, and routing to and from your devices.</p>
-  <p>As a developer, after you have been <a href="authentication.html">authorized</a> to access a user's device data, you will want to subscribe to this data. This is easily accomplished with <code>callbacks</code> (see <a href="device.html#device-create-callback">here</a>), a neat feature that allows you to register a URL against a device that we will POST to whenever data is received by that device. When working with callbacks as a third party application developer, we recommend <a href="http://requestb.in" target="_blank">requestb.in</a> to assist with troubleshooting.</p>
+  <p>As a developer, after you have been <a href="/authentication.html">authorized</a> to access a user's device data, you will want to subscribe to this data. This is easily accomplished with <code>callbacks</code> (see <a href="/rest/device.html#device-create-callback">here</a>), a neat feature that allows you to register a URL against a device that we will POST to whenever data is received by that device. When working with callbacks as a third party application developer, we recommend <a href="http://requestb.in" target="_blank">requestb.in</a> to assist with troubleshooting.</p>
   <p>Devices have numerous properties, but a few you will see over and over again:<br />
   <ul>
   	<li><code>GUID</code> - the device's globally unique ID.</li>
@@ -57,25 +54,20 @@
   <p>In some cases, you might have many things talking to 1 device, for example an RF module, or Blue Tooth dongle. In this case we allow for creating 'sub-devices'. <strong>Sub-devices</strong> can be either sensors or actuators, and  essentially allow you to class data that might be sent/received by that device. For example, your RF module might report '101000001111101010000' when you press your door bell. Saving this value as a sensor sub-device allows the user a more human interaction. Depending on your application, you may never have to interact with sub-devices.</p>
   <p>You can add web services as devices too, such as Twitter, Webhooks, Facebook, Email, Twilio, etc. The list can be found in <a href="https://a.ninja.is/networking">your account</a> page.</p>
 
-    <h3>Block Activation Explained</h3>
-
-  <p>Claiming / activating a block is the process of retrieving a token for a given block (identified by its node ID) that is used to link that block to a particular user.</p>
-  <p>There are two flows to block activation. First, you can request a token with user credentials. This is useful for browsers and other apps that already have a user's authorization.</p>
-  <p>The second involves a two-legged flow where a block requests a token and awaits activation (HTTP GET, does not require user authorization) and a user separately attempts to claim that block awaiting activation (HTTP POST, does require authorization). For example an Arduino might request activation, and a user then 'claims' that block via his/her browser/smartphone. The token is sent down the wire to the Arduino which then uses it in all subsequent requests.</p>
-  <p>For more information <a href="block.html#block-activate">see here</a>.</p>
-
   <!-- /Core Concepts -->
  </section>
-      <script src="javascripts/scale.fix.js"></script>
-      <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-28187777-2']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
+
+      <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/all.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28187777-2']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
   </body>
 </html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title> User |  Ninja Blocks API</title>
+<link rel="stylesheet" href="/stylesheets/styles.css">
+<link rel="stylesheet" href="/stylesheets/font-awesome.css">
+<!--[if IE 7]>
+<link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
+<![endif]-->
+<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/javascripts/smooth.pack.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ninja Blocks API</h1>
+        <h3>/rest/v0</h3>
+        <p></p>
+        <p class="view"><a href="/index.html"><i class="icon-home"></i> Home</a></p>
+        <h4><a href="/core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
+        <h4><a href="/rest"><i class="icon-bolt"></i> REST</a></h4>
+        <div class="active-nav-block">
+          <h4><a href="/rest/authentication.html"><i class="icon-unlock"></i> Authentication</a></h4>
+          <h4><a href="/rest/user.html"><i class="icon-group"></i> User</a></h4>
+          <h4><a href="/rest/block.html"><i class="icon-hdd"></i> Block</a></h4>
+          <h4><a href="/rest/device.html"><i class="icon-sitemap"></i> Device</a></h4>
+          <h4><a href="/rest/rule.html"><i class="icon-legal"></i> Rule</a></h4>
+        </div>
+        <!--
+        <h4><a href="/module.html"><i class="icon-cogs"></i> Modules</a></h4>
+        <h4><a href="/protocol"><i class="icon-book"></i> Device Protocols</a></h4>
+        -->
+        <h3>See Also</h3>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
+<p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github-alt"></i> Code</a></p>
+<p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
+      </header>
+      <section>
+  <a name="user-object" id="user-object"></a>
+  <h1>User</h1>
+  <table>
+    <tbody>
+      <tr>
+        <th width="30%">Resource</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><a href="#user-info">GET user</a></td>
+        <td>Return information about the authenticated user.</td>
+      </tr>
+      <tr>
+        <td><a href="#user-stream">GET user/stream</a></td>
+        <td>Returns the 30 most recent entries in the authenticating user's activity stream.</td>
+      </tr>
+      <tr>
+        <td><a href="#user-pusher">GET user/pusherchannel</a></td>
+        <td>Returns user's pusher channel key.</td>
+      </tr>
+      <tr>
+        <td><a href="#user-realtime">PUT user/realtime</a></td>
+        <td>Sets the amount of time that 'realtime' mode will be active for. If successful, during this duration all messages received from all blocks will be forwarded via Pusher.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;</p>
+  <a name="user-info" id="user-info"></a>
+  <h2>GET user</h2>
+  <p>Return information about the authenticated user.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/user</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "email": "help@ninjablocks.com",
+    "id": "1fb889da-f331-11e1-9acb-ab5bc6c99ebf",
+    "name": "Ninja Support",
+    "pusherChannel": "97f0b1e1-e504-f333-b7ad-eadaa8590b99"
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="user-stream" id="user-stream"></a>
+  <h2>GET user/stream</h2>
+  <p>Returns the 30 most recent entries in the authenticating user's activity stream.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/user/stream</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>[
+{
+  "message": "Rule \"Door Bell\" Executed.",
+  "timestamp": 1343268860669
+},
+{
+  "message": "Rule \"Door Bell\" Executed.",
+  "timestamp": 1343268810530
+},
+{
+  "message": "Rule \"Door Bell\" Executed.",
+  "timestamp": 1343268782287
+},
+{
+  "message": "Rule \"Door Bell\" Executed.",
+  "timestamp": 1343268757513
+}
+]</code></pre>
+  <p>&nbsp;</p>
+  <a name="user-pusher" id="user-pusher"></a>
+  <h2>GET user/pusherchannel</h2>
+  <p>Returns user's pusher channel key.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>Ninja Blocks' pusher key is ccff70362850caf79c9f</li>
+  </ul>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/user/pusherchannel</code></pre>
+
+
+
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "pusherChannel": "1c0c8929-3318-411d-96e0-36fb7872ea5e"
+  }
+}</code></pre>
+  <p>&nbsp;</p>
+  <a name="user-realtime" id="user-realtime"></a>
+  <h2>PUT user/realtime</h2>
+  <p>Sets the amount of time that 'realtime' mode will be active for, defaulting to 10 seconds. If successful, during this duration all messages received from all blocks will be forwarded via Pusher.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>length</strong><br /><em>number</em><br /><small>Optional</small></td>
+        <td>
+          The amount of time to activate 'realtime' mode for. This value must be between 1 and 30. Values out of this range will be ignored, and defaulted to 10.
+          <br />
+          <small>Example: 15</small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+  <pre><code>https://api.ninja.is/rest/v0/user/realtime</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+}</code></pre>
+</section>
+      <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/all.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28187777-2']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title> Ninja Blocks API Documentation |  Ninja Blocks API</title>
+<title> Protocol |  Ninja Blocks API</title>
 <link rel="stylesheet" href="/stylesheets/styles.css">
 <link rel="stylesheet" href="/stylesheets/font-awesome.css">
 <!--[if IE 7]>
@@ -27,8 +27,12 @@
         <h4><a href="/core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
         <h4><a href="/rest"><i class="icon-bolt"></i> REST</a></h4>
         <!--
+
         <h4><a href="/module.html"><i class="icon-cogs"></i> Modules</a></h4>
         <h4><a href="/protocol"><i class="icon-book"></i> Device Protocols</a></h4>
+        <div class="active-nav-block">
+          <h4><a href="/protocol/list.html"><i class="icon-list"></i> List</a></h4>
+        </div>
       -->
         <h3>See Also</h3>
 <p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
@@ -37,16 +41,21 @@
 <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
       <section>
-  <a name="top" id="top"></a>
-  <h3>Welcome Developer,</h3>
-  <p>Thinking about developing something on our platform? Awesome! This site aims to outline the preferred way to interact with the Ninja platform. Please note thought that we're still building this thing, and at present <em>everything</em> is experimental, and some elements are likely to change.</p>
-  <p>If you would like to be kept in the loop about changes please sign up to our <a href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks">developer mailing list</a>. We will do our best to communicate any changes we make to v0.</p>
-  <p>One more thing, you might notice us throwing a few cardinal rules about consistency out of the window here and there (looking at you camel case vs underscore). We know it's bad, and we promise to fix all of it in v1. Right now we're focused on building the foundations, rest assured we'll get to the finishings soon.</p>
-  <p>Make sure to read the section on <a href="/core-concepts.html">Core Concepts</a> before you begin, and enjoy!</p>
-  <p>- The Platform Team</p>
+  <a name="module-object" id="module-object"></a>
+  <h1>Protocol List</h1>
+ <table>
+    <tbody>
+      <tr>
+        <th>Device Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><a href='/protocol/light'>light</a></td>
+        <td>Typically full RGB LED lights</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
-
-
       <script src="/javascripts/scale.fix.js"></script>
 <script src="/javascripts/all.js"></script>
 <script type="text/javascript">

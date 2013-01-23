@@ -253,3 +253,22 @@ footer {
     color:#444;
   }
 }
+
+.active-nav {
+  background-color:#39c;
+  border-radius:2px;
+  width:15em;
+}
+
+.active-nav > a {
+  color:#fff;
+  padding-left:0.5em;
+}
+
+.active-nav-block {
+  padding-left:1em;
+}
+
+.active-sub-nav > a {
+  font-weight: bold;
+}

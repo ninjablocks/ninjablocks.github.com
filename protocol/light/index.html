@@ -1,0 +1,123 @@
+---
+title: Light Protocol
+layout: protocol
+---
+<section>
+  <h1>Light [DRAFT]</h1>
+  <p>A device that emits light. Typically it can be set to a range of colours and brightnesses, as well as some more advanced features such as alerts.</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>light</td>
+      </tr>
+      <tr>
+        <td><strong>Protocol Type</strong></td>
+        <td>hybrid (sRGB / serialised JSON)</td>
+      </tr>
+      <tr>
+        <td><strong>Example Modules</strong></td>
+        <td>
+          <!--
+          <br />
+          <ul>
+            <li><a href='localhost'>Hue</a></li>
+            <li><a href='localhost'>Limitless</a></li>
+          </ul>
+        -->
+        </td>
+      </tr>
+      <tr>
+        <td><strong>More information</strong></td>
+        <td>
+          <br />
+          <ul>
+            <li><a target="_blank" href='http://en.wikipedia.org/wiki/HSL_and_HSV'>HSL and HSV</a></li>
+            <li><a target="_blank" href='http://en.wikipedia.org/wiki/CIE_1931_color_space'>xyY (CIE 1931 colour space)</a></li>
+            <li><a target="_blank" href='http://en.wikipedia.org/wiki/Color_temperature'>Colour temperature</a></li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>sRGB</h3>
+  <p>
+    It is possible to send purely a 6 byte string representing the intended colour to change the light to. This is intended for easy of use / development.
+    <br />
+    <small>Example: FF00FF</small>
+  </p>
+  <h3>Serialised JSON</h3>
+
+   <table>
+      <tbody>
+        <tr>
+          <th colspan="2">Parameters</th>
+        </tr>
+        <tr>
+          <td><strong>on</strong><br /><em>boolean</em><br /><small>Optional</small></td>
+          <td>
+            Whether to power the light on or not. `true` is on, `false` is off.
+            <br />
+            <small>Example: true</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>bri</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            The brightness, measured as an 8bit unsigned integer (ie between 0 and 254).
+            <br />
+            <small>Example: 100</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>hue</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            The color measured as a 16bit unsigned integer (ie between 0 and 65535).
+            <br />
+            <small>Example: 12000</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>sat</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            Saturation, measured as an 8bit unsigned integer (ie between 0 and 254).
+            <br />
+            <small>Example: 10</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>xy</strong><br /><em>array</em><br /><small>Optional</small></td>
+          <td>
+            The colour in CIE 1931 colour space represented as an array of x,y co-ordinates.
+            <br />
+            <small>Example: [0.4,0.6]</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>ct</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            Colour temperature (luminance) between 154 (cold) and 500 (warm)
+            <br />
+            <small>Example: 154</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>alert</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            Flash the light this many times (between 1 and 10).
+            <br />
+            <small>Example: 10</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>transitionTime</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            The time to transition to the new state in miliseconds.
+            <br />
+            <small>Example: 2000</small>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</section>

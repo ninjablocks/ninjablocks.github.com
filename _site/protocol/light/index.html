@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title> Light Protocol |  Ninja Blocks API</title>
+<link rel="stylesheet" href="/stylesheets/styles.css">
+<link rel="stylesheet" href="/stylesheets/font-awesome.css">
+<!--[if IE 7]>
+<link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
+<![endif]-->
+<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/javascripts/smooth.pack.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ninja Blocks API</h1>
+        <h3>/rest/v0</h3>
+        <p></p>
+        <p class="view"><a href="/index.html"><i class="icon-home"></i> Home</a></p>
+        <h4><a href="/core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
+        <h4><a href="/rest"><i class="icon-bolt"></i> REST</a></h4>
+        <!--
+
+        <h4><a href="/module.html"><i class="icon-cogs"></i> Modules</a></h4>
+        <h4><a href="/protocol"><i class="icon-book"></i> Device Protocols</a></h4>
+        <div class="active-nav-block">
+          <h4><a href="/protocol/list.html"><i class="icon-list"></i> List</a></h4>
+        </div>
+      -->
+        <h3>See Also</h3>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
+<p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github-alt"></i> Code</a></p>
+<p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
+      </header>
+      <section>
+  <h1>Light [DRAFT]</h1>
+  <p>A device that emits light. Typically it can be set to a range of colours and brightnesses, as well as some more advanced features such as alerts.</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>light</td>
+      </tr>
+      <tr>
+        <td><strong>Protocol Type</strong></td>
+        <td>hybrid (sRGB / serialised JSON)</td>
+      </tr>
+      <tr>
+        <td><strong>Example Modules</strong></td>
+        <td>
+          <!--
+          <br />
+          <ul>
+            <li><a href='localhost'>Hue</a></li>
+            <li><a href='localhost'>Limitless</a></li>
+          </ul>
+        -->
+        </td>
+      </tr>
+      <tr>
+        <td><strong>More information</strong></td>
+        <td>
+          <br />
+          <ul>
+            <li><a target="_blank" href='http://en.wikipedia.org/wiki/HSL_and_HSV'>HSL and HSV</a></li>
+            <li><a target="_blank" href='http://en.wikipedia.org/wiki/CIE_1931_color_space'>xyY (CIE 1931 colour space)</a></li>
+            <li><a target="_blank" href='http://en.wikipedia.org/wiki/Color_temperature'>Colour temperature</a></li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>sRGB</h3>
+  <p>
+    It is possible to send purely a 6 byte string representing the intended colour to change the light to. This is intended for easy of use / development.
+    <br />
+    <small>Example: FF00FF</small>
+  </p>
+  <h3>Serialised JSON</h3>
+
+   <table>
+      <tbody>
+        <tr>
+          <th colspan="2">Parameters</th>
+        </tr>
+        <tr>
+          <td><strong>on</strong><br /><em>boolean</em><br /><small>Optional</small></td>
+          <td>
+            Whether to power the light on or not. `true` is on, `false` is off.
+            <br />
+            <small>Example: true</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>bri</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            The brightness, measured as an 8bit unsigned integer (ie between 0 and 254).
+            <br />
+            <small>Example: 100</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>hue</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            The color measured as a 16bit unsigned integer (ie between 0 and 65535).
+            <br />
+            <small>Example: 12000</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>sat</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            Saturation, measured as an 8bit unsigned integer (ie between 0 and 254).
+            <br />
+            <small>Example: 10</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>xy</strong><br /><em>array</em><br /><small>Optional</small></td>
+          <td>
+            The colour in CIE 1931 colour space represented as an array of x,y co-ordinates.
+            <br />
+            <small>Example: [0.4,0.6]</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>ct</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            Colour temperature (luminance) between 154 (cold) and 500 (warm)
+            <br />
+            <small>Example: 154</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>alert</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            Flash the light this many times (between 1 and 10).
+            <br />
+            <small>Example: 10</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>transitionTime</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td>
+            The time to transition to the new state in miliseconds.
+            <br />
+            <small>Example: 2000</small>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</section>
+      <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/all.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28187777-2']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>
