@@ -3,16 +3,20 @@ title: Module
 layout: module
 ---
 <section>
-  <a name="module-object" id="module-object"></a>
   <h1>Module [DRAFT]</h1>
-  <p>Modules are pieces of software the interface between the Ninja platform and hardware devices. Think of them like hardware drivers. At present our only client is written in Node.js, therefore so are our modules.</p>
-  <p>There are 2 important parts to a module:
-    <ul>
-      <li><a href="/module/constructor.html">A constructor</a> responsible for registering; </li>
-      <li><a href="/module/device.html">Devices</a></li>
-    </ul>
+  <p>
+    Modules are pieces of software the interface between the Ninja platform and hardware devices. Think of them like hardware drivers that run inside of our <a href="https://github.com/ninjablocks/client" target="_blank">client</a>. Our client is written in Node.js, therefore so are our modules.
   </p>
   <p>
-    The point of a constructor is to register devices with the Ninja Cloud. A `Device` is an object that has standard properties/methods that allow us to actuate/read it.
+    A module is made up of a
+    <big><a href="/module/constructor.html">constructor</a></big> responsible for registering
+    <big><a href="/module/device.html">devices</a></big> that speak certain
+    <big><a href="/protocol">protocols</a></big>.
+  </p>
+  <p>
+    The protocol they talk is defined by their <code>device_type</code> which itself is derived from the device's <code>G</code>, <code>V</code>, and <code>D</code>. (See <a href="/core-concepts.html">core concepts</a> for more on that).
+  </p>
+  <p>
+    The constructor/device both have methods/properties/events associated with them that provide an interface the Ninja client can understand.
   </p>
 </section>
