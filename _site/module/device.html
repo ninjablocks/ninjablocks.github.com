@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title> Device |  Ninja Blocks API</title>
+<link rel="stylesheet" href="/stylesheets/styles.css">
+
+<link rel="stylesheet" href="/stylesheets/font-awesome.css">
+<link rel="stylesheet" href="/stylesheets/stylesheets/pygments.css">
+
+<!--[if IE 7]>
+<link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
+<![endif]-->
+<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/javascripts/smooth.pack.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ninja Blocks API</h1>
+        <h3>/rest/v0</h3>
+        <p></p>
+        <p class="view"><a href="/index.html"><i class="icon-home"></i> Home</a></p>
+        <h4><a href="/core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
+        <h4><a href="/rest"><i class="icon-bolt"></i> REST</a></h4>
+        <h4><a href="/module"><i class="icon-cogs"></i> Modules</a></h4>
+        <div class="active-nav-block">
+          <h4><a href="/module/constructor.html"><i class="icon-briefcase"></i> Constructor</a></h4>
+          <h4><a href="/module/device.html"><i class="icon-sitemap"></i> Device</a></h4>
+        </div>
+        <h4><a href="/protocol"><i class="icon-book"></i> Device Protocols</a></h4>
+        <h3>See Also</h3>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
+<p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github-alt"></i> Code</a></p>
+<p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
+      </header>
+      <section>
+  <h2>Device</h2>
+
+  <div class="highlight"><pre><code class="javascript">  <span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
+
+  <span class="c1">// Give our module a stream interface</span>
+  <span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">Device</span><span class="p">,</span><span class="nx">stream</span><span class="p">);</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * Creates a new Device Object</span>
+<span class="cm">   *</span>
+<span class="cm">   * @property {Boolean} readable Whether the device emits data</span>
+<span class="cm">   * @property {Boolean} writable Whether the data can be actuated</span>
+<span class="cm">   *</span>
+<span class="cm">   * @property {Number} G - the channel of this device</span>
+<span class="cm">   * @property {Number} V - the vendor ID of this device</span>
+<span class="cm">   * @property {Number} D - the device ID of this device</span>
+<span class="cm">   *</span>
+<span class="cm">   * @property {Function} write Called when data is received from the cloud</span>
+<span class="cm">   *</span>
+<span class="cm">   * @fires data - Emit this when you wish to send data to the cloud</span>
+<span class="cm">   */</span>
+  <span class="kd">function</span> <span class="nx">Device</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+    <span class="c1">// This device will emit data</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">readable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="c1">// This device can be actuated</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">writeable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">V</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">D</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">G</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+      <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * Called whenever there is data from the cloud</span>
+<span class="cm">   * This is required if Device.writable = true</span>
+<span class="cm">   *</span>
+<span class="cm">   * @param  {String} data The data received</span>
+<span class="cm">   */</span>
+  <span class="nx">Device</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">write</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// I&#39;m being actuated with data!</span>
+  <span class="p">};</span>
+
+  
+</code></pre>
+</div>
+
+</section>
+
+
+      <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/all.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28187777-2']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>
