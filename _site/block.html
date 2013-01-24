@@ -2,20 +2,23 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Block |  Ninja Blocks API</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/font-awesome.css">
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
-    <![endif]-->
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="javascripts/smooth.pack.js"></script>
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title> Block |  Ninja Blocks API</title>
+<link rel="stylesheet" href="/stylesheets/styles.css">
+
+<link rel="stylesheet" href="/stylesheets/font-awesome.css">
+<link rel="stylesheet" href="/stylesheets/stylesheets/pygments.css">
+
+<!--[if IE 7]>
+<link rel="stylesheet" href="stylesheets/font-awesome-ie7.css">
+<![endif]-->
+<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/javascripts/smooth.pack.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
   </head>
   <body>
     <div class="wrapper">
@@ -23,21 +26,18 @@
         <h1>Ninja Blocks API</h1>
         <h3>/rest/v0</h3>
         <p></p>
-        <p class="view"><a href="index.html"><i class="icon-home"></i> Home</a></p>
-        <h3>Basics</h3>
-        <h4><a href="core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
-        <h4><a href="authentication.html"><i class="icon-unlock"></i> Authentication</a></h4>
-        <h3>Objects</h3>
-        <h4><a href="user.html"><i class="icon-group"></i> User</a></h4>
-        <h4><a href="block.html"><i class="icon-hdd"></i> Block</a></h4>
-        <h4><a href="device.html"><i class="icon-sitemap"></i> Device</a></h4>
-        <h4><a href="rule.html"><i class="icon-legal"></i> Rule</a></h4>
-        <h4><a href="module.html"><i class="icon-cogs"></i> Module</a></h4>
+        <p class="view"><a href="/index.html"><i class="icon-home"></i> Home</a></p>
+        <h4><a href="/core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
+        <h4><a href="/rest"><i class="icon-bolt"></i> REST</a></h4>
+        <!--
+        <h4><a href="/module"><i class="icon-cogs"></i> Modules</a></h4>
+        <h4><a href="/protocol"><i class="icon-book"></i> Device Protocols</a></h4>
+        -->
         <h3>See Also</h3>
-        <p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
-        <p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
-        <p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github"></i> Code</a></p>
-        <p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
+<p class="view"><a target="_blank" href="http://help.ninjablocks.com"><i class="icon-info-sign"></i> Support</a></p>
+<p class="view"><a target="_blank" href="https://github.com/ninjablocks"><i class="icon-github-alt"></i> Code</a></p>
+<p class="view"><a target="_blank" href="https://groups.google.com/forum/?fromgroups#!forum/ninjablocks"><i class="icon-envelope"></i> Mailing List</a></p>
       </header>
       <section>
   <a name="block-object" id="block-object"></a>
@@ -46,12 +46,7 @@
   <p>To get you up and running quickly, we provide a virtual block token, which you can enable (and revoke), in the <a href="https://a.ninja.is/hacking">account settings page</a>. This block token will allow you to create arbitrary devices under your account without activating or claiming.</p>
   <p>Use your virtual block token exactly as you would a standard block token, i.e. pass it as an http header named X-Ninja-Token.</p>
 
-    <h3>Block Activation Explained</h3>
-
-  <p>Claiming / activating a block is the process of retrieving a token for a given block (identified by its node ID) that is used to link that block to a particular user.</p>
-  <p>There are two flows to block activation. First, you can request a token with user credentials. This is useful for browsers and other apps that already have a user's authorization.</p>
-  <p>The second involves a two-legged flow where a block requests a token and awaits activation (HTTP GET, does not require user authorization) and a user separately attempts to claim that block awaiting activation (HTTP POST, does require authorization). For example an Arduino might request activation, and a user then 'claims' that block via his/her browser/smartphone. The token is sent down the wire to the Arduino which then uses it in all subsequent requests.</p>
-  <p>For more information <a href="block.html#block-activate">see here</a>.</p>
+  Included file 'block_activation.html' not found in _includes directory
 
   <p><strong>cURL tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
 
@@ -71,7 +66,7 @@
       </tr>
       <tr>
         <td><a href="#block-activate">GET block/:nodeId/activate</a></td>
-        <td>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier, ideally a unique serial number.</td>
+        <td>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier (no underscores), ideally a unique serial number.</td>
       </tr>
 
       <tr>
@@ -161,7 +156,7 @@
       <tr>
         <td><strong>nodeid</strong><br /><em>string</em><br /><small>Required</small></td>
         <td>
-          The ID of the block you are attempting to claim. This block must be currently awaiting activation. ID's have a minimum length of 12 characters.
+          The ID of the block you are attempting to claim. This block must be currently awaiting activation. ID's have a minimum length of 12 characters and only include letters and numbers (no underscores).
           <br />
           <small>Example: "ASTEALTHYNODE01"</small>
         </td>
@@ -191,7 +186,7 @@
   <p>&nbsp;</p>
   <a name="block-activate" id="block-activate"></a>
   <h2>GET block/:nodeId/activate</h2>
-  <p>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier, ideally a unique serial number.</p>
+  <p>Activate a block and return its token. This token should be used with all subsequent requests. Your nodeId should be a 12+ alphanumeric character identifier (no underscores), ideally a unique serial number.</p>
   <table>
     <tbody>
       <tr>
@@ -204,7 +199,7 @@
   </table>
   <h4>Notes</h4>
   <ul>
-    <li><strong>nodeId</strong> should be a unique string at least 12 characters in length, ideally a hardware serial number accessible by the user.</li>
+    <li><strong>nodeId</strong> should be a unique string at least 12 alphanumeric characters (no underscores) in length, ideally a hardware serial number accessible by the user.</li>
     <li>If authentication credentials are provided with the request, ie via an <code>access_token</code> or <code>user_access_token</code>, an activated block token will immediately be returned.</li>
     <li>If no authentication credentials are provided, a response will only be returned only after a user has successfully executed the <a href="#block-post">POST to claim a block</a>. In this case the request is a 'long GET', and thus if the response ends without a body, the request should be reinitialized.</li>
   </ul>
@@ -288,7 +283,7 @@
   <p>&nbsp;</p>
   <a name="block-heartbeat" id="block-heartbeat"></a>
   <h2>POST block/:nodeId/heartbeat</h2>
-  <h4><em>Deprecated</em></h4>
+  <h3><em>DEPRECATED - use <a href="#block-data">Data</a> instead</em></h3>
   <p>Send a heartbeat from this block.<br /><strong>Important</strong>: the request body takes the form of an <strong>array of objects</strong>, whose parameters are outlined below.</p>
   <p>Heartbeat events are intended to be values to be analyzed in due course. For example, a temperature reading should be part of a 'heartbeat' event, whereas a button press should be a <a href="#block-data">'data'</a> event.</p>
   <table>
@@ -354,7 +349,7 @@
   <a name="block-data" id="block-data"></a>
   <h2>POST block/:nodeId/data</h2>
   <p>Send a data event from this block.</p>
-  <p>Data events are intended to be values to be actioned immediately. For example, a button press should be a 'data' event, whereas a temperature reading should be part of a <a href="#block-heartbeat">'heartbeat'</a> event</p>
+  <p>Data events are actioned immediately. You can POST a single data event object or an array of objects. Note that omiting the timestamp attibute will result in the server timestamping the event on receipt.</p>
   <table>
     <tbody>
       <tr>
@@ -392,20 +387,29 @@
           <small>Example: "-1"</small>
         </td>
       </tr>
+      <tr>
+        <td><strong>TIMESTAMP</strong><br /><em>int (timestamp)</em><br /><small>Optional</small></td>
+        <td>
+          The time of the event in <a href="http://www.epochconverter.com/">Unix or Epoch time</a>.
+          <br />
+          <small>Example: "1356920901"</small>
+        </td>
+      </tr>
+
     </tbody>
   </table>
   <h4>Notes</h4>
   <ul>
-    <li>This endpoint will also accept an array of objects to send multiple datapoints in one request.</li>
+    <li>This endpoint will also accept an object or an array of objects to send multiple datapoints in one request.</li>
     <li><strong>X-Ninja-Token</strong> is required in the headers of this request, and corresponds to the token acquired via the <a href="#block-activate">GET block/:nodeId/activate</a> route.</li>
   </ul>
   <h4>Resource URL</h4>
 <pre><code>https://api.ninja.is/rest/v0/block/:nodeId/data</code></pre>
-  <h4>cURL Example</h4>
+  <p>Set the temperature to 20 degrees C and report RGB LED device as purple.</a></p>
 <pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -H 'Content-Type: application/json' \
-     -d '{"G":0,"V":0,"D":5,"DA":"1"}' \
+     -d '[{"G":0,"V":0,"D":9,"DA":"20"},{"G":0,"V":0,"D":1000,"DA":"FF00FF"}]' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/data </code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -537,16 +541,18 @@
   <strong>Note: this call is to stream.ninja.is.</strong>
 </section>
 
-      <script src="javascripts/scale.fix.js"></script>
-      <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-28187777-2']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
+
+      <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/all.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28187777-2']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
   </body>
 </html>
