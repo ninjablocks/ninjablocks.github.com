@@ -46,7 +46,9 @@
       <li>A constructor</li>
       <li>Devices</li>
     </ul>
-    The point of a constructor is to register devices with the Ninja Cloud.
+  </p>
+  <p>
+    The point of a constructor is to register devices with the Ninja Cloud. A `Device` is an object that has standard properties/methods that allow us to actuate/read it.
   </p>
 
   <h3>Constructor</h3>
@@ -128,6 +130,8 @@
 <span class="cm"> * @fires data - Emit this when you wish to send data to the cloud</span>
 <span class="cm"> */</span>
 <span class="kd">function</span> <span class="nx">Device</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
   <span class="c1">// This device will emit data</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">readable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
