@@ -97,6 +97,8 @@ util.inherits(Device,stream);
  */
 function Device() {
 
+  var self = this;
+
   // This device will emit data
   this.readable = true;
   // This device can be actuated
