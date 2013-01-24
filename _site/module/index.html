@@ -30,6 +30,10 @@
         <h4><a href="/core-concepts.html"><i class="icon-book"></i> Core Concepts</a></h4>
         <h4><a href="/rest"><i class="icon-bolt"></i> REST</a></h4>
         <h4><a href="/module"><i class="icon-cogs"></i> Modules</a></h4>
+        <div class="active-nav-block">
+          <h4><a href="/module/constructor.html"><i class="icon-briefcase"></i> Constructor</a></h4>
+          <h4><a href="/module/device.html"><i class="icon-sitemap"></i> Device</a></h4>
+        </div>
         <h4><a href="/protocol"><i class="icon-book"></i> Device Protocols</a></h4>
         <h3>See Also</h3>
 <p class="view"><a target="_blank" href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/_pages"><i class="icon-beaker"></i> Examples</a>
@@ -50,116 +54,9 @@
   <p>
     The point of a constructor is to register devices with the Ninja Cloud. A `Device` is an object that has standard properties/methods that allow us to actuate/read it.
   </p>
-
-  <h3>Constructor</h3>
-
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">)</span>
-  <span class="p">,</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
-
-<span class="c1">// Give our module a stream interface</span>
-<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">myModule</span><span class="p">,</span><span class="nx">stream</span><span class="p">);</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Called when our client starts up</span>
-<span class="cm"> * @constructor</span>
-<span class="cm"> *</span>
-<span class="cm"> * @param  {Object} opts Saved/default module configuration</span>
-<span class="cm"> * @param  {Object} app  The app event emitter</span>
-<span class="cm"> * @param  {String} app.id The client serial number</span>
-<span class="cm"> *</span>
-<span class="cm"> * @property  {Function} save When called will save the contents of `opts`</span>
-<span class="cm"> * @property  {Function} config Will be called when config data is received from the cloud</span>
-<span class="cm"> *</span>
-<span class="cm"> * @fires register - Emit this when you wish to register a device (see Device)</span>
-<span class="cm"> * @fires config - Emit this when you wish to send config data back to the cloud</span>
-<span class="cm"> */</span>
-<span class="kd">function</span> <span class="nx">myModule</span><span class="p">(</span><span class="nx">opts</span><span class="p">,</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-
-  <span class="nx">app</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;client::up&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
-
-    <span class="c1">// The client is now connected to the cloud</span>
-
-    <span class="c1">// Do stuff with opts, and then commit it to disk</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">hasMutated</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">opts</span><span class="p">.</span><span class="nx">hasMutated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="nx">self</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
-
-    <span class="c1">// Register a device</span>
-    <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;register&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Device</span><span class="p">());</span>
-    <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">hello</span><span class="o">:</span><span class="s1">&#39;world&#39;</span> <span class="p">});</span>
-  <span class="p">});</span>
-<span class="p">};</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Called when config data is received from the cloud</span>
-<span class="cm"> * @param  {Object} config Configuration data</span>
-<span class="cm"> */</span>
-<span class="nx">myModule</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">config</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
-
-<span class="p">};</span>
-
-<span class="c1">// Export it</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">myModule</span><span class="p">;</span>
-</code></pre>
-</div>
+  <p>
 
   </p>
-
-    <h3>Device</h3>
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
-
-<span class="c1">// Give our module a stream interface</span>
-<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">Device</span><span class="p">,</span><span class="nx">stream</span><span class="p">);</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Creates a new Device Object</span>
-<span class="cm"> *</span>
-<span class="cm"> * @property {Boolean} readable Whether the device emits data</span>
-<span class="cm"> * @property {Boolean} writable Whether the data can be actuated</span>
-<span class="cm"> *</span>
-<span class="cm"> * @property {Number} G - the channel of this device</span>
-<span class="cm"> * @property {Number} V - the vendor ID of this device</span>
-<span class="cm"> * @property {Number} D - the device ID of this device</span>
-<span class="cm"> *</span>
-<span class="cm"> * @property {Function} write Called when data is received from the cloud</span>
-<span class="cm"> *</span>
-<span class="cm"> * @fires data - Emit this when you wish to send data to the cloud</span>
-<span class="cm"> */</span>
-<span class="kd">function</span> <span class="nx">Device</span><span class="p">()</span> <span class="p">{</span>
-
-  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-
-  <span class="c1">// This device will emit data</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">readable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-  <span class="c1">// This device can be actuated</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">writeable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-
-  <span class="k">this</span><span class="p">.</span><span class="nx">V</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">D</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">G</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-  <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
-  <span class="p">});</span>
-<span class="p">};</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Called whenever there is data from the cloud</span>
-<span class="cm"> * This is required if Device.writable = true</span>
-<span class="cm"> *</span>
-<span class="cm"> * @param  {String} data The data received</span>
-<span class="cm"> */</span>
-<span class="nx">Device</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">write</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="c1">// I&#39;m being actuated with data!</span>
-<span class="p">};</span>
-</code></pre>
-</div>
 
 
 </section>
