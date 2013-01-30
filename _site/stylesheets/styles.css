@@ -272,3 +272,8 @@ footer {
 .active-sub-nav > a {
   font-weight: bold;
 }
+
+.protocol-list {
+  width:400px;
+  height:500px;
+}
