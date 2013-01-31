@@ -1,0 +1,29 @@
+---
+title: Orientation Protocol
+layout: protocol
+---
+<section>
+  <h1>Orientation</h1>
+  <p>Device which discretly senses the direction of gravity</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>orientation</td>
+      </tr>
+      <tr>
+        <td><strong>Data Type</strong></td>
+        <td>2 Discrete</td>
+      </tr>
+      <tr>
+        <td><strong>Data Format</strong></td>
+        <td>char sign{+ or -}, char axis{x, y or z}</td>
+      </tr>
+      <tr>
+        <td><strong>Format Example</strong></td>
+        <td>-x</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

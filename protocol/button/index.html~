@@ -1,0 +1,25 @@
+---
+title: Button Protocol
+layout: protocol
+---
+<section>
+  <h1>Button</h1>
+  <p>Generic Button Sensor</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>button</td>
+      </tr>
+      <tr>
+        <td><strong>Data Type</strong></td>
+        <td>Discrete Boolean</td>
+      </tr>
+      <tr>
+        <td><strong>Data Format</strong></td>
+        <td>int button {0=no press, 1=press}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

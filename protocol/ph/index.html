@@ -1,33 +1,32 @@
 ---
-title: Temperature Protocol
+title: pH Protocol
 layout: protocol
 ---
 <section>
-  <h1>Temperature</h1>
-  <p>A device which senses temperature</p>
+  <h1>pH</h1>
+  <p>A device which detects hydrogen ion concentration</p>
   <h2>Overview</h2>
   <table>
     <tbody>
       <tr>
         <td><strong>Device Type</strong></td>
-        <td>temperature</td>
+        <td>ph</td>
       </tr>
       <tr>
         <td><strong>Data Type</strong></td>
         <td>1 Continuous Numerical</td>
       </tr>
       <tr>
-        <td><strong>Data Format</strong></td>
-        <td>float temperature</td>
+        <td><strong>Units</strong></td>
+        <td>pH (inverse log of hydrogen ion concentration)</td>
       </tr>
       <tr>
         <td><strong>Data Format</strong></td>
-        <td>37.02</td>
+        <td>float ph {between 1 and 14}</td>
       </tr>
       <tr>
-      <tr>
-        <td><strong>Unit</strong></td>
-        <td>Degrees Celsius</td>
+        <td><strong>Format Example</strong></td>
+        <td>2.00</td>
       </tr>
     </tbody>
   </table>

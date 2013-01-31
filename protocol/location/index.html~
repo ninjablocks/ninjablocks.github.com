@@ -1,0 +1,33 @@
+---
+title: Location Protocol
+layout: protocol
+---
+<section>
+  <h1>Location</h1>
+  <p>Generic Compass Sensor</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>location</td>
+      </tr>
+      <tr>
+        <td><strong>Data Type</strong></td>
+        <td>2 Continuous Numerical</td>
+      </tr>
+      <tr>
+        <td><strong>Units</strong></td>
+        <td>Degrees, Latitude and Lonitude</td>
+      </tr>
+      <tr>
+        <td><strong>Data Format</strong></td>
+        <td>float longitude, float latitude</td>
+      </tr>
+      <tr>
+        <td><strong>Format Example</strong></td>
+        <td>151.20861,33.8683</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

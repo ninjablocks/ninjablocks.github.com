@@ -1,0 +1,25 @@
+---
+title: Pressure Protocol
+layout: protocol
+---
+<section>
+  <h1>Pressure</h1>
+  <p>A device which detects if another object is close</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>proximity</td>
+      </tr>
+      <tr>
+        <td><strong>Data Type</strong></td>
+        <td>1 Discete Int</td>
+      </tr>
+      <tr>
+        <td><strong>Data Format</strong></td>
+        <td>int proximity {0=nothing close 1=something close}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

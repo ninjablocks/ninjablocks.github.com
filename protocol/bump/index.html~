@@ -1,0 +1,25 @@
+---
+title: Bump Protocol
+layout: protocol
+---
+<section>
+  <h1>Bump</h1>
+  <p>discrete accelerometer sensor</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>bump</td>
+      </tr>
+      <tr>
+        <td><strong>Data Type</strong></td>
+        <td>Discrete Boolean</td>
+      </tr>
+      <tr>
+        <td><strong>Data Format</strong></td>
+        <td>[bump] {0=steady, 1=bump}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

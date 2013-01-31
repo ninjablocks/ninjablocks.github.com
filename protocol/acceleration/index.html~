@@ -1,33 +1,32 @@
 ---
-title: Temperature Protocol
+title: Acceleration Protocol
 layout: protocol
 ---
 <section>
-  <h1>Temperature</h1>
-  <p>A device which senses temperature</p>
+  <h1>Acceleration</h1>
+  <p>A device which senses accelerations in three axis</p>
   <h2>Overview</h2>
   <table>
     <tbody>
       <tr>
         <td><strong>Device Type</strong></td>
-        <td>temperature</td>
+        <td>acceleration</td>
       </tr>
       <tr>
         <td><strong>Data Type</strong></td>
-        <td>1 Continuous Numerical</td>
+        <td>3 Continuous Numerical</td>
       </tr>
       <tr>
         <td><strong>Data Format</strong></td>
-        <td>float temperature</td>
+        <td>float x, float y, float z</td>
       </tr>
       <tr>
-        <td><strong>Data Format</strong></td>
-        <td>37.02</td>
+        <td><strong>Format Example</strong></td>
+        <td>0.1234,-12.3456,1.0000</td>
       </tr>
-      <tr>
       <tr>
         <td><strong>Unit</strong></td>
-        <td>Degrees Celsius</td>
+        <td>m/s<sup>2</sup></td>
       </tr>
     </tbody>
   </table>

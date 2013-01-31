@@ -14,17 +14,12 @@ layout: protocol
       </tr>
       <tr>
         <td><strong>Data Type</strong></td>
-        <td>1 Continuous Numerical</td>
+        <td>Continuous Numerical</td>
       </tr>
       <tr>
         <td><strong>Data Format</strong></td>
-        <td>float temperature</td>
+        <td>[temperature]</td>
       </tr>
-      <tr>
-        <td><strong>Data Format</strong></td>
-        <td>37.02</td>
-      </tr>
-      <tr>
       <tr>
         <td><strong>Unit</strong></td>
         <td>Degrees Celsius</td>
