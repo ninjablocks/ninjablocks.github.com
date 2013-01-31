@@ -56,15 +56,15 @@
     The protocol they talk is defined by their <code>device_type</code> which itself is derived from the device's <code>V</code> (Vendor ID), and <code>D</code> (Device ID). (See <a href="/core-concepts.html">core concepts</a> for more on that).
   </p>
   <p>
-    The constructor/device both have methods/properties/events associated with them that provide an interface the Ninja client can understand.
+    The constructor/device both have methods/properties/events associated with them that provide an interface that the Ninja client can understand.
   </p>
 
   <h2>Writing a Module Quick Start Guide [WIP]</h2>
 
   <h3>Step 1 - pick the device(s) you'll be working with</h3>
   <p>Soon you will be able to register as your own vendor (thus getting your own <code>V</code>) and manage your own device list, however until then we have a big list of generic devices that you can choose from. <a href="http://ninjablocks.com/pages/device-ids" target="_blank">The list is located here</a>.</p>
-
-  <h3> Step 2 - look up its protocol</h3>
+  <p>Note down the device's vendor ID, device ID, and device type.</p>
+  <h3> Step 2 - look up its protocol by device type</h3>
   Each device type has a different protocol that must be adhered to so that other developers can understand how to talk to your devices. <a href="/protocol/list.html" target="_blank">The list of protocols we have written (so far) is located here</a>.
   <br />
   <br />
