@@ -8,54 +8,59 @@ layout: module
 
   {% highlight javascript %}
 
-  var stream = require('stream');
+var stream = require('stream')
+  , util = require('util');
 
-  // Give our module a stream interface
-  util.inherits(Device,stream);
+// Give our module a stream interface
+util.inherits(Device,stream);
 
-  /**
-   * Creates a new Device Object
-   *
-   * @property {Boolean} readable Whether the device emits data
-   * @property {Boolean} writable Whether the data can be actuated
-   *
-   * @property {Number} G - the channel of this device
-   * @property {Number} V - the vendor ID of this device
-   * @property {Number} D - the device ID of this device
-   *
-   * @property {Function} write Called when data is received from the cloud
-   *
-   * @fires data - Emit this when you wish to send data to the cloud
-   */
-  function Device() {
+// Export it
+module.exports=Device;
 
-    var self = this;
+/**
+ * Creates a new Device Object
+ *
+ * @property {Boolean} readable Whether the device emits data
+ * @property {Boolean} writable Whether the data can be actuated
+ *
+ * @property {Number} G - the channel of this device
+ * @property {Number} V - the vendor ID of this device
+ * @property {Number} D - the device ID of this device
+ *
+ * @property {Function} write Called when data is received from the cloud
+ *
+ * @fires data - Emit this when you wish to send data to the cloud
+ */
+function Device() {
 
-    // This device will emit data
-    this.readable = true;
-    // This device can be actuated
-    this.writeable = true;
+  var self = this;
 
-    this.V = 0;
-    this.D = 0;
-    this.G = 0;
+  // This device will emit data
+  this.readable = true;
+  // This device can be actuated
+  this.writeable = true;
 
-    process.nextTick(function() {
+  this.V = 0;
+  this.D = 0;
+  this.G = "0"; // G is a string
 
-      self.emit('data','Hello World');
-    });
-  };
+  process.nextTick(function() {
 
-  /**
-   * Called whenever there is data from the cloud
-   * This is required if Device.writable = true
-   *
-   * @param  {String} data The data received
-   */
-  Device.prototype.write = function(data) {
+    self.emit('data','Hello World');
+  });
+};
 
-    // I'm being actuated with data!
-  };
+/**
+ * Called whenever there is data from the cloud
+ * This is required if Device.writable = true
+ *
+ * @param  {String} data The data received
+ */
+Device.prototype.write = function(data) {
+
+  // I'm being actuated with data!
+  console.log(data);
+};
 
   {% endhighlight %}
 </section>

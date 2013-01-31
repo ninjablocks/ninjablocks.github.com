@@ -44,54 +44,59 @@
       <section>
   <h2>Device</h2>
 
-  <div class="highlight"><pre><code class="javascript">  <span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
+  <div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">);</span>
 
-  <span class="c1">// Give our module a stream interface</span>
-  <span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">Device</span><span class="p">,</span><span class="nx">stream</span><span class="p">);</span>
+<span class="c1">// Give our module a stream interface</span>
+<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">Device</span><span class="p">,</span><span class="nx">stream</span><span class="p">);</span>
 
-  <span class="cm">/**</span>
-<span class="cm">   * Creates a new Device Object</span>
-<span class="cm">   *</span>
-<span class="cm">   * @property {Boolean} readable Whether the device emits data</span>
-<span class="cm">   * @property {Boolean} writable Whether the data can be actuated</span>
-<span class="cm">   *</span>
-<span class="cm">   * @property {Number} G - the channel of this device</span>
-<span class="cm">   * @property {Number} V - the vendor ID of this device</span>
-<span class="cm">   * @property {Number} D - the device ID of this device</span>
-<span class="cm">   *</span>
-<span class="cm">   * @property {Function} write Called when data is received from the cloud</span>
-<span class="cm">   *</span>
-<span class="cm">   * @fires data - Emit this when you wish to send data to the cloud</span>
-<span class="cm">   */</span>
-  <span class="kd">function</span> <span class="nx">Device</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Export it</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="o">=</span><span class="nx">Device</span><span class="p">;</span>
 
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+<span class="cm">/**</span>
+<span class="cm"> * Creates a new Device Object</span>
+<span class="cm"> *</span>
+<span class="cm"> * @property {Boolean} readable Whether the device emits data</span>
+<span class="cm"> * @property {Boolean} writable Whether the data can be actuated</span>
+<span class="cm"> *</span>
+<span class="cm"> * @property {Number} G - the channel of this device</span>
+<span class="cm"> * @property {Number} V - the vendor ID of this device</span>
+<span class="cm"> * @property {Number} D - the device ID of this device</span>
+<span class="cm"> *</span>
+<span class="cm"> * @property {Function} write Called when data is received from the cloud</span>
+<span class="cm"> *</span>
+<span class="cm"> * @fires data - Emit this when you wish to send data to the cloud</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">Device</span><span class="p">()</span> <span class="p">{</span>
 
-    <span class="c1">// This device will emit data</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">readable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="c1">// This device can be actuated</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">writeable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">V</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">D</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">G</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="c1">// This device will emit data</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">readable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="c1">// This device can be actuated</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">writeable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
-    <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">V</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">D</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">G</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span><span class="p">;</span> <span class="c1">// G is a string</span>
 
-      <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
-    <span class="p">});</span>
-  <span class="p">};</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
-  <span class="cm">/**</span>
-<span class="cm">   * Called whenever there is data from the cloud</span>
-<span class="cm">   * This is required if Device.writable = true</span>
-<span class="cm">   *</span>
-<span class="cm">   * @param  {String} data The data received</span>
-<span class="cm">   */</span>
-  <span class="nx">Device</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">write</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
 
-    <span class="c1">// I&#39;m being actuated with data!</span>
-  <span class="p">};</span>
+<span class="cm">/**</span>
+<span class="cm"> * Called whenever there is data from the cloud</span>
+<span class="cm"> * This is required if Device.writable = true</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param  {String} data The data received</span>
+<span class="cm"> */</span>
+<span class="nx">Device</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">write</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// I&#39;m being actuated with data!</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">};</span>
 
   
 </code></pre>

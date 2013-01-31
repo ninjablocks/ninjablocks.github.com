@@ -45,59 +45,57 @@
 
   <h2>Constructor</h2>
 
-  <div class="highlight"><pre><code class="javascript">  <span class="kd">var</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">)</span>
-    <span class="p">,</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
+  <div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">Device</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./lib/device&#39;</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
 
-  <span class="c1">// Give our module a stream interface</span>
-  <span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">myModule</span><span class="p">,</span><span class="nx">stream</span><span class="p">);</span>
+<span class="c1">// Give our module a stream interface</span>
+<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">myModule</span><span class="p">,</span><span class="nx">stream</span><span class="p">);</span>
 
-  <span class="cm">/**</span>
-<span class="cm">   * Called when our client starts up</span>
-<span class="cm">   * @constructor</span>
-<span class="cm">   *</span>
-<span class="cm">   * @param  {Object} opts Saved/default module configuration</span>
-<span class="cm">   * @param  {Object} app  The app event emitter</span>
-<span class="cm">   * @param  {String} app.id The client serial number</span>
-<span class="cm">   *</span>
-<span class="cm">   * @property  {Function} save When called will save the contents of `opts`</span>
-<span class="cm">   * @property  {Function} config Will be called when config data is received from the cloud</span>
-<span class="cm">   *</span>
-<span class="cm">   * @fires register - Emit this when you wish to register a device (see Device)</span>
-<span class="cm">   * @fires config - Emit this when you wish to send config data back to the cloud</span>
-<span class="cm">   */</span>
-  <span class="kd">function</span> <span class="nx">myModule</span><span class="p">(</span><span class="nx">opts</span><span class="p">,</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+<span class="cm">/**</span>
+<span class="cm"> * Called when our client starts up</span>
+<span class="cm"> * @constructor</span>
+<span class="cm"> *</span>
+<span class="cm"> * @param  {Object} opts Saved/default module configuration</span>
+<span class="cm"> * @param  {Object} app  The app event emitter</span>
+<span class="cm"> * @param  {String} app.id The client serial number</span>
+<span class="cm"> *</span>
+<span class="cm"> * @property  {Function} save When called will save the contents of `opts`</span>
+<span class="cm"> * @property  {Function} config Will be called when config data is received from the cloud</span>
+<span class="cm"> *</span>
+<span class="cm"> * @fires register - Emit this when you wish to register a device (see Device)</span>
+<span class="cm"> * @fires config - Emit this when you wish to send config data back to the cloud</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">myModule</span><span class="p">(</span><span class="nx">opts</span><span class="p">,</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
 
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
-    <span class="nx">app</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;client::up&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;client::up&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
 
-      <span class="c1">// The client is now connected to the cloud</span>
+    <span class="c1">// The client is now connected to the cloud</span>
 
-      <span class="c1">// Do stuff with opts, and then commit it to disk</span>
-      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">hasMutated</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">opts</span><span class="p">.</span><span class="nx">hasMutated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-      <span class="p">}</span>
+    <span class="c1">// Do stuff with opts, and then commit it to disk</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">hasMutated</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">opts</span><span class="p">.</span><span class="nx">hasMutated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
 
-      <span class="nx">self</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+    <span class="nx">self</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
 
-      <span class="c1">// Register a device</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;register&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Device</span><span class="p">());</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">hello</span><span class="o">:</span><span class="s1">&#39;world&#39;</span> <span class="p">});</span>
-    <span class="p">});</span>
-  <span class="p">};</span>
+    <span class="c1">// Register a device</span>
+    <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;register&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Device</span><span class="p">());</span>
+  <span class="p">});</span>
+<span class="p">};</span>
 
-  <span class="cm">/**</span>
-<span class="cm">   * Called when config data is received from the cloud</span>
-<span class="cm">   * @param  {Object} config Configuration data</span>
-<span class="cm">   */</span>
-  <span class="nx">myModule</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">config</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
+<span class="cm">/**</span>
+<span class="cm"> * Called when config data is received from the cloud</span>
+<span class="cm"> * @param  {Object} config Configuration data</span>
+<span class="cm"> */</span>
+<span class="nx">myModule</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">config</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
 
-  <span class="p">};</span>
+<span class="p">};</span>
 
-  <span class="c1">// Export it</span>
-  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">myModule</span><span class="p">;</span>
-
-
+<span class="c1">// Export it</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">myModule</span><span class="p">;</span>
   
 </code></pre>
 </div>
