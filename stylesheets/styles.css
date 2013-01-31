@@ -169,6 +169,10 @@ small {
   font-size:11px;
 }
 
+big {
+  font-size:21px;
+}
+
 hr {
   border:0;
   background:#e5e5e5;
