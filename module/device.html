@@ -40,9 +40,9 @@ function Device() {
   // This device can be actuated
   this.writeable = true;
 
-  this.V = 0;
-  this.D = 0;
-  this.G = "0"; // G is a string
+  this.G = "0"; // G is a string a represents the channel
+  this.V = 0; // 0 is Ninja Blocks' device list
+  this.D = 2000; // 2000 is a generic Ninja Blocks sandbox device
 
   process.nextTick(function() {
 
