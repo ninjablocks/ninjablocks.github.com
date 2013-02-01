@@ -11,7 +11,7 @@ layout: module
   <p>
     On any device that can run node follow <a href=http://ninjablocks.com/blogs/how-to/7195176>these instructions</a>. Running node (node client.js) is the equivalent of what the service 'ninjablock' does on the actual Ninja Block hardware.<br />
   <br />
-    Note: Disregard errors about /dev/tty01 (arduino), within the Ninja Block, tty01 is the arduino-cape as seen by the beagle-bone. If you wish to use an arduino with your client you can see here http://ninjablocks.com/blogs/how-to/7192604.
+    Note: Disregard errors about /dev/tty01 (arduino), within the Ninja Block, tty01 is the arduino-cape as seen by the beagle-bone. (If you wish to use an arduino with your client you can see <a href=http://ninjablocks.com/blogs/how-to/7192604>here</a>)
   </p>
   <h2>Step 2: Installing ninja-toolbelt and setting up a new module</h2>
   <p>
@@ -20,7 +20,7 @@ layout: module
     Now go to the sub-directory ninja_modules<br />
     Note: On the Ninja Block hardware, the client code is in the directory /opt/ninja/, otherwise it is where you checked it out.<br />
     <br />
-    When creating your module (ninja create <module name>), follow the instructions for 'ninja create', and then onwards with the instructions for 'npm init'<br />
+    When creating your module (ninja create [module name]), follow the instructions for 'ninja create', and then onwards with the instructions for 'npm init'<br />
     Note: For 'npm init' most default options should suffice (just hit enter).<br />
     <br />
     If you've not created a README.md file, you will receive a warning, but this can be done later.<br />
@@ -29,7 +29,7 @@ layout: module
   </p>
   <h2>Step 3: Verifying the module template</h2>
   <p>
-    By default the device ID will be set to 2000 (<client base>/ninja_modules/<module name>/lib/device.js), and assuming that you've already paired you block, this will be presented on the dashboard in a device titled "Sandbox".
+    By default the device ID will be set to 2000 ([client base]/ninja_modules/[module name]/lib/device.js), and assuming that you've already paired you block, this will be presented on the dashboard in a device titled "Sandbox".
   </p>
   <h1>What next?</h1>
   <p>
