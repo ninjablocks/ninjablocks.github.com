@@ -56,6 +56,8 @@
   <p>OAuth 2 is a protocol that allows third party applications access to a user's personal data securely. OAuth 2 is the only means by which a third party application can access another user's data via the Ninja Blocks platform.</p>
   <p>All third party applications must be registed on the <a href="https://a.ninja.is/hacking">settings</a> page of your Ninja Blocks account, and are issued an ID and secret on registration. The client secret must not be shared.</p>
 
+    <p><strong>cURL tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+
   <h2>Third Party Application Flow</h2>
   <hr />
   <h3>Step 1 - retrieve an access code</h3>

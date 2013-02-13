@@ -9,7 +9,8 @@ layout: rest
   <h3>A note on Auth</h3>
   <p>For quick dev and hacking on your own account you can use your personal API Access Token found at <a href="https://a.ninja.is/hacking">a.ninja.is/hacking</a>. The cURL Examples in this document use your <code>user_access_token</code>. Note that when using the API with a token acquired via OAuth, the param is just <code>access_token</code>. See the section on <a href="http://docs.ninja.is/authentication.html">authentication</a> for more.</p>
 
-  <p><strong>cURL tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+  {% include curl-tip.html %}
+
   <table>
     <tbody>
       <tr>

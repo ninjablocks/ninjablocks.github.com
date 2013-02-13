@@ -49,6 +49,70 @@
       <section>
   <a name="rule-object" id="rule-object"></a>
   <h2>Rule</h2>
+
+  <h3>Rules Explained</h3>
+  <p>
+    A rule is a JSON document, part of which describes a list of preconditions that will trigger a rule, and a list of actions to take if triggered. These lists are arrays and are executed serially.
+  </p>
+
+  <h4>Example Rule</h4>
+  <div class="highlight"><pre><code class="json"><span class="p">{</span>
+  <span class="nt">&quot;shortName&quot;</span><span class="p">:</span> <span class="s2">&quot;Nerf Gun Shooter&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;preconditions&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;handler&quot;</span><span class="p">:</span> <span class="s2">&quot;ninjaChange&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;guid&quot;</span><span class="p">:</span> <span class="s2">&quot;RFID_DEVICE_GUID&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;to&quot;</span><span class="p">:</span> <span class="s2">&quot;10101000101000001010101&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;handler&quot;</span><span class="p">:</span> <span class="s2">&quot;ninjaSendCommand&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;guid&quot;</span><span class="p">:</span> <span class="s2">&quot;RELAY_DEVICE_GUID&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;da&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;handler&quot;</span><span class="p">:</span> <span class="s2">&quot;sleep&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;guid&quot;</span><span class="p">:</span> <span class="s2">&quot;N/A&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;sleepLength&quot;</span><span class="p">:</span> <span class="mi">3000</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;handler&quot;</span><span class="p">:</span> <span class="s2">&quot;ninjaSendCommand&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;guid&quot;</span><span class="p">:</span> <span class="s2">&quot;RELAY_DEVICE_GUID&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;da&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;handler&quot;</span><span class="p">:</span> <span class="s2">&quot;getNinjaSnapshot&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;guid&quot;</span><span class="p">:</span> <span class="s2">&quot;CAMERA_DEVICE_GUID&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;handler&quot;</span><span class="p">:</span> <span class="s2">&quot;sendToDropbox&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;guid&quot;</span><span class="p">:</span> <span class="s2">&quot;DROPBOX_DEVICE_GUID&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+  
+</code></pre>
+</div>
+
+
+  <p>
+    <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/Rules-Engine-Documentation" target="_blank"><big>Preconditions/actions documentation</big></a>
+  </p>
+    <p><strong>cURL tip:</strong> JSON responses on the command line can be very hard to read. The simplest way is to get <a href="https://github.com/trentm/json">this excellent json script</a> and then add pipe to json <code>| json</code> at the end of your curl commands. Slightly more work to install but well worth the effort if you regularly work with restful APIs is the python utility <a href="https://github.com/jkbr/httpie">HTTPie</a>.</p>
+
   <table>
     <tbody>
       <tr>
@@ -60,16 +124,432 @@
         <td>Create a new rule.</td>
       </tr>
       <tr>
-        <td><a href="#rule-get">GET rule</a></td>
+        <td><a href="#rule-fetch-all">GET rule</a></td>
         <td>Fetch all of a user's rules.</td>
+      </tr>
+      <tr>
+        <td><a href="#rule-fetch-one">GET rule/:rid</a></td>
+        <td>Fetch one rules.</td>
+      </tr>
+      <tr>
+        <td><a href="#rule-update">PUT rule/:rid</a></td>
+        <td>Update a rule.</td>
       </tr>
       <tr>
         <td><a href="#rule-delete">DELETE rule/:rid</a></td>
         <td>Delete a rule.</td>
       </tr>
+
+      <tr>
+        <td><a href="#rule-suspend">POST rule/:rid/suspend</a></td>
+        <td>Suspend a rule.</td>
+      </tr>
+      <tr>
+        <td><a href="#rule-unsuspend">DELETE rule/:rid/suspend</a></td>
+        <td>Unsuspend a rule.</td>
+      </tr>
     </tbody>
   </table>
+
+
+  <p>&nbsp;</p>
+  <a name="rule-create" id="rule-create"></a>
+  <h2>POST rule</h2>
+  <p>Create a new rule.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>shortName</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The name of your rule.
+          <br />
+          <small>Example: "Nerf Gun Shooter"</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>preconditions</strong><br /><em>array</em><br /><small>Required</small></td>
+        <td>
+          Array of precondition handlers. <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/Rules-Engine-Documentation" target="_blank">See further documentation</a>.
+          <br />
+          <small>Example: [{"handler":"ninjaRangeToggle","params":{"guid":"STEALTHYNINJA_2_0_9","between":26,"and":30}}]</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>actions</strong><br /><em>array</em><br /><small>Required</small></td>
+        <td>
+          Array of action handlers. <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/Rules-Engine-Documentation" target="_blank">See further documentation</a>.
+          <br />
+          <small>Example: [{"handler":"sendEmail","params":{"to":"example@example.com","subject":"NINJA","body":"Hello World!","guid":"EMAIL_GUID"}}]</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>timeout</strong><br /><em>number</em><br /><small>Optional</small></td>
+        <td>
+          Number of seconds to wait before executing this rule again.
+          <br />
+          <small>Example: 60</small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Notes</h4>
+  <ul>
+    <li>If successful, this endpoint will return a 'rid' which is the ID of the rule created.</li>
+  </ul>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/rule</code></pre>
+  <h4>cURL Example</h4>
+<pre><code>curl -X 'POST' \
+     -H 'Content-Type: application/json' \
+     -d '{"shortName":"Nerf Gun Shooter","preconditions":[{"handler":"ninjaChange","params":{"guid":"RFID_DEVICE_GUID","to":"10101000101000001010101"}}],"actions":[{"handler":"ninjaSendCommand","params":{"guid":"RELAY_DEVICE_GUID","da":"0"}},{"handler":"sleep","params":{"guid":"N/A","sleepLength":3000}},{"handler":"ninjaSendCommand","params":{"guid":"RELAY_DEVICE_GUID","da":"1"}},{"handler":"getNinjaSnapshot","params":{"guid":"CAMERA_DEVICE_GUID"}},{"handler":"sendToDropbox","params":{"guid":"DROPBOX_DEVICE_GUID"}}]}' \
+     -i https://api.ninja.is/rest/v0/rule?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+  "data":{
+    "rid":"89353"
+  }
+}</code></pre>
+
+
+  <p>&nbsp;</p>
+  <a name="rule-fetch-all" id="rule-fetch-all"></a>
+  <h2>GET rule</h2>
+  <p>Fetch all of a users' rules.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/rule</code></pre>
+  <h4>cURL Example</h4>
+<pre><code>curl -i https://api.ninja.is/rest/v0/rule?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+  <h4>Sample JSON response</h4>
+
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": [
+    {
+      "rid": 46001,
+      "preconditions": [
+        {
+          "handler": "ninjaChange",
+          "params": {
+            "to": "011111110001010100110000",
+            "guid": "2712BB000675_1_0_11",
+            "shortName": "Red Button"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "handler": "ninjaSendCommand",
+          "params": {
+            "guid": "2712BB000675_0_0_1000",
+            "da": "0000FF",
+            "shortName": "Blue"
+          }
+        }
+      ],
+      "store": {},
+      "suspended": false,
+      "shortName": "Blue",
+      "timeout": 0
+    },
+    {
+      "rid": 89353,
+      "preconditions": [
+        {
+          "handler": "ninjaChange",
+          "params": {
+            "guid": "RFID_DEVICE_GUID",
+            "to": "10101000101000001010101"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "handler": "ninjaSendCommand",
+          "params": {
+            "guid": "RELAY_DEVICE_GUID",
+            "da": "0"
+          }
+        },
+        {
+          "handler": "sleep",
+          "params": {
+            "guid": "N/A",
+            "sleepLength": 3000
+          }
+        },
+        {
+          "handler": "ninjaSendCommand",
+          "params": {
+            "guid": "RELAY_DEVICE_GUID",
+            "da": "1"
+          }
+        },
+        {
+          "handler": "getNinjaSnapshot",
+          "params": {
+            "guid": "CAMERA_DEVICE_GUID"
+          }
+        },
+        {
+          "handler": "sendToDropbox",
+          "params": {
+            "guid": "DROPBOX_DEVICE_GUID"
+          }
+        }
+      ],
+      "store": {},
+      "suspended": false,
+      "shortName": "Nerf Gun Shooter",
+      "timeout": 0
+    }
+  ]
+}</code></pre>
+
+  <p>&nbsp;</p>
+  <a name="rule-fetch-one" id="rule-fetch-one"></a>
+  <h2>GET rule/:rid</h2>
+  <p>Fetch the specified rule.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/rule/:rid</code></pre>
+  <h4>cURL Example</h4>
+<pre><code>curl -i https://api.ninja.is/rest/v0/rule/89353?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0,
+  "data": {
+    "rid": 89353,
+    "preconditions": [
+      {
+        "handler": "ninjaChange",
+        "params": {
+          "guid": "RFID_DEVICE_GUID",
+          "to": "10101000101000001010101"
+        }
+      }
+    ],
+    "actions": [
+      {
+        "handler": "ninjaSendCommand",
+        "params": {
+          "guid": "RELAY_DEVICE_GUID",
+          "da": "0"
+        }
+      },
+      {
+        "handler": "sleep",
+        "params": {
+          "guid": "N/A",
+          "sleepLength": 3000
+        }
+      },
+      {
+        "handler": "ninjaSendCommand",
+        "params": {
+          "guid": "RELAY_DEVICE_GUID",
+          "da": "1"
+        }
+      },
+      {
+        "handler": "getNinjaSnapshot",
+        "params": {
+          "guid": "CAMERA_DEVICE_GUID"
+        }
+      },
+      {
+        "handler": "sendToDropbox",
+        "params": {
+          "guid": "DROPBOX_DEVICE_GUID"
+        }
+      }
+    ],
+    "store": {},
+    "suspended": false,
+    "shortName": "Nerf Gun Shooter",
+    "timeout": 0
+  }
+}</code></pre>
+
+
+
+ <p>&nbsp;</p>
+  <a name="rule-update" id="rule-update"></a>
+  <h2>PUT rule/:rid</h2>
+  <p>Update a rule.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td><strong>shortName</strong><br /><em>string</em><br /><small>Required</small></td>
+        <td>
+          The name of your rule.
+          <br />
+          <small>Example: "Nerf Gun Shooter"</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>preconditions</strong><br /><em>array</em><br /><small>Required</small></td>
+        <td>
+          Array of precondition handlers. <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/Rules-Engine-Documentation" target="_blank">See further documentation</a>.
+          <br />
+          <small>Example: [{"handler":"ninjaRangeToggle","params":{"guid":"STEALTHYNINJA_2_0_9","between":26,"and":30}}]</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>actions</strong><br /><em>array</em><br /><small>Required</small></td>
+        <td>
+          Array of action handlers. <a href="https://github.com/ninjablocks/ninjablocks.github.com/wiki/Rules-Engine-Documentation" target="_blank">See further documentation</a>.
+          <br />
+          <small>Example: [{"handler":"sendEmail","params":{"to":"example@example.com","subject":"NINJA","body":"Hello World!","guid":"EMAIL_GUID"}}]</small>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>timeout</strong><br /><em>number</em><br /><small>Optional</small></td>
+        <td>
+          Number of seconds to wait before executing this rule again.
+          <br />
+          <small>Example: 60</small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/rule/:rid</code></pre>
+  <h4>cURL Example</h4>
+  <p>Add a timeout of 60 seconds to rule 89353:</p>
+<pre><code>curl -X 'PUT' \
+     -H 'Content-Type: application/json' \
+     -d '{"timeout":60,"shortName":"Nerf Gun Shooter","preconditions":[{"handler":"ninjaChange","params":{"guid":"RFID_DEVICE_GUID","to":"10101000101000001010101"}}],"actions":[{"handler":"ninjaSendCommand","params":{"guid":"RELAY_DEVICE_GUID","da":"0"}},{"handler":"sleep","params":{"guid":"N/A","sleepLength":3000}},{"handler":"ninjaSendCommand","params":{"guid":"RELAY_DEVICE_GUID","da":"1"}},{"handler":"getNinjaSnapshot","params":{"guid":"CAMERA_DEVICE_GUID"}},{"handler":"sendToDropbox","params":{"guid":"DROPBOX_DEVICE_GUID"}}]}' \
+     -i https://api.ninja.is/rest/v0/rule/89353?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+  <h4>Sample JSON response</h4>
+<pre><code>{
+  "result": 1,
+  "error": null,
+  "id": 0
+}</code></pre>
+
+<p>&nbsp;</p>
+  <a name="rule-delete" id="rule-delete"></a>
+  <h2>DELETE rule/:rid</h2>
+  <p>Delete a rule.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/rule/:rid</code></pre>
+
+  <h4>cURL Example</h4>
+  <p>Delete rule 89353:</p>
+<pre><code>curl -X 'DELETE' \
+     -i https://api.ninja.is/rest/v0/rule/89353?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null,
+    "id": 0
+}</code></pre>
+
+
+<p>&nbsp;</p>
+  <a name="rule-suspend" id="rule-suspend"></a>
+  <h2>POST rule/:rid/suspend</h2>
+  <p>suspend a rule.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/rule/:rid/suspend</code></pre>
+
+  <h4>cURL Example</h4>
+  <p>Suspend rule 89353:</p>
+<pre><code>curl -X 'POST' \
+     -i https://api.ninja.is/rest/v0/rule/89353/suspend?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null,
+    "id": 0
+}</code></pre>
+
+
+<p>&nbsp;</p>
+  <a name="rule-unsuspend" id="rule-unsuspend"></a>
+  <h2>DELETE rule/:rid/suspend</h2>
+  <p>Unsuspend a rule.</p>
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="2">Parameters</th>
+      </tr>
+      <tr>
+        <td colspan="2"><em>none</em</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>Resource URL</h4>
+<pre><code>https://api.ninja.is/rest/v0/rule/:rid/suspend</code></pre>
+
+  <h4>cURL Example</h4>
+  <p>Unsuspend rule 89353:</p>
+<pre><code>curl -X 'DELETE' \
+     -i https://api.ninja.is/rest/v0/rule/89353/suspend?user_access_token=YOUR_ACCESS_TOKEN</code></pre>
+
+  <h4>Sample JSON response</h4>
+<pre><code>{
+    "result": 1,
+    "error": null,
+    "id": 0
+}</code></pre>
+
 </section>
+
       <script src="/javascripts/scale.fix.js"></script>
 <script src="/javascripts/all.js"></script>
 <script type="text/javascript">
