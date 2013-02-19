@@ -4,7 +4,7 @@ layout: protocol
 ---
 <section>
   <h1>Air Conditioner [DRAFT]</h1>
-  <p>An device that regulates room temperature. Of various form factors but typically it can be set to a range of colours and brightnesses, as well as some more advanced features such as alerts.</p>
+  <p>Any device that regulates room temperature. Could also be thought of as a temperature actuator.</p>
   <h2>Overview</h2>
   <table>
     <tbody>
@@ -28,9 +28,10 @@ layout: protocol
       </tr>
     </tbody>
   </table>
+  <p>The specification is kept simple so as to cater for the various types of air conditioners that can be integrated into the Ninja Cloud.</p>
   <h3>Serialised JSON</h3>
 
-   <table>
+  <table>
       <tbody>
         <tr>
           <th colspan="3">Parameters</th>
@@ -119,4 +120,16 @@ layout: protocol
         </tr>
       </tbody>
   </table>
+  <p><strong>Example Unserialised JSON</strong></p>
+  <pre>
+<code>
+{
+  "on":                   true,
+  "tempCurrent":          26.4,
+  "tempTarget":           23.1,
+  "fanSpeed":             1,
+  "mode":                 2,
+}
+</code>
+  </pre>
 </section>
