@@ -1,0 +1,135 @@
+---
+title: Air Conditioner Protocol
+layout: protocol
+---
+<section>
+  <h1>Air Conditioner [DRAFT]</h1>
+  <p>Any device that regulates room temperature. Could also be thought of as a temperature actuator.</p>
+  <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>Device Type</strong></td>
+        <td>airconditioner</td>
+      </tr>
+      <tr>
+        <td><strong>Data Type</strong></td>
+        <td>serialised JSON</td>
+      </tr>
+      <tr>
+        <td><strong>Example Modules</strong></td>
+        <td>None        </td>
+      </tr>
+      <tr>
+        <td><strong>More information</strong></td>
+        <td><ul>
+        </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The specification is kept simple so as to cater for the various types of air conditioners that can be integrated into the Ninja Cloud.</p>
+  <h3>Serialised JSON</h3>
+
+  <table>
+      <tbody>
+        <tr>
+          <th colspan="3">Parameters</th>
+        </tr>
+        <tr>
+          <td><strong>on</strong><br /><em>boolean</em><br /><small>Optional</small></td>
+          <td><div align="center">R+W</div></td>
+          <td>
+            Turn on the airconditioner. `true` is on, `false` is off.
+            <br />
+            <small>Example: true</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>tempCurrent</strong><br />
+            <em>fixed</em><br />
+            Optional</td>
+          <td><div align="center">R</div></td>
+          <td>The current temperature. Fixed to 1 decimal place.<br />
+            Only the airconditioner device itself should change this value.
+            <br />
+            <small>Example: 25.7</small>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>tempTarget<br />
+           </strong><em>fixed</em><br />
+           Optional
+          </td>
+          <td><div align="center">R+W</div></td>
+          <td>The target temperature for the airconditioner to reach. Fixed to 1 decimal place<br />
+            <small>Example: 26.3</small></td>
+        </tr>
+        <tr>
+          <td><strong>fanSpeed</strong><br />
+          <em>number</em><br /><small>Optional</small></td>
+          <td><div align="center">R+W</div></td>
+          <td>
+            Set the fan speed setting of the airconditioner starting at 0.
+            <br>
+            Typically 3 values (0,1,2) however upper limit depends on the airconditioner device
+            <br>
+            <small>Example: 0</small>
+            <br />
+            <table>
+              <tr>
+                <td>0</td>
+                <td>LOW</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>MEDIUM</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>HIGH</td>
+              </tr>
+              </table>
+            </td>
+        </tr>
+        <tr>
+          <td><strong>mode</strong><br /><em>number</em><br /><small>Optional</small></td>
+          <td><div align="center">R+W</div></td>
+          <td>The mode of the airconditioner. The number should match a value in the table below. 
+          	<br />
+            <small>Example: 2</small>
+            <br />
+            <table>
+              <tr>
+                <td>0</td>
+                <td>AUTOMATIC</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>HEAT</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>COOL</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>FAN</td>
+              </tr>
+          </table></td>
+        </tr>
+      </tbody>
+  </table>
+  <p><strong>Example Unserialised JSON</strong></p>
+  <pre>
+<code>
+{
+  "on":                   true,
+  "tempCurrent":          26.4,
+  "tempTarget":           23.1,
+  "fanSpeed":             1,
+  "mode":                 2,
+}
+</code>
+  </pre>
+</section>
