@@ -299,7 +299,7 @@ layout: rest
 <pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -H 'Content-Type: application/json' \
-     -d '[{"G":0,"V":0,"D":9,"DA":"20"},{"G":0,"V":0,"D":1000,"DA":"FF00FF"}]' \
+     -d '[{"G":"0","V":0,"D":9,"DA":"20"},{"G":"0","V":0,"D":1000,"DA":"FF00FF"}]' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/heartbeat </code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -363,7 +363,7 @@ layout: rest
 <pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -H 'Content-Type: application/json' \
-     -d '{"G":0,"V":0,"D":5,"DA":"1"}' \
+     -d '{"G":"0","V":0,"D":5,"DA":"1"}' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/data </code></pre>
   <h4>Sample JSON response</h4>
 <pre><code>{
@@ -428,7 +428,7 @@ layout: rest
 <pre><code>curl -X 'POST' \
      -H 'X-Ninja-Token: YOUR_BLOCK_TOKEN' \
      -H 'Content-Type: application/json' \
-     -d '{"G":0,"V":0,"D":5,"type":"UNPLUG"}' \
+     -d '{"G":"0","V":0,"D":5,"type":"UNPLUG"}' \
      -i https://api.ninja.is/rest/v0/block/123456789ABC/config </code></pre>
 
   <h4>Sample JSON response</h4>
