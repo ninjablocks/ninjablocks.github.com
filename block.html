@@ -55,7 +55,7 @@ layout: default
       </tr>
       <tr>
         <td><a href="#block-commands">GET block/:nodeId/commands</a></td>
-        <td>Long GET that will respond with that block's commands for the duration of the request.</td>
+        <td>A block will receive commands from this endpoint.</td>
       </tr>
       <tr>
         <td><a href="#device-send-image">POST camera/:guid/snapshot</a></td>
@@ -452,7 +452,7 @@ layout: default
   <p>&nbsp;</p>
   <a name="block-commands" id="block-commands"></a>
   <h2>GET block/:nodeId/commands</h2>
-  <p>Long GET that will respond with a the requested block's commands.</p>
+  <p>A block will receive commands from this endpoint. See notes for the behaviour of this endpoint.</p>
   <table>
     <tbody>
       <tr>
